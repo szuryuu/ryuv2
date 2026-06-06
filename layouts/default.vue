@@ -14,20 +14,25 @@ const buttonVariant = computed(() => (isHovered.value ? "solid" : "outline"));
 
 <template>
   <div class="min-h-[100svh] flex flex-col relative overflow-x-clip">
+    <!-- Floating pill navbar -->
     <nav
-      class="fixed top-0 left-0 right-0 flex justify-between px-6 md:px-12 py-8 z-10"
+      class="fixed left-1/2 top-6 z-30 -translate-x-1/2 backdrop-blur-2xl bg-white/70 border border-black/8 ring-1 ring-black/5 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] rounded-full px-6 sm:px-10 py-2 flex items-center gap-6 w-max mx-auto"
     >
-      <h1 class="text-3xl font-display select-none text-white">Sz</h1>
+      <div class="flex items-center gap-3 select-none">
+        <h1 class="text-2xl md:text-3xl font-display font-bold tracking-tight text-ink">Sz</h1>
+        <!-- Kanji ornament, faint, decorative -->
+        <span class="font-decoration text-[1.1rem] md:text-xl opacity-30 -ml-1 mt-0.5 hidden sm:inline-block tracking-tighter align-top select-none">士</span>
+      </div>
       <UButton
         color="neutral"
         :variant="buttonVariant"
-        class="rounded-3xl font-display text-xs px-4 pt-2 md:py-2 flex justify-center items-center uppercase border-1 text-white hover:text-black duration-400 transition-all transform transform-fill bg-primary hover:bg-white cursor-pointer"
+        class="rounded-full font-display text-xs md:text-sm px-5 py-2 flex items-center font-semibold border-none ring-1 ring-black/5 bg-white/60 hover:bg-innerlight shadow-none text-ink hover:text-ink-2 active:scale-98 duration-700 transition-all"
         @click="handleClick"
         @mouseover="isHovered = true"
         @mouseleave="isHovered = false"
       >
-        {{ isOpen ? "Close" : "Menu" }}
-        <p class="hidden md:flex">&#x1F784;</p>
+        <span class="pr-2">{{ isOpen ? "Close" : "Menu" }}</span>
+        <span class="hidden md:inline">&#x1F784;</span>
       </UButton>
     </nav>
 

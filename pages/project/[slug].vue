@@ -109,9 +109,9 @@ onUnmounted(() => {
 <template>
   <article v-if="project" class="w-full min-h-screen relative" ref="pageRef">
     <div class="fixed top-0 left-0 right-0 z-20 pointer-events-none">
-      <div class="h-px w-full bg-white/5">
+      <div class="h-px w-full bg-hairline">
         <div
-          class="h-full bg-white/60 transition-none"
+          class="h-full bg-ink/30 transition-none"
           :style="{ width: scrollProgress + '%' }"
         ></div>
       </div>
@@ -125,94 +125,74 @@ onUnmounted(() => {
           v-if="project.image"
           :src="project.image"
           :alt="project.title"
-          class="hero-image w-full h-full object-cover opacity-30"
+          class="hero-image w-full h-full object-cover opacity-20"
           width="1920"
           height="1080"
           size="100vw"
           format="webp"
           preload
         />
-        <div
-          class="absolute inset-0 bg-gradient-to-t from-primary via-primary/90 to-transparent"
-        ></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-canvas via-canvas/90 to-transparent"></div>
       </div>
       <div class="w-full max-w-7xl mx-auto px-6 md:px-12 pb-20 pt-32">
         <div class="flex items-center gap-4 mb-8">
-          <span class="font-decoration text-2xl md:text-3xl text-white/60">
+          <span class="font-decoration text-2xl md:text-3xl text-ink/40">
             プロジェクト
           </span>
-          <div
-            class="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent"
-          ></div>
+          <div class="h-px flex-1 bg-gradient-to-r from-hairline to-transparent"></div>
         </div>
 
-        <h1
-          class="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6 leading-tight"
-        >
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6 leading-tight text-ink">
           {{ project.title }}
         </h1>
 
-        <p
-          class="text-xl md:text-2xl text-white/80 max-w-3xl mb-12 font-display"
-        >
+        <p class="text-xl md:text-2xl text-ink/70 max-w-3xl mb-12 font-display">
           {{ project.description }}
         </p>
 
         <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
           <div v-if="project.type" class="hero-meta">
-            <p class="text-xs uppercase font-display text-white/50 mb-1">
-              Type
-            </p>
-            <p class="text-lg font-display text-white">{{ project.type }}</p>
+            <p class="text-xs uppercase font-display text-ink/45 mb-1">Type</p>
+            <p class="text-lg font-display text-ink">{{ project.type }}</p>
           </div>
           <div v-if="project.year" class="hero-meta">
-            <p class="text-xs uppercase font-display text-white/50 mb-1">
-              Year
-            </p>
-            <p class="text-lg font-display text-white">{{ project.year }}</p>
+            <p class="text-xs uppercase font-display text-ink/45 mb-1">Year</p>
+            <p class="text-lg font-display text-ink">{{ project.year }}</p>
           </div>
           <div v-if="project.role" class="hero-meta">
-            <p class="text-xs uppercase font-display text-white/50 mb-1">
-              Role
-            </p>
-            <p class="text-lg font-display text-white">{{ project.role }}</p>
+            <p class="text-xs uppercase font-display text-ink/45 mb-1">Role</p>
+            <p class="text-lg font-display text-ink">{{ project.role }}</p>
           </div>
           <div v-if="project.status" class="hero-meta">
-            <p class="text-xs uppercase font-display text-white/50 mb-1">
-              Status
-            </p>
+            <p class="text-xs uppercase font-display text-ink/45 mb-1">Status</p>
             <span
-              class="inline-block px-3 py-1 bg-white/10 border border-white/20 rounded-full text-sm font-display text-white backdrop-blur-sm"
+              class="inline-block px-3 py-1 bg-canvas-2 border border-hairline-strong rounded-full text-sm font-display text-ink/90"
             >
               {{ project.status }}
             </span>
           </div>
           <div class="hero-meta">
-            <p class="text-xs uppercase font-display text-white/50 mb-1">
-              Reads
-            </p>
-            <p class="text-lg font-display text-white">{{ readCount }}</p>
+            <p class="text-xs uppercase font-display text-ink/45 mb-1">Reads</p>
+            <p class="text-lg font-display text-ink">{{ readCount }}</p>
           </div>
         </div>
       </div>
     </header>
 
     <section
-      class="content-section sticky top-0 z-10 bg-primary/95 backdrop-blur-md border-b border-white/10"
+      class="content-section sticky top-0 z-10 bg-canvas/95 backdrop-blur-md border-b border-hairline"
     >
       <div class="max-w-7xl mx-auto px-6 md:px-12 py-8">
-        <div
-          class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6"
-        >
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div class="flex-1">
-            <p class="text-xs uppercase font-display text-white/50 mb-3">
+            <p class="text-xs uppercase font-display text-ink/45 mb-3">
               Tech Stack
             </p>
             <div class="flex flex-wrap gap-2">
               <span
                 v-for="tech in project.tech"
                 :key="tech"
-                class="px-3 py-1.5 bg-accent/50 border border-white/10 text-white text-sm font-display rounded-md hover:bg-accent transition-colors duration-300"
+                class="soft-tag-filter px-3 py-1.5 rounded-full bg-canvas-2 border border-hairline text-ink text-sm font-display hover:bg-canvas hover:text-ink/90 hover:ring-1 hover:ring-hairline transition-all duration-150"
               >
                 {{ tech }}
               </span>
@@ -224,20 +204,20 @@ onUnmounted(() => {
               v-if="project.github"
               :to="project.github"
               aria-label="View GitHub Repository"
-              class="flex items-center gap-2"
+              class="flex items-center gap-2 soft-tag-filter px-5 py-2 rounded-full bg-ink text-canvas font-display hover:bg-ink/90 hover:text-canvas transition-all duration-150"
             >
               <LucideGithub :size="14" />
-              <span class="font-display">Repository</span>
+              <span>Repository</span>
             </LinkButton>
             <LinkButton
               v-if="project.live"
               :to="project.live"
               aria-label="View Live Demo"
               target="_blank"
-              class="flex items-center gap-2"
+              class="flex items-center gap-2 soft-tag-filter px-5 py-2 rounded-full border border-hairline bg-canvas-2 text-ink font-display hover:bg-canvas hover:text-ink/90 transition-all duration-150"
             >
               <LucideExternalLink :size="14" />
-              <span class="font-display">Live Demo</span>
+              <span>Live Demo</span>
             </LinkButton>
           </div>
         </div>
@@ -251,40 +231,44 @@ onUnmounted(() => {
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div
           v-if="project.duration"
-          class="bg-black/20 backdrop-blur-sm rounded-xl p-6 border border-white/5"
+          class="double-bezel-card h-full"
         >
-          <div class="flex items-center gap-3 mb-2">
-            <LucideClock :size="20" class="text-white/50" />
-            <p class="text-xs uppercase font-display text-white/50">Duration</p>
+          <div class="bezel-shell">
+            <div class="bezel-core p-6">
+              <div class="flex items-center gap-3 mb-2">
+                <LucideClock :size="20" class="text-ink/50" />
+                <p class="text-xs uppercase font-display text-ink/45">Duration</p>
+              </div>
+              <p class="text-2xl font-display text-ink">{{ project.duration }}</p>
+            </div>
           </div>
-          <p class="text-2xl font-display text-white">{{ project.duration }}</p>
         </div>
 
         <div
           v-if="project.team_size"
-          class="bg-black/20 backdrop-blur-sm rounded-xl p-6 border border-white/5"
+          class="double-bezel-card h-full"
         >
-          <div class="flex items-center gap-3 mb-2">
-            <LucideUsers :size="20" class="text-white/50" />
-            <p class="text-xs uppercase font-display text-white/50">
-              Team Size
-            </p>
+          <div class="bezel-shell">
+            <div class="bezel-core p-6">
+              <div class="flex items-center gap-3 mb-2">
+                <LucideUsers :size="20" class="text-ink/50" />
+                <p class="text-xs uppercase font-display text-ink/45">Team Size</p>
+              </div>
+              <p class="text-2xl font-display text-ink">{{ project.team_size }} members</p>
+            </div>
           </div>
-          <p class="text-2xl font-display text-white">
-            {{ project.team_size }} members
-          </p>
         </div>
 
-        <div
-          class="bg-black/20 backdrop-blur-sm rounded-xl p-6 border border-white/5"
-        >
-          <div class="flex items-center gap-3 mb-2">
-            <LucideCalendar :size="20" class="text-white/50" />
-            <p class="text-xs uppercase font-display text-white/50">
-              Published
-            </p>
+        <div class="double-bezel-card h-full">
+          <div class="bezel-shell">
+            <div class="bezel-core p-6">
+              <div class="flex items-center gap-3 mb-2">
+                <LucideCalendar :size="20" class="text-ink/50" />
+                <p class="text-xs uppercase font-display text-ink/45">Published</p>
+              </div>
+              <p class="text-2xl font-display text-ink">{{ project.year }}</p>
+            </div>
           </div>
-          <p class="text-2xl font-display text-white">{{ project.year }}</p>
         </div>
       </div>
     </section>
@@ -326,14 +310,9 @@ onUnmounted(() => {
           class="hidden lg:block w-56 shrink-0 sticky top-48 pt-4 self-start"
         >
           <div class="flex flex-col">
-            <div class="flex items-start text-white mb-10 opacity-60">
-              <span class="[writing-mode:vertical-lr] text-2xl font-decoration"
-                >目次</span
-              >
-              <span
-                class="[writing-mode:vertical-lr] text-lg font-display uppercase tracking-widest"
-                >Contents</span
-              >
+            <div class="flex items-start text-ink mb-10 opacity-70">
+              <span class="[writing-mode:vertical-lr] text-2xl font-decoration">目次</span>
+              <span class="[writing-mode:vertical-lr] text-lg font-display uppercase tracking-widest text-ink/40">Contents</span>
             </div>
 
             <nav
@@ -347,14 +326,14 @@ onUnmounted(() => {
                 class="transition-colors flex items-center gap-3 group uppercase tracking-widest"
                 :class="
                   activeId === link.id
-                    ? 'text-white'
-                    : 'text-white/40 hover:text-white'
+                    ? 'text-ink font-semibold'
+                    : 'text-ink/40 hover:text-ink'
                 "
               >
                 <span
                   class="h-px transition-all duration-300"
                   :class="[
-                    activeId === link.id ? 'bg-white' : 'bg-white/20',
+                    activeId === link.id ? 'bg-hairline-strong' : 'bg-hairline',
                     link.depth === 2
                       ? activeId === link.id
                         ? 'w-12'
@@ -380,7 +359,7 @@ onUnmounted(() => {
 
             <p
               v-else
-              class="text-xs font-display text-white/30 uppercase tracking-widest"
+              class="text-xs font-display text-ink/30 uppercase tracking-widest"
             >
               No contents available
             </p>

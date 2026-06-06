@@ -14,58 +14,55 @@ defineProps<{
 
 <template>
   <div
-    class="flex flex-col bg-white/5 border backdrop-blur-sm transition-all duration-500 rounded-xl overflow-hidden group/card"
-    :class="
-      certificate.pinned
-        ? 'border-white/40 shadow-[0_0_20px_rgba(255,255,255,0.05)]'
-        : 'border-white/10 hover:border-white/20'
-    "
+    class="double-bezel-card flex flex-col transition-all duration-400 group/card h-full"
+    :class="certificate.pinned ? 'shadow-lg shadow-green-300/10' : ''"
   >
-    <div class="relative overflow-hidden">
-      <NuxtImg
-        :src="certificate.Image"
-        class="w-full h-48 object-cover transition-transform duration-700 group-hover/card:scale-105"
-        width="400"
-        height="300"
-        format="webp"
-        loading="lazy"
-      />
-      <div
-        v-if="certificate.pinned"
-        class="absolute top-3 right-3 bg-black/80 backdrop-blur-md border border-white/20 text-white text-[10px] uppercase px-2 py-1 rounded font-display tracking-widest flex items-center gap-1.5 shadow-lg"
-      >
-        <LucidePin class="w-3 h-3 text-white fill-white/20" />
-        Pinned
-      </div>
-    </div>
+    <div class="bezel-shell">
+      <div class="bezel-core flex flex-col overflow-hidden h-full p-0">
+        <div class="relative overflow-hidden rounded-t-
+        [calc(var(--core-radius,1.5rem))]">
+          <NuxtImg
+            :src="certificate.Image"
+            class="w-full h-48 object-cover transition-transform duration-700 group-hover/card:scale-105"
+            width="400"
+            height="300"
+            format="webp"
+            loading="lazy"
+            :alt="certificate.title"
+          />
+          <div
+            v-if="certificate.pinned"
+            class="absolute top-3 right-3 bg-ink/85 border border-hairline-strong text-canvas text-[10px] uppercase px-2 py-1 rounded font-display tracking-widest flex items-center gap-1 shadow-lg backdrop-blur-md"
+          >
+            <LucidePin class="w-3 h-3 text-green-600 fill-green-400/20" />
+            Pinned
+          </div>
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <h3 class="text-lg font-display font-semibold text-ink leading-tight mb-2">
+            {{ certificate.title }}
+          </h3>
+          <p class="text-xs text-ink/45 font-display line-clamp-3 mb-6 flex-1">
+            {{ certificate.description }}
+          </p>
 
-    <div class="p-5 flex flex-col flex-1">
-      <h3
-        class="text-lg font-display font-semibold text-white leading-tight mb-2"
-      >
-        {{ certificate.title }}
-      </h3>
-      <p class="text-xs text-white/50 font-display line-clamp-3 mb-6 flex-1">
-        {{ certificate.description }}
-      </p>
-
-      <div
-        class="flex items-center justify-between mt-auto pt-4 border-t border-white/10"
-      >
-        <a
-          :href="certificate.url || '#'"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-xs font-display text-white/70 hover:text-white uppercase tracking-widest flex items-center gap-2 transition-colors"
-        >
-          Verify
-          <LucideExternalLink class="w-3 h-3" />
-        </a>
-        <span
-          class="text-[10px] font-display text-white/40 uppercase tracking-widest border border-white/10 px-2 py-1 rounded bg-white/5"
-        >
-          {{ certificate.skill }}
-        </span>
+          <div class="flex items-center justify-between mt-auto pt-4 border-t border-hairline">
+            <a
+              :href="certificate.url || '#'"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-xs font-display text-ink/80 hover:text-ink uppercase tracking-widest flex items-center gap-2 transition-colors soft-tag-filter"
+            >
+              Verify
+              <LucideExternalLink class="w-3 h-3" />
+            </a>
+            <span
+              class="text-[10px] font-display text-ink/40 uppercase tracking-widest border border-hairline px-2 py-1 rounded bg-canvas-2"
+            >
+              {{ certificate.skill }}
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Marcellus&family=Zen+Old+Mincho&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Zen+Old+Mincho&display=swap");
 
 @import "tailwindcss";
 @import "@nuxt/ui";
@@ -7,11 +7,20 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-display: "Marcellus", serif;
+  --font-display: "Plus Jakarta Sans", sans-serif;
   --font-decoration: "Zen Old Mincho", serif;
-  --color-primary: #2e2e2e;
-  --color-secondary: #fffff;
-  --color-accent: #505050;
+  --canvas: #F2F2F0;
+  --canvas-2: #FDFBF7;
+  --ink: #222222;
+  --ink-2: #434343;
+  --muted: #8d8d7b;
+  --hairline: #e5e5dc;
+  --hairline-strong: #b3b3a5;
+  --innerlight: #faf9f7;
+  --ease: cubic-bezier(0.32,0.72,0,1);
+  --ease-spring: cubic-bezier(0.16,1.16,0.3,1);
+  --shell-radius: 2.25rem;
+  --core-radius: 1.85rem;
 }
 
 /* Upside for Japanese Text */
@@ -46,14 +55,16 @@ html {
 
 html,
 body {
-  background-color: var(--color-primary);
+  background-color: var(--canvas);
+  font-family: var(--font-display);
+  color: var(--ink);
   overscroll-behavior-y: none;
 }
 
 /* Texture overlay */
 body::after {
   background: url("/texture.png") repeat;
-  opacity: 0.08;
+  opacity: 0.04;
   mix-blend-mode: overlay;
   z-index: 50;
   inset: -6rem;

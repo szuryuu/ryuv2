@@ -137,18 +137,16 @@ onUnmounted(() => {
 <template>
   <article v-if="article" class="w-full min-h-screen relative" ref="pageRef">
     <div class="fixed top-0 left-0 right-0 z-20">
-      <div class="h-px w-full bg-white/5">
+      <div class="h-px w-full bg-hairline">
         <div
-          class="h-full bg-white/60 transition-none"
+          class="h-full bg-ink/30 transition-none"
           :style="{ width: scrollProgress + '%' }"
         ></div>
       </div>
     </div>
 
     <header class="relative flex mb-10 gap-8">
-      <div
-        class="absolute top-0 left-1/2 -translate-x-1/2 w-[100vw] h-full -z-10"
-      >
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[100vw] h-full -z-10">
         <NuxtImg
           v-if="article.cover"
           :src="article.cover"
@@ -159,41 +157,37 @@ onUnmounted(() => {
           format="webp"
           preload
         />
-        <div
-          class="absolute inset-0 bg-gradient-to-t from-primary via-primary/90 to-transparent"
-        ></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-canvas via-canvas/90 to-transparent"></div>
       </div>
 
       <div class="w-full max-w-7xl mx-auto px-6 md:px-12 pb-16 pt-32">
         <div class="flex items-center gap-4 mb-8">
-          <span class="font-decoration text-2xl text-white/60">技術記事</span>
-          <div
-            class="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent"
-          ></div>
+          <span class="font-decoration text-2xl text-ink/40">技術記事</span>
+          <div class="h-px flex-1 bg-gradient-to-r from-hairline to-transparent"></div>
         </div>
 
         <div class="flex flex-wrap gap-2 mb-6">
           <span
             v-for="tag in article.tags"
             :key="tag"
-            class="px-3 py-1 bg-white/10 border border-white/15 rounded-md text-xs font-display text-white/70"
+            class="soft-tag-filter px-3 py-1 rounded-full bg-canvas-2 border border-hairline text-ink text-xs font-display"
           >
             {{ tag }}
           </span>
         </div>
 
         <h1
-          class="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-6 leading-tight"
+          class="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-6 leading-tight text-ink"
         >
           {{ article.title }}
         </h1>
 
-        <p class="text-lg text-white/70 max-w-2xl font-display mb-10">
+        <p class="text-lg text-ink/70 max-w-2xl font-display mb-10">
           {{ article.description }}
         </p>
 
         <div
-          class="flex flex-wrap items-center gap-6 text-xs font-display text-white/40 uppercase tracking-wider"
+          class="flex flex-wrap items-center gap-6 text-xs font-display text-ink/40 uppercase tracking-wider"
         >
           <span class="flex items-center gap-2">
             <LucideCalendar class="w-3.5 h-3.5" />
@@ -216,7 +210,7 @@ onUnmounted(() => {
         <div class="flex-1 min-w-0 w-full">
           <details
             v-if="article?.body?.toc?.links?.length"
-            class="block lg:hidden mb-10 p-5 border border-white/10 bg-white/5 rounded-xl text-white"
+            class="block lg:hidden mb-10 p-5 border border-hairline bg-canvas-2 rounded-xl text-ink"
           >
             <summary
               class="font-display font-bold cursor-pointer outline-none uppercase tracking-widest text-xs opacity-60"
@@ -228,7 +222,7 @@ onUnmounted(() => {
                 v-for="link in article.body.toc.links"
                 :key="link.id"
                 :href="`#${link.id}`"
-                class="transition-colors text-white/60 hover:text-white uppercase tracking-widest"
+                class="transition-colors text-ink/70 hover:text-ink uppercase tracking-widest"
                 :class="[
                   link.depth === 3 ? 'ml-4' : '',
                   link.depth > 3 ? 'ml-8' : '',
@@ -246,16 +240,10 @@ onUnmounted(() => {
 
         <aside class="hidden lg:block w-56 shrink-0 sticky top-32 self-start">
           <div class="flex flex-col">
-            <div class="flex items-start text-white mb-10 opacity-60">
-              <span class="[writing-mode:vertical-lr] text-2xl font-decoration"
-                >目次</span
-              >
-              <span
-                class="[writing-mode:vertical-lr] text-lg font-display uppercase tracking-widest"
-                >Contents</span
-              >
+            <div class="flex items-start text-ink mb-10 opacity-70">
+              <span class="[writing-mode:vertical-lr] text-2xl font-decoration">目次</span>
+              <span class="[writing-mode:vertical-lr] text-lg font-display uppercase tracking-widest text-ink/40">Contents</span>
             </div>
-
             <nav
               v-if="article?.body?.toc?.links?.length"
               class="flex flex-col gap-5 text-[11px] font-display"
@@ -267,14 +255,14 @@ onUnmounted(() => {
                 class="transition-colors flex items-center gap-3 group uppercase tracking-widest"
                 :class="
                   activeId === link.id
-                    ? 'text-white'
-                    : 'text-white/40 hover:text-white'
+                    ? 'text-ink font-semibold'
+                    : 'text-ink/40 hover:text-ink'
                 "
               >
                 <span
                   class="h-px transition-all duration-300"
                   :class="[
-                    activeId === link.id ? 'bg-white' : 'bg-white/20',
+                    activeId === link.id ? 'bg-hairline-strong' : 'bg-hairline',
                     link.depth === 2
                       ? activeId === link.id
                         ? 'w-12'
@@ -297,10 +285,9 @@ onUnmounted(() => {
                 }}</span>
               </a>
             </nav>
-
             <p
               v-else
-              class="text-xs font-display text-white/30 uppercase tracking-widest"
+              class="text-xs font-display text-ink/30 uppercase tracking-widest"
             >
               No contents available
             </p>
@@ -311,7 +298,7 @@ onUnmounted(() => {
 
     <section class="max-w-7xl mx-auto px-6 md:px-12 pb-24">
       <div
-        class="pt-12 border-t border-white/10 flex flex-col md:flex-row md:justify-between md:items-center gap-8"
+        class="pt-12 border-t border-hairline flex flex-col md:flex-row md:justify-between md:items-center gap-8"
       >
         <NuxtLink
           v-if="prevArticle"
@@ -319,7 +306,7 @@ onUnmounted(() => {
           class="flex flex-col items-start gap-2 group w-full md:w-1/3"
         >
           <span
-            class="text-[10px] font-display text-white/40 uppercase tracking-widest flex items-center gap-2"
+            class="text-[10px] font-display text-ink/40 uppercase tracking-widest flex items-center gap-2"
           >
             <LucideArrowLeft
               class="w-3 h-3 group-hover:-translate-x-1 transition-transform"
@@ -327,7 +314,7 @@ onUnmounted(() => {
             Previous
           </span>
           <span
-            class="text-sm font-display text-white/80 group-hover:text-white line-clamp-2"
+            class="text-sm font-display text-ink/80 group-hover:text-ink line-clamp-2"
             >{{ prevArticle.title }}</span
           >
         </NuxtLink>
@@ -336,7 +323,7 @@ onUnmounted(() => {
         <LinkButton
           to="/writing"
           aria-label="Back to Writing"
-          class="shrink-0 flex items-center justify-center gap-2 group"
+          class="shrink-0 flex items-center justify-center gap-2 group soft-tag-filter px-6 py-2 rounded-full bg-ink text-canvas font-display hover:bg-ink/90 hover:text-canvas transition-all duration-150"
         >
           <LucideGrid class="w-4 h-4" />
           <span class="font-display">All Articles</span>
@@ -348,7 +335,7 @@ onUnmounted(() => {
           class="flex flex-col items-end gap-2 group w-full md:w-1/3 text-right"
         >
           <span
-            class="text-[10px] font-display text-white/40 uppercase tracking-widest flex items-center gap-2"
+            class="text-[10px] font-display text-ink/40 uppercase tracking-widest flex items-center gap-2"
           >
             Next
             <LucideArrowRight
@@ -356,7 +343,7 @@ onUnmounted(() => {
             />
           </span>
           <span
-            class="text-sm font-display text-white/80 group-hover:text-white line-clamp-2"
+            class="text-sm font-display text-ink/80 group-hover:text-ink line-clamp-2"
             >{{ nextArticle.title }}</span
           >
         </NuxtLink>
