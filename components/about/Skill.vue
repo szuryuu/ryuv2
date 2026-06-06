@@ -1,73 +1,134 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="h-full z-20 flex items-center max-w-7xl w-full px-4">
-    <div class="w-full space-y-24">
-      <!-- CERTIFICATIONS SECTION styled soft, pastel -->
-      <section class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-        <!-- Left -->
-        <div class="space-y-8">
-          <!-- Number indicator -->
-          <div class="flex items-center gap-4">
-            <span class="text-5xl font-display text-hairline font-bold inline-block -scale-x-100" aria-hidden="true">03</span>
-            <div class="h-px flex-1 bg-hairline"></div>
+  <div class="skill-preview">
+    <section class="split">
+      <article class="bezel-card pane">
+        <div class="core">
+          <div class="line-head">
+            <span>03</span>
+            <div class="line" />
           </div>
 
-          <!-- Reveal Title -->
-          <h2 class="text-reveal font-display uppercase group cursor-pointer text-ink text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[1.04]">
-            <span class="text-gradient-base">Certifi<br />cations</span>
-            <span class="text-reveal-overlay">Certifi<br />cations</span>
-          </h2>
+          <h3>Certifications</h3>
 
-          <!-- Meta info -->
-          <div class="space-y-2 pl-1">
-            <p class="font-decoration text-ink/28">証明書</p>
-            <p class="text-xs text-ink/45 max-w-xs font-display leading-relaxed">
-              Professional credentials in architecture, DevOps automation, security.
-            </p>
-            <!-- CTA -->
-            <NuxtLink
-              to="/about/skill"
-              class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-ink rounded-full bg-hairline/60 px-5 py-2.5 mt-4 font-display font-semibold shadow-none hover:bg-hairline transition-all duration-700 group/link"
-              aria-label="View all certifications"
-            >
-              <span class="border-b border-hairline group-hover/link:border-ink/60">View All</span>
-              <LucideChevronRight class="w-3 h-3 group-hover/link:translate-x-1 transition-transform duration-700" />
-            </NuxtLink>
-          </div>
+          <p class="font-decoration jp">証明書</p>
+          <p class="desc">
+            Professional credentials in architecture, DevOps automation, and security.
+          </p>
+
+          <NuxtLink to="/about/skill" class="cta">
+            <span>View All</span>
+            <LucideChevronRight class="w-3 h-3" />
+          </NuxtLink>
         </div>
+      </article>
 
-        <div class="space-y-8 lg:text-right">
-          <!-- Number indicator -->
-          <div class="flex lg:flex-row-reverse items-center gap-4">
-            <span class="text-5xl font-display text-hairline font-bold">03</span>
-            <div class="h-px flex-1 bg-hairline"></div>
+      <article class="bezel-card pane">
+        <div class="core">
+          <div class="line-head alt">
+            <span>03</span>
+            <div class="line" />
           </div>
 
-          <!-- Reveal Title -->
-          <h2 class="text-reveal font-display uppercase group cursor-pointer text-ink lg:text-right text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[1.04]">
-            <span class="text-gradient-base">Tech<br />Stack</span>
-            <span class="text-reveal-overlay">Tech<br />Stack</span>
-          </h2>
+          <h3>Tech Stack</h3>
 
-          <!-- Meta info -->
-          <div class="space-y-2 pr-1 lg:flex lg:flex-col lg:items-end">
-            <p class="font-decoration text-ink/28">技術スタック</p>
-            <p class="text-xs text-ink/45 max-w-xs font-display leading-relaxed lg:text-right">
-              Battle-tested tools and frameworks. Production proven.
-            </p>
-            <!-- CTA -->
-            <NuxtLink
-              to="/about/skill"
-              class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-ink rounded-full bg-hairline/60 px-5 py-2.5 mt-4 font-display font-semibold shadow-none hover:bg-hairline transition-all duration-700 group/link"
-              aria-label="View all tech stack"
-            >
-              <span class="border-b border-hairline group-hover/link:border-ink/60">Explore</span>
-              <LucideChevronRight class="w-3 h-3 group-hover/link:translate-x-1 transition-transform duration-700" />
-            </NuxtLink>
-          </div>
+          <p class="font-decoration jp">技術スタック</p>
+          <p class="desc">
+            Battle-tested tools and frameworks used in production systems.
+          </p>
+
+          <NuxtLink to="/about/skill" class="cta">
+            <span>Explore</span>
+            <LucideChevronRight class="w-3 h-3" />
+          </NuxtLink>
         </div>
-      </section>
-    </div>
+      </article>
+    </section>
   </div>
 </template>
+
+<style scoped>
+.skill-preview {
+  width: 100%;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.pane .core {
+  padding: 20px;
+}
+
+.line-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.line-head.alt {
+  flex-direction: row-reverse;
+}
+
+.line-head .line {
+  height: 1px;
+  flex: 1;
+  background: var(--hairline-strong);
+}
+
+.line-head span {
+  color: var(--muted);
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.pane h3 {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(32px, 4.2vw, 58px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.jp {
+  margin: 10px 0 0;
+  color: var(--ink);
+  opacity: 0.42;
+}
+
+.desc {
+  margin: 6px 0 0;
+  color: var(--ink-2);
+  font-size: 14px;
+  max-width: 34ch;
+  line-height: 1.55;
+}
+
+.cta {
+  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  border-radius: 999px;
+  border: 1px solid var(--hairline-strong);
+  background: var(--canvas-2);
+  color: var(--ink);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+}
+
+@media (max-width: 1100px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

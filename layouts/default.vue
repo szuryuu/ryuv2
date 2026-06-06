@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 
 const mobileOpen = ref(false)
-const router = useRouter()
 
 function closeMobile() {
   mobileOpen.value = false
@@ -11,107 +9,256 @@ function closeMobile() {
 </script>
 
 <template>
-  <div class="min-h-[100svh] flex flex-col relative overflow-x-clip">
+  <div class="site-shell">
     <nav class="nav-shell">
       <header class="nav">
-        <!-- Brand + Kanji ornament -->
-        <div class="flex items-center gap-2 pl-4 select-none">
-          <span class="font-display font-bold text-2xl md:text-3xl tracking-tight text-ink">Sz</span>
-          <span class="font-decoration text-md md:text-xl opacity-30 -ml-1 mt-0.5 select-none">士</span>
-        </div>
-        <!-- Nav links (hidden on mobile) -->
-        <ul class="hidden md:flex gap-2 px-4">
-          <li><NuxtLink to="/about" class="nav-link">About <span class="font-decoration text-xs align-sub opacity-40 ml-1">経験</span></NuxtLink></li>
-          <li><NuxtLink to="/project" class="nav-link">Projects <span class="font-decoration text-xs align-sub opacity-40 ml-1">計画</span></NuxtLink></li>
-          <li><NuxtLink to="/writing" class="nav-link">Writing <span class="font-decoration text-xs align-sub opacity-40 ml-1">記事</span></NuxtLink></li>
-          <li><NuxtLink to="/contact" class="nav-link">Contact <span class="font-decoration text-xs align-sub opacity-40 ml-1">連絡</span></NuxtLink></li>
+        <NuxtLink to="/" class="brand" @click="closeMobile">
+          <span>Sz</span>
+          <span class="font-decoration brand-kanji" aria-hidden="true">士</span>
+        </NuxtLink>
+
+        <ul>
+          <li><NuxtLink to="/about">About</NuxtLink></li>
+          <li><NuxtLink to="/project">Projects</NuxtLink></li>
+          <li><NuxtLink to="/writing">Writing</NuxtLink></li>
+          <li><NuxtLink to="/contact">Contact</NuxtLink></li>
         </ul>
-        <!-- CTA pill -->
-        <NuxtLink to="/contact" class="pill flex items-center gap-1 text-base px-5 py-2 rounded-full font-semibold shadow-sm ml-1 mr-3 bg-ink text-canvas group hover:scale-98 transition-transform duration-700"
-          tabindex="0" aria-label="Contact">
-          <span>Contact</span>
-          <span class="inline-block ml-2 bg-canvas/50 rounded-full w-7 h-7 flex items-center justify-center transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:scale-105">
-            <svg viewBox="0 0 20 20" fill="none" width="18" height="18" xmlns="http://www.w3.org/2000/svg"><path d="M9 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+        <NuxtLink to="/contact#guestbook" class="pill" @click="closeMobile">
+          <span>Questbook</span>
+          <span class="icon-wrap">
+            <svg viewBox="0 0 12 12" stroke-width="1.6">
+              <path d="M2.5 6h7M6 2.5L9.5 6 6 9.5" />
+            </svg>
           </span>
         </NuxtLink>
-        <!-- Mobile hamburger -->
-        <button class="inline-flex md:hidden items-center justify-center mr-1 p-2 bg-canvas-2 border border-hairline rounded-full ring-1 ring-hairline shadow-sm hover:bg-innerlight transition-all duration-700" @click="mobileOpen = !mobileOpen" :aria-expanded="mobileOpen">
-          <span class="sr-only">Menu</span>
-          <svg v-if="!mobileOpen" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="7" x2="18" y2="7"/><line x1="4" y1="11" x2="18" y2="11"/><line x1="4" y1="15" x2="18" y2="15"/></svg>
-          <svg v-else width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="16" y2="16"/><line x1="6" y1="16" x2="16" y2="6"/></svg>
+
+        <button
+          class="menu-btn"
+          type="button"
+          :aria-expanded="mobileOpen"
+          aria-label="Toggle menu"
+          @click="mobileOpen = !mobileOpen"
+        >
+          <svg v-if="!mobileOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+          <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M6 6l12 12M18 6l-12 12" />
+          </svg>
         </button>
       </header>
-      <!-- Mobile dropdown -->
-      <div v-if="mobileOpen" class="md:hidden absolute left-1/2 top-full z-20 -translate-x-1/2 mt-2 min-w-[180px] w-max px-2">
-        <div class="bezel-card bg-white/85 py-3 px-4 rounded-2xl shadow-xl">
-          <div class="core py-1 px-2 rounded-2xl bg-canvas-2 flex flex-col gap-1 w-full">
-            <NuxtLink to="/about" class="block py-1 w-full text-left nav-link flex items-center" @click="closeMobile">About <span class="font-decoration text-xs opacity-40 ml-1">経験</span></NuxtLink>
-            <NuxtLink to="/project" class="block py-1 w-full text-left nav-link flex items-center" @click="closeMobile">Projects <span class="font-decoration text-xs opacity-40 ml-1">計画</span></NuxtLink>
-            <NuxtLink to="/writing" class="block py-1 w-full text-left nav-link flex items-center" @click="closeMobile">Writing <span class="font-decoration text-xs opacity-40 ml-1">記事</span></NuxtLink>
-            <NuxtLink to="/contact" class="block py-1 w-full text-left nav-link flex items-center" @click="closeMobile">Contact <span class="font-decoration text-xs opacity-40 ml-1">連絡</span></NuxtLink>
-          </div>
-        </div>
+
+      <div v-if="mobileOpen" class="mobile-dropdown">
+        <NuxtLink to="/about" @click="closeMobile">About</NuxtLink>
+        <NuxtLink to="/project" @click="closeMobile">Projects</NuxtLink>
+        <NuxtLink to="/writing" @click="closeMobile">Writing</NuxtLink>
+        <NuxtLink to="/contact" @click="closeMobile">Contact</NuxtLink>
+        <NuxtLink to="/contact#guestbook" class="mobile-questbook" @click="closeMobile">Questbook</NuxtLink>
       </div>
     </nav>
-    <main class="flex-1 relative z-1 flex flex-col px-0 md:px-9 pt-0">
+
+    <main class="site-main">
       <slot />
     </main>
+
+    <SiteFooter />
   </div>
 </template>
 
 <style scoped>
-.nav-shell {
-  position: sticky;
-  top: 1.5rem;
-  z-index: 50;
-  border-radius: var(--shell-radius);
+.site-shell {
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100vw;
-  max-width: 920px;
-  margin: 0 auto 0 auto;
+  position: relative;
+  overflow-x: clip;
 }
+
+.nav-shell {
+  position: sticky;
+  top: 24px;
+  z-index: 50;
+  margin: 24px auto 0;
+  padding: 6px;
+  width: max-content;
+  max-width: calc(100% - 56px);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: saturate(160%) blur(22px);
+  -webkit-backdrop-filter: saturate(160%) blur(22px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.45) inset,
+    0 0 0 1px rgba(10, 10, 10, 0.05),
+    0 12px 36px -18px rgba(10, 10, 10, 0.18);
+}
+
 .nav {
   display: flex;
   align-items: center;
-  border-radius: var(--shell-radius);
-  padding: 0.6rem 0.5rem 0.6rem 0.5rem;
-  background: rgba(246,246,242,0.92);
-  box-shadow:
-    0 2px 16px -3px rgba(180,180,164,0.06),
-    0 0 0 1.5px var(--hairline-strong);
-  backdrop-filter: blur(17px);
-  width: 100%;
+  gap: 18px;
+  padding: 6px 8px 6px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
-.pill {
-  border-radius: 9999px;
-  background: var(--ink);
-  color: var(--canvas);
-  font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.01em;
+
+.brand {
   display: inline-flex;
   align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+}
+
+.brand-kanji {
+  font-size: 14px;
+  opacity: 0.3;
+  transform: translateY(-1px);
+}
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav ul a {
+  display: inline-block;
+  padding: 9px 14px;
+  border-radius: 999px;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 700ms var(--ease);
+}
+
+.nav ul a:hover {
+  background: rgba(10, 10, 10, 0.05);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 7px 7px 16px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--canvas);
+  font: 600 13px/1 var(--font-display);
+  cursor: pointer;
   border: none;
-  outline: none;
-  box-shadow: 0 4px 20px -6px rgba(36,45,60,0.10);
+  text-decoration: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
   transition: transform 700ms var(--ease);
 }
+
+.pill .icon-wrap {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 360ms var(--ease-spring), background 700ms var(--ease);
+}
+
+.pill:hover .icon-wrap {
+  transform: translate(1px, -1px) scale(1.05);
+  background: rgba(255, 255, 255, 0.22);
+}
+
 .pill:active {
   transform: scale(0.98);
 }
-.nav-link {
-  padding: 0.35rem 1.0rem 0.35rem 0.9rem;
-  border-radius: 0.875rem;
-  font-weight: 500;
-  font-size: 1rem;
-  color: var(--ink-2);
-  transition: background 180ms var(--ease), color 180ms var(--ease);
+
+.pill svg {
+  width: 12px;
+  height: 12px;
+  stroke: currentColor;
+  fill: none;
 }
-.nav-link:hover,
-.nav-link:focus {
-  background: var(--canvas-2);
+
+.menu-btn {
+  display: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  background: rgba(255, 255, 255, 0.6);
   color: var(--ink);
+}
+
+.menu-btn svg {
+  width: 18px;
+  height: 18px;
+  margin: auto;
+}
+
+.mobile-dropdown {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 10px);
+  transform: translateX(-50%);
+  width: min(260px, calc(100vw - 32px));
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 0 0 1px var(--hairline),
+    0 18px 40px -24px rgba(10, 10, 10, 0.24);
+  padding: 10px;
+  display: grid;
+  gap: 4px;
+}
+
+.mobile-dropdown a {
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 999px;
+  padding: 9px 12px;
+}
+
+.mobile-dropdown a:hover {
+  background: rgba(10, 10, 10, 0.05);
+}
+
+.mobile-questbook {
+  background: var(--ink);
+  color: var(--canvas) !important;
+}
+
+.site-main {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 980px) {
+  .nav ul,
+  .nav > .pill {
+    display: none;
+  }
+
+  .menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav {
+    padding-right: 6px;
+  }
 }
 </style>

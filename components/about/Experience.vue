@@ -1,206 +1,292 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import { useTimeline } from "~/composables/useTimeline";
-import { certificateArray } from "@/utils/certificates";
+import { computed } from 'vue'
+import { useTimeline } from '~/composables/useTimeline'
+import { certificateArray } from '@/utils/certificates'
 
-const { linearTimeline } = useTimeline();
-const certificates = certificateArray;
+const { linearTimeline } = useTimeline()
+const certificates = certificateArray
 
-const { data: projects } = await useAsyncData("projects-count", () =>
-  queryCollection("projects").all(),
-);
+const { data: projects } = await useAsyncData('projects-count', () =>
+  queryCollection('projects').all()
+)
 
 const items = computed(() => {
   return linearTimeline.value.map((item) => ({
     title: item.title,
     description: item.description,
-    label: item.date,
-  }));
-});
+    label: item.date
+  }))
+})
 
 const stats = [
   {
     number: `${projects.value?.length ?? 0}+`,
-    label: "Projects",
-    sublabel: "Shipped to Production",
-    link: "/project",
+    label: 'Projects',
+    sublabel: 'Shipped to Production',
+    link: '/project'
   },
   {
     number: `${certificates.length}+`,
-    label: "Certifications",
-    sublabel: "Full-Stack & Security",
-    link: "/about/skill",
+    label: 'Certifications',
+    sublabel: 'Full-Stack & Security',
+    link: '/about/skill'
   },
   {
-    number: "2+",
-    label: "Years",
-    sublabel: "Building & Learning",
-    link: "/about/timeline",
-  },
-];
+    number: '2+',
+    label: 'Years',
+    sublabel: 'Building & Learning',
+    link: '/about/timeline'
+  }
+]
 </script>
 
 <template>
-  <div
-    class="flex w-full h-full justify-center items-center max-w-7xl mx-auto px-4"
-  >
-    <div class="w-full space-y-12">
-      <section class="grid grid-cols-1 gap-8 lg:gap-12 items-center">
-        <div class="space-y-8">
-          <div class="flex items-center gap-4">
-            <div class="h-px flex-1 bg-hairline"></div>
-            <span class="text-5xl font-display text-hairline font-bold">02</span>
-          </div>
-
-          <h2 class="text-reveal font-display uppercase group cursor-pointer text-ink text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.03]">
-            <span class="text-gradient-base">The<br />Journey</span>
-            <span class="text-reveal-overlay">The<br />Journey</span>
-          </h2>
-
-          <div class="space-y-2 pl-1">
-            <p class="font-decoration text-ink/30">経験</p>
-            <p class="text-xs text-ink/45 max-w-xs font-display leading-relaxed">
-              Architect solutions, secure networks, ship scalable applications.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Soft bento-style stats cards -->
-      <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <NuxtLink
-          v-for="(stat, index) in stats"
-          :key="index"
-          :to="stat.link"
-          class="group relative overflow-hidden"
-        >
-          <div class="double-bezel-card h-full">
-            <div class="bezel-shell">
-              <div class="bezel-core px-8 py-8 flex flex-col gap-2 relative">
-                <div class="absolute top-4 right-4 text-3xl font-display text-hairline font-bold opacity-50 select-none pointer-events-none">
-                  {{ String(index + 1).padStart(2, "0") }}
-                </div>
-                <div class="text-4xl font-display font-bold text-ink mb-1">
-                  {{ stat.number }}
-                </div>
-                <div class="text-base font-display text-ink-2">
-                  {{ stat.label }}
-                </div>
-                <div class="text-xs text-muted mt-1 font-display">
-                  {{ stat.sublabel }}
-                </div>
-                <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-400">
-                  <LucideChevronRight class="w-5 h-5 text-ink-2 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </NuxtLink>
-      </section>
-
-      <section class="w-full">
-        <div class="flex items-center gap-4 mb-8">
-          <div class="h-px flex-1 bg-hairline"></div>
-          <span class="text-xs uppercase tracking-wider text-ink/25 font-display">
-            Recent Activity
-          </span>
+  <div class="exp-wrap">
+    <section class="lead bezel-card">
+      <div class="core">
+        <div class="line-head">
+          <div class="line" />
+          <span>02</span>
         </div>
 
-        <div class="bg-hairline/20 rounded-2xl p-6 md:p-8 border border-hairline">
-          <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <h3 class="text-2xl font-display font-bold text-ink mb-2">
-                Career Path
-              </h3>
-              <p class="text-sm text-ink/40 font-display">
-                Key milestones driving my technical growth.
-              </p>
-            </div>
-            <NuxtLink
-              to="/about/timeline"
-              class="inline-flex items-center gap-2 px-4 py-2 bg-hairline/60 border border-hairline hover:bg-hairline rounded-lg text-xs font-display text-ink transition-colors duration-600"
-            >
-              View Full Git Log
-              <LucideChevronRight class="w-4 h-4" />
-            </NuxtLink>
-          </div>
+        <h2>The Journey</h2>
 
-          <div class="flex flex-col relative before:absolute before:inset-y-0 before:left-2 md:before:left-2.5 before:w-px before:bg-hairline ml-2 mt-6">
-            <NuxtLink
-              to="/about/timeline"
-              v-for="(item, i) in items"
-              :key="i"
-              class="relative pl-8 py-5 group block hover:bg-hairline/30 rounded-r-xl transition-colors border border-transparent hover:border-hairline/60"
-            >
-              <div class="absolute left-[7.5px] md:left-[9.5px] top-7 w-2 h-2 rounded-full bg-hairline-strong/70 border border-hairline z-10 group-hover:bg-ink-2 group-hover:scale-110 transition-all -translate-x-1/2 shadow-[0_0_10px_rgba(220,220,220,0)] group-hover:shadow-[0_0_8px_rgba(104,108,127,0.12)]"></div>
-              <div class="flex items-center justify-between gap-4 mb-1.5">
-                <p class="text-[10px] md:text-xs uppercase tracking-widest text-muted font-display">{{ item.label }}</p>
-                <LucideArrowUpRight class="w-3.5 h-3.5 text-hairline/70 group-hover:text-ink/70 transition-colors" />
-              </div>
-              <h4 class="text-base md:text-lg font-display font-semibold text-ink-2 group-hover:text-ink transition-colors mb-1.5">
-                {{ item.title }}
-              </h4>
-              <p class="text-xs md:text-sm text-ink/50 font-display line-clamp-2 md:line-clamp-none pr-4">
-                {{ item.description }}
-              </p>
-            </NuxtLink>
-          </div>
-
-          <div class="mt-12 pt-6 border-t border-hairline">
-            <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
-              <div>
-                <p class="text-sm text-ink/65 font-display mb-1">Ready to collaborate?</p>
-                <p class="text-xs text-muted font-display">
-                  Let's engineer solutions together.
-                </p>
-              </div>
-              <div class="flex gap-3">
-                <NuxtLink
-                  to="mailto:hello@szuryuu.com"
-                  class="inline-flex items-center gap-2 px-6 py-3 bg-ink text-canvas rounded-lg text-xs md:text-sm font-display font-semibold hover:bg-ink-2 transition-colors"
-                >
-                  Get in Touch
-                  <LucideChevronRight class="w-4 h-4" />
-                </NuxtLink>
-                <NuxtLink
-                  to="/cv-2026.pdf"
-                  target="_blank"
-                  class="inline-flex items-center gap-2 px-6 py-3 border border-hairline text-ink rounded-lg text-xs md:text-sm font-display hover:bg-hairline/50 transition-colors"
-                >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                  Download CV
-                </NuxtLink>
-              </div>
-            </div>
-          </div>
+        <div class="meta">
+          <p class="font-decoration jp">経験</p>
+          <p>Architect solutions, secure networks, and ship scalable systems.</p>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
+
+    <section class="stats-grid">
+      <NuxtLink
+        v-for="(stat, index) in stats"
+        :key="index"
+        :to="stat.link"
+        class="stat-card bezel-card"
+      >
+        <div class="core">
+          <span class="num-mark">{{ String(index + 1).padStart(2, '0') }}</span>
+          <div class="num">{{ stat.number }}</div>
+          <div class="label">{{ stat.label }}</div>
+          <div class="sub">{{ stat.sublabel }}</div>
+        </div>
+      </NuxtLink>
+    </section>
+
+    <section class="recent bezel-card">
+      <div class="core">
+        <div class="recent-head">
+          <div>
+            <h3>Career Path</h3>
+            <p>Key milestones driving technical growth.</p>
+          </div>
+          <NuxtLink to="/about/timeline" class="see-all">
+            View Full Git Log
+            <LucideChevronRight class="w-4 h-4" />
+          </NuxtLink>
+        </div>
+
+        <div class="list">
+          <NuxtLink
+            to="/about/timeline"
+            v-for="(item, i) in items"
+            :key="i"
+            class="item"
+          >
+            <div class="item-top">
+              <p>{{ item.label }}</p>
+              <LucideArrowUpRight class="w-3.5 h-3.5" />
+            </div>
+            <h4>{{ item.title }}</h4>
+            <p>{{ item.description }}</p>
+          </NuxtLink>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
 <style scoped>
-      .double-bezel-card {
-        padding: 9px;
-        border-radius: var(--shell-radius);
-        background: var(--canvas-2);
-        box-shadow: 0 20px 40px -15px rgba(0,0,0,0.05);
-        border: 1.5px solid var(--hairline);
-        display: flex;
-      }
-      .bezel-shell {
-        background: var(--hairline);
-        border-radius: calc(var(--shell-radius) - 0.18rem);
-        padding: 0.05rem;
-        flex: 1;
-        display: flex;
-      }
-      .bezel-core {
-        background: var(--innerlight);
-        border-radius: var(--core-radius);
-        box-shadow: 0 2px 8px 0 rgba(180,180,171,0.06), 0 1.5px 7px 0 rgba(221,221,215,0.06);
-        flex: 1;
-      }
+.exp-wrap {
+  display: grid;
+  gap: 16px;
+}
+
+.lead .core {
+  padding: 22px;
+}
+
+.line-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.line-head .line {
+  height: 1px;
+  flex: 1;
+  background: var(--hairline-strong);
+}
+
+.line-head span {
+  color: var(--muted);
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.lead h2 {
+  margin: 12px 0 6px;
+  font-size: clamp(38px, 5vw, 68px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.meta .jp {
+  margin: 0;
+  color: var(--ink);
+  opacity: 0.45;
+}
+
+.meta p:last-child {
+  margin: 4px 0 0;
+  color: var(--ink-2);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.stat-card {
+  text-decoration: none;
+}
+
+.stat-card .core {
+  position: relative;
+  padding: 20px;
+}
+
+.num-mark {
+  position: absolute;
+  right: 16px;
+  top: 12px;
+  color: var(--hairline-strong);
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.num {
+  font-size: 38px;
+  line-height: 1;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.label {
+  color: var(--ink-2);
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+.sub {
+  color: var(--muted);
+  margin-top: 3px;
+  font-size: 12px;
+}
+
+.recent .core {
+  padding: 20px;
+}
+
+.recent-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.recent-head h3 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 26px;
+}
+
+.recent-head p {
+  margin: 4px 0 0;
+  color: var(--ink-2);
+  font-size: 13px;
+}
+
+.see-all {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+  border: 1px solid var(--hairline);
+  background: var(--canvas-2);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.list {
+  border-top: 1px solid var(--hairline);
+  margin-top: 10px;
+}
+
+.item {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid var(--hairline);
+  padding: 12px 4px;
+}
+
+.item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item-top p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.item-top svg {
+  color: var(--hairline-strong);
+}
+
+.item h4 {
+  margin: 4px 0;
+  color: var(--ink);
+  font-size: 17px;
+}
+
+.item p:last-child {
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 13px;
+}
+
+@media (max-width: 900px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .recent-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
 </style>

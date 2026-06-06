@@ -19,8 +19,7 @@ defineProps<{
   >
     <div class="bezel-shell">
       <div class="bezel-core flex flex-col overflow-hidden h-full p-0">
-        <div class="relative overflow-hidden rounded-t-
-        [calc(var(--core-radius,1.5rem))]">
+        <div class="relative overflow-hidden rounded-t-[calc(var(--core-radius,1.5rem))]">
           <NuxtImg
             :src="certificate.Image"
             class="w-full h-48 object-cover transition-transform duration-700 group-hover/card:scale-105"
@@ -42,7 +41,7 @@ defineProps<{
           <h3 class="text-lg font-display font-semibold text-ink leading-tight mb-2">
             {{ certificate.title }}
           </h3>
-          <p class="text-xs text-ink/45 font-display line-clamp-3 mb-6 flex-1">
+          <p class="text-xs text-ink-2 font-display line-clamp-3 mb-6 flex-1 leading-relaxed">
             {{ certificate.description }}
           </p>
 
@@ -51,13 +50,13 @@ defineProps<{
               :href="certificate.url || '#'"
               target="_blank"
               rel="noopener noreferrer"
-              class="text-xs font-display text-ink/80 hover:text-ink uppercase tracking-widest flex items-center gap-2 transition-colors soft-tag-filter"
+              class="text-xs font-display text-ink-2 hover:text-ink uppercase tracking-widest flex items-center gap-2 transition-colors soft-tag-filter"
             >
               Verify
               <LucideExternalLink class="w-3 h-3" />
             </a>
             <span
-              class="text-[10px] font-display text-ink/40 uppercase tracking-widest border border-hairline px-2 py-1 rounded bg-canvas-2"
+              class="text-[10px] font-display text-ink-2 uppercase tracking-widest border border-hairline px-2 py-1 rounded bg-canvas-2"
             >
               {{ certificate.skill }}
             </span>

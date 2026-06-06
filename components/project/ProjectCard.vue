@@ -22,16 +22,18 @@ defineProps<{
       <div class="bezel-core flex flex-col gap-4 px-0 pt-6 pb-6 h-full">
         <div class="flex justify-between items-start w-full gap-2">
           <!-- Image/featured badge -->
-          <div class="relative w-36 flex items-center justify-center min-h-[120px]">
+          <div class="relative image-wrap">
             <NuxtImg
+              v-if="project.image"
               :src="project.image"
               alt="Project Image"
-              class="w-36 h-auto max-h-36 object-cover bg-hairline"
+              class="project-image"
               height="130"
               width="144"
               format="webp"
               preload
             />
+            <div v-else class="image-empty">No Image</div>
             <div
               v-if="project.featured"
               class="absolute top-2 right-2 flex items-center gap-1 bg-green-500/10 text-green-400 border border-green-500/20 text-[10px] uppercase px-2 py-0.5 rounded font-display tracking-widest shadow-none"
@@ -109,5 +111,31 @@ defineProps<{
   min-height: 230px;
   display: flex;
   flex-direction: column;
+}
+
+.image-wrap {
+  width: 144px;
+  height: 136px;
+  border-radius: 14px;
+  background: var(--canvas-2);
+  border: 1px solid var(--hairline);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.project-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: var(--canvas-2);
+}
+
+.image-empty {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 </style>

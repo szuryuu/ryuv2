@@ -1,255 +1,403 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed } from 'vue'
 import {
   fullStackSkills,
   devOpsSkills,
   cyberSecuritySkills,
-  skillUrl,
-} from "@/utils/skills";
-import { certificateArray } from "@/utils/certificates";
-import { usePageEnter } from "~/composables/usePageEnter";
-import { useScrollSpy } from "~/composables/useScrollSpy";
+  skillUrl
+} from '@/utils/skills'
+import { certificateArray } from '@/utils/certificates'
+import { usePageEnter } from '~/composables/usePageEnter'
+import { useScrollSpy } from '~/composables/useScrollSpy'
 
-const pageRef = usePageEnter({ y: 20, duration: 0.6 });
+const pageRef = usePageEnter({ y: 20, duration: 0.6 })
 
 const { activeId } = useScrollSpy([
-  "certificates",
-  "fullstack",
-  "devops",
-  "security",
-]);
+  'certificates',
+  'fullstack',
+  'devops',
+  'security'
+])
 
-const filterItems = ["All", "FullStack", "DevOps", "CyberSec"];
-const selectedFilter = ref("All");
+const filterItems = ['All', 'FullStack', 'DevOps', 'CyberSec']
+const selectedFilter = ref('All')
 
 const filteredCertificates = computed(() => {
-  let certs = [...certificateArray];
-  if (selectedFilter.value !== "All") {
-    certs = certs.filter((c) => c.skill === selectedFilter.value);
+  let certs = [...certificateArray]
+  if (selectedFilter.value !== 'All') {
+    certs = certs.filter((c) => c.skill === selectedFilter.value)
   }
   return certs.sort((a, b) => {
-    if (a.pinned && !b.pinned) return -1;
-    if (!a.pinned && b.pinned) return 1;
-    return 0;
-  });
-});
+    if (a.pinned && !b.pinned) return -1
+    if (!a.pinned && b.pinned) return 1
+    return 0
+  })
+})
 </script>
 
 <template>
-  <div
-    class="w-full min-h-screen flex flex-col lg:flex-row pt-24 gap-8 max-w-7xl mx-auto"
-    ref="pageRef"
-  >
-    <aside class="w-full hidden lg:block">
-      <div class="flex items-start flex-col justify-between fixed">
-        <div class="flex items-start text-ink">
-          <span class="[writing-mode:vertical-lr] text-2xl font-decoration">スキル</span>
-          <span class="[writing-mode:vertical-lr] text-lg font-display">Skills & Certs</span>
-        </div>
+  <div ref="pageRef" class="skill-page">
+    <aside class="skill-aside">
+      <div class="bezel-card sticky-shell">
+        <div class="core">
+          <div class="aside-title">
+            <span class="upside font-decoration">スキル</span>
+            <span class="upside">Skills & Certs</span>
+          </div>
 
-        <nav class="hidden lg:flex flex-col gap-4 mt-12 text-sm font-display">
-          <a
-            href="#certificates"
-            class="transition-colors flex items-center gap-3 group uppercase tracking-widest"
-            :class="activeId === 'certificates' ? 'text-ink' : 'text-muted hover:text-ink'"
-          >
-            <span
-              class="h-px transition-all duration-300"
-              :class="activeId === 'certificates' ? 'w-12 bg-ink' : 'w-8 bg-hairline-strong group-hover:w-12'"
-            ></span>
-            Certificates
-          </a>
-          <a
-            href="#fullstack"
-            class="transition-colors flex items-center gap-3 group uppercase tracking-widest"
-            :class="activeId === 'fullstack' ? 'text-ink' : 'text-muted hover:text-ink'"
-          >
-            <span
-              class="h-px transition-all duration-300"
-              :class="activeId === 'fullstack' ? 'w-12 bg-ink' : 'w-8 bg-hairline-strong group-hover:w-12'"
-            ></span>
-            Full Stack
-          </a>
-          <a
-            href="#devops"
-            class="transition-colors flex items-center gap-3 group uppercase tracking-widest"
-            :class="activeId === 'devops' ? 'text-ink' : 'text-muted hover:text-ink'"
-          >
-            <span
-              class="h-px transition-all duration-300"
-              :class="activeId === 'devops' ? 'w-12 bg-ink' : 'w-8 bg-hairline-strong group-hover:w-12'"
-            ></span>
-            DevOps
-          </a>
-          <a
-            href="#security"
-            class="transition-colors flex items-center gap-3 group uppercase tracking-widest"
-            :class="activeId === 'security' ? 'text-ink' : 'text-muted hover:text-ink'"
-          >
-            <span
-              class="h-px transition-all duration-300"
-              :class="activeId === 'security' ? 'w-12 bg-ink' : 'w-8 bg-hairline-strong group-hover:w-12'"
-            ></span>
-            Security
-          </a>
-        </nav>
+          <nav class="aside-nav">
+            <a href="#certificates" :class="activeId === 'certificates' ? 'is-active' : ''">Certificates</a>
+            <a href="#fullstack" :class="activeId === 'fullstack' ? 'is-active' : ''">Full Stack</a>
+            <a href="#devops" :class="activeId === 'devops' ? 'is-active' : ''">DevOps</a>
+            <a href="#security" :class="activeId === 'security' ? 'is-active' : ''">Security</a>
+          </nav>
+        </div>
       </div>
     </aside>
 
-    <main class="w-full lg:min-w-5xl max-w-5xl space-y-12 pb-32 mx-auto">
-      <section id="certificates" class="relative group">
-        <div
-          class="absolute -left-4 top-0 bottom-0 w-px bg-hairline origin-top scale-y-0 transition-transform group-hover:scale-y-100 duration-500"
-        ></div>
-        <h2
-          class="text-xs font-display text-muted uppercase tracking-widest mb-12 pl-4"
-        >
-          01 / Certificates
-        </h2>
+    <main class="skill-main">
+      <header class="head bezel-card">
+        <div class="core">
+          <span class="eyebrow"><span class="dot" />02 · capability</span>
+          <h1>Skills, certifications, and delivery stack.</h1>
+          <p>
+            Practical tooling for frontend, backend, infrastructure, and defense.
+            <span class="font-decoration"> 技術と改善 </span>
+          </p>
+        </div>
+      </header>
 
-        <div class="space-y-8">
-          <div class="flex flex-wrap gap-2">
-            <button
-              v-for="filter in filterItems"
-              :key="filter"
-              @click="selectedFilter = filter"
-              class="px-4 py-2 rounded-full text-sm font-display transition-all duration-300 border"
-              :class="selectedFilter === filter ? 'bg-ink text-canvas border-ink' : 'bg-canvas-2 text-ink border-hairline hover:bg-canvas'"
-            >
-              {{ filter }}
-            </button>
-          </div>
+      <section id="certificates" class="block">
+        <div class="block-head">
+          <span class="index">01 / Certificates</span>
+          <span class="font-decoration kanji">証明書</span>
+        </div>
 
-          <div
-            v-if="filteredCertificates.length === 0"
-            class="bg-canvas-2 backdrop-blur-sm rounded-xl p-12 border border-hairline text-center"
+        <div class="filters">
+          <button
+            v-for="filter in filterItems"
+            :key="filter"
+            @click="selectedFilter = filter"
+            class="filter-pill"
+            :class="selectedFilter === filter ? 'is-active' : ''"
           >
-            <p class="text-lg font-display text-ink mb-2">No certificates found</p>
-          </div>
+            {{ filter }}
+          </button>
+        </div>
 
-          <div
-            v-else
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            <CertificateCard
-              v-for="cert in filteredCertificates"
-              :key="cert.id"
-              :certificate="cert"
-            />
+        <div v-if="filteredCertificates.length === 0" class="empty bezel-card">
+          <div class="core">
+            <p>No certificates found.</p>
+          </div>
+        </div>
+
+        <div v-else class="cert-grid">
+          <CertificateCard
+            v-for="cert in filteredCertificates"
+            :key="cert.id"
+            :certificate="cert"
+          />
+        </div>
+      </section>
+
+      <section id="fullstack" class="block">
+        <div class="block-head">
+          <span class="index">02 / Full Stack</span>
+          <span class="font-decoration kanji">開発</span>
+        </div>
+        <p class="sub">Building full web systems from UI to APIs and data layers.</p>
+        <div class="icon-grid">
+          <div v-for="skill in fullStackSkills" :key="skill" class="icon-cell">
+            <img :src="`${skillUrl}?i=${skill}`" :alt="skill" loading="lazy">
+            <span>{{ skill }}</span>
           </div>
         </div>
       </section>
 
-      <section id="fullstack" class="relative group">
-        <div
-          class="absolute -left-4 top-0 bottom-0 w-px bg-hairline origin-top scale-y-0 transition-transform group-hover:scale-y-100 duration-500"
-        ></div>
-        <h2
-          class="text-xs font-display text-muted uppercase tracking-widest mb-12 pl-4"
-        >
-          02 / Full Stack
-        </h2>
-
-        <div class="space-y-6">
-          <p class="text-sm font-display text-ink-2 max-w-2xl leading-relaxed">
-            Building scalable web applications from frontend UI to backend APIs,
-            database design, and deployment.
-          </p>
-          <div class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
-            <div
-              v-for="skill in fullStackSkills"
-              :key="skill"
-              class="group/skill relative bg-canvas-2 border border-hairline rounded-xl p-4 flex items-center justify-center hover:bg-canvas hover:border-hairline-strong transition-colors"
-            >
-              <img
-                :src="`${skillUrl}?i=${skill}`"
-                :alt="skill"
-                class="w-8 h-8 transition-transform duration-300 group-hover/skill:scale-110"
-                loading="lazy"
-              />
-              <div
-                class="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/skill:opacity-100 transition-opacity bg-canvas-2 border border-hairline text-ink text-[10px] px-2 py-1 rounded whitespace-nowrap z-10 font-display"
-              >
-                {{ skill }}
-              </div>
-            </div>
+      <section id="devops" class="block">
+        <div class="block-head">
+          <span class="index">03 / DevOps</span>
+          <span class="font-decoration kanji">運用</span>
+        </div>
+        <p class="sub">Automating CI/CD, cloud operations, observability, and IaC.</p>
+        <div class="icon-grid">
+          <div v-for="skill in devOpsSkills" :key="skill" class="icon-cell">
+            <img :src="`${skillUrl}?i=${skill}`" :alt="skill" loading="lazy">
+            <span>{{ skill }}</span>
           </div>
         </div>
       </section>
 
-      <section id="devops" class="relative group">
-        <div
-          class="absolute -left-4 top-0 bottom-0 w-px bg-hairline origin-top scale-y-0 transition-transform group-hover:scale-y-100 duration-500"
-        ></div>
-        <h2
-          class="text-xs font-display text-muted uppercase tracking-widest mb-12 pl-4"
-        >
-          03 / DevOps
-        </h2>
-
-        <div class="space-y-6">
-          <p class="text-sm font-display text-ink-2 max-w-2xl leading-relaxed">
-            Automating deployments, container orchestration, CI/CD pipelines,
-            and infrastructure as code.
-          </p>
-          <div class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
-            <div
-              v-for="skill in devOpsSkills"
-              :key="skill"
-              class="group/skill relative bg-canvas-2 border border-hairline rounded-xl p-4 flex items-center justify-center hover:bg-canvas hover:border-hairline-strong transition-colors"
-            >
-              <img
-                :src="`${skillUrl}?i=${skill}`"
-                :alt="skill"
-                class="w-8 h-8 transition-transform duration-300 group-hover/skill:scale-110"
-                loading="lazy"
-              />
-              <div
-                class="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/skill:opacity-100 transition-opacity bg-canvas-2 border border-hairline text-ink text-[10px] px-2 py-1 rounded whitespace-nowrap z-10 font-display"
-              >
-                {{ skill }}
-              </div>
-            </div>
-          </div>
+      <section id="security" class="block">
+        <div class="block-head">
+          <span class="index">04 / Security</span>
+          <span class="font-decoration kanji">防御</span>
         </div>
-      </section>
-
-      <section id="security" class="relative group">
-        <div
-          class="absolute -left-4 top-0 bottom-0 w-px bg-hairline origin-top scale-y-0 transition-transform group-hover:scale-y-100 duration-500"
-        ></div>
-        <h2
-          class="text-xs font-display text-muted uppercase tracking-widest mb-12 pl-4"
-        >
-          04 / Security
-        </h2>
-
-        <div class="space-y-6">
-          <p class="text-sm font-display text-ink-2 max-w-2xl leading-relaxed">
-            Network security, penetration testing, security audits, and
-            implementing secure coding practices.
-          </p>
-          <div class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
-            <div
-              v-for="skill in cyberSecuritySkills"
-              :key="skill"
-              class="group/skill relative bg-canvas-2 border border-hairline rounded-xl p-4 flex items-center justify-center hover:bg-canvas hover:border-hairline-strong transition-colors"
-            >
-              <img
-                :src="`${skillUrl}?i=${skill}`"
-                :alt="skill"
-                class="w-8 h-8 transition-transform duration-300 group-hover/skill:scale-110"
-                loading="lazy"
-              />
-              <div
-                class="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/skill:opacity-100 transition-opacity bg-canvas-2 border border-hairline text-ink text-[10px] px-2 py-1 rounded whitespace-nowrap z-10 font-display"
-              >
-                {{ skill }}
-              </div>
-            </div>
+        <p class="sub">Security baseline, hardening, and defensive engineering practices.</p>
+        <div class="icon-grid">
+          <div v-for="skill in cyberSecuritySkills" :key="skill" class="icon-cell">
+            <img :src="`${skillUrl}?i=${skill}`" :alt="skill" loading="lazy">
+            <span>{{ skill }}</span>
           </div>
         </div>
       </section>
     </main>
   </div>
 </template>
+
+<style scoped>
+.skill-page {
+  width: 100%;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 28px;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 96px 20px 120px;
+}
+
+.sticky-shell {
+  position: sticky;
+  top: 132px;
+}
+
+.sticky-shell .core {
+  min-height: 430px;
+  padding: 24px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.aside-title {
+  display: flex;
+  gap: 6px;
+}
+
+.aside-title .upside:first-child {
+  font-size: 18px;
+}
+
+.aside-title .upside:last-child {
+  font-size: 14px;
+  opacity: 0.45;
+}
+
+.aside-nav {
+  display: grid;
+  gap: 10px;
+}
+
+.aside-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 700ms var(--ease);
+}
+
+.aside-nav a::before {
+  content: '';
+  width: 26px;
+  height: 1px;
+  background: var(--hairline-strong);
+  transition: width 700ms var(--ease), background 700ms var(--ease);
+}
+
+.aside-nav a:hover,
+.aside-nav a.is-active {
+  color: var(--ink);
+}
+
+.aside-nav a:hover::before,
+.aside-nav a.is-active::before {
+  width: 40px;
+  background: var(--ink);
+}
+
+.skill-main {
+  display: grid;
+  gap: 44px;
+}
+
+.head .core {
+  padding: 26px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: inset 0 0 0 1px var(--hairline);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #2f6a4a;
+  box-shadow: 0 0 0 4px rgba(47, 106, 74, 0.18);
+}
+
+.head h1 {
+  margin: 14px 0 10px;
+  font-size: clamp(30px, 4vw, 52px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.head p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.block {
+  border-top: 1px solid var(--hairline);
+  padding-top: 16px;
+}
+
+.block-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.index {
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+}
+
+.kanji {
+  font-size: 14px;
+  opacity: 0.35;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.filter-pill {
+  border: 1px solid var(--hairline);
+  background: var(--canvas-2);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 12px;
+  transition: transform 700ms var(--ease), background 700ms var(--ease), color 700ms var(--ease);
+}
+
+.filter-pill:hover {
+  background: var(--canvas);
+}
+
+.filter-pill.is-active {
+  background: var(--ink);
+  color: var(--canvas);
+  border-color: var(--ink);
+}
+
+.empty .core p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.sub {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.icon-cell {
+  border-radius: 16px;
+  border: 1px solid var(--hairline);
+  background: var(--canvas-2);
+  min-height: 82px;
+  display: grid;
+  place-items: center;
+  gap: 7px;
+  padding: 10px 6px;
+  transition: transform 700ms var(--ease), border-color 700ms var(--ease);
+}
+
+.icon-cell:hover {
+  transform: translateY(-3px);
+  border-color: var(--hairline-strong);
+}
+
+.icon-cell img {
+  width: 28px;
+  height: 28px;
+}
+
+.icon-cell span {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: capitalize;
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .skill-page {
+    grid-template-columns: 1fr;
+    padding-top: 84px;
+  }
+
+  .skill-aside {
+    display: none;
+  }
+
+  .cert-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .icon-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .skill-page {
+    padding: 74px 16px 90px;
+  }
+
+  .cert-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .icon-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+</style>

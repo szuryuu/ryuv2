@@ -302,7 +302,7 @@ onUnmounted(() => {
           </details>
 
           <main
-            class="prose prose-lg prose-invert max-w-none text-ink prose-headings:text-ink prose-p:text-ink-2 prose-strong:text-ink prose-a:text-ink prose-a:decoration-hairline-strong prose-li:text-ink-2 prose-code:text-ink"
+            class="prose prose-lg max-w-none text-ink prose-headings:text-ink prose-p:text-ink prose-strong:text-ink prose-a:text-ink prose-a:decoration-hairline-strong prose-li:text-ink prose-code:text-ink-2 prose-pre:bg-canvas-2 prose-pre:text-ink prose-blockquote:text-ink-2"
           >
             <ContentRenderer class="text-ink" :value="project" />
           </main>
