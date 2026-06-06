@@ -18,15 +18,15 @@ function toggleRole(id: string) {
     <div class="mb-16">
       <NuxtLink
         to="/about"
-        class="inline-flex items-center gap-2 text-sm text-white/40 hover:text-white mb-8 transition-colors font-display"
+        class="inline-flex items-center gap-2 text-sm text-muted hover:text-ink mb-8 transition-colors font-display"
       >
         <LucideArrowLeft class="w-4 h-4" />
         Back to About
       </NuxtLink>
-      <h1 class="text-4xl font-display font-bold text-white mb-4">
+      <h1 class="text-4xl font-display font-bold text-ink mb-4">
         Git Log: Career Path
       </h1>
-      <p class="text-white/40 font-display text-sm">
+      <p class="text-ink-2 font-display text-sm">
         A structured, non-linear visualization of my main trajectory and
         parallel technical tracks.
       </p>
@@ -39,11 +39,11 @@ function toggleRole(id: string) {
         class="relative flex min-h-[140px] group"
       >
         <div class="relative w-24 shrink-0">
-          <div class="absolute left-6 top-0 bottom-0 w-px bg-white/20"></div>
+          <div class="absolute left-6 top-0 bottom-0 w-px bg-hairline"></div>
 
           <div
             v-if="!event.isMain && event.status === 'ongoing'"
-            class="absolute left-[71px] top-0 bottom-1/2 w-px bg-gradient-to-t from-white/20 to-transparent"
+            class="absolute left-[71px] top-0 bottom-1/2 w-px bg-gradient-to-t from-[var(--hairline)] to-transparent"
           ></div>
 
           <svg
@@ -55,7 +55,7 @@ function toggleRole(id: string) {
             <path
               d="M 0 100 C 0 50, 48 50, 48 0"
               fill="none"
-              class="stroke-white/20"
+              class="stroke-[var(--hairline)]"
               stroke-width="2"
               vector-effect="non-scaling-stroke"
             />
@@ -70,14 +70,14 @@ function toggleRole(id: string) {
             <path
               d="M 48 100 C 48 50, 0 50, 0 0"
               fill="none"
-              class="stroke-white/20"
+              class="stroke-[var(--hairline)]"
               stroke-width="2"
               vector-effect="non-scaling-stroke"
             />
           </svg>
 
           <div
-            class="absolute w-4 h-4 rounded-full border-[3px] border-[#0a0a0a] z-10 top-1/2 -translate-y-1/2 transition-transform duration-300 group-hover:scale-125"
+            class="absolute w-4 h-4 rounded-full border-[3px] border-canvas z-10 top-1/2 -translate-y-1/2 transition-transform duration-300 group-hover:scale-125"
             :class="[
               event.color,
               event.isMain
@@ -89,14 +89,14 @@ function toggleRole(id: string) {
 
         <div class="flex-1 pb-12 pt-4 pr-4 md:pr-0">
           <div
-            class="p-6 md:p-8 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm hover:border-white/30 transition-all duration-300"
+            class="p-6 md:p-8 rounded-xl bg-canvas-2 border border-hairline hover:border-hairline-strong transition-all duration-300"
           >
             <div
-              class="flex flex-col md:flex-row md:items-center gap-4 mb-2 pb-6 border-b border-white/10"
+              class="flex flex-col md:flex-row md:items-center gap-4 mb-2 pb-6 border-b border-hairline"
             >
               <div
                 v-if="event.logo"
-                class="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden shrink-0 p-2.5 bg-white/05"
+                class="w-14 h-14 rounded-xl bg-canvas border border-hairline flex items-center justify-center overflow-hidden shrink-0 p-2.5"
               >
                 <img
                   :src="event.logo"
@@ -106,27 +106,27 @@ function toggleRole(id: string) {
               </div>
               <div class="flex-1">
                 <div class="flex flex-wrap items-center gap-3 mb-1.5">
-                  <h3 class="text-white font-display font-bold text-xl">
+                  <h3 class="text-ink font-display font-bold text-xl">
                     {{ event.title }}
                   </h3>
 
                   <span
                     v-if="event.status === 'merged'"
-                    class="inline-flex items-center gap-1.5 px-2 py-0.5 text-[10px] uppercase tracking-widest bg-sky-500/10 text-sky-400 rounded font-mono"
+                    class="inline-flex items-center gap-1.5 px-2 py-0.5 text-[10px] uppercase tracking-widest bg-sky-500/10 text-sky-500 rounded font-mono"
                   >
                     <LucideGitMerge class="w-3 h-3" />
                     Merged
                   </span>
                   <span
                     v-else-if="!event.isMain"
-                    class="inline-flex items-center gap-1.5 px-2 py-0.5 text-[10px] uppercase tracking-widest bg-emerald-500/10 text-emerald-400 rounded font-mono"
+                    class="inline-flex items-center gap-1.5 px-2 py-0.5 text-[10px] uppercase tracking-widest bg-emerald-500/10 text-emerald-600 rounded font-mono"
                   >
                     <LucideGitBranch class="w-3 h-3" />
                     Active Branch
                   </span>
                   <span
                     v-else
-                    class="inline-flex items-center gap-1.5 px-2 py-0.5 text-[10px] uppercase tracking-widest bg-white/10 text-white/80 rounded font-mono"
+                    class="inline-flex items-center gap-1.5 px-2 py-0.5 text-[10px] uppercase tracking-widest bg-ink/10 text-ink-2 rounded font-mono"
                   >
                     <LucideGitCommit class="w-3 h-3" />
                     Main
@@ -151,39 +151,35 @@ function toggleRole(id: string) {
                     y1="0"
                     x2="0"
                     y2="100%"
-                    class="stroke-white/10"
+                    class="stroke-[var(--hairline)]"
                     stroke-width="1.5"
                   />
                   <path
                     d="M 0 0 V 20 C 0 28, 8 28, 24 28"
-                    class="stroke-white/20 group-hover/role:stroke-white/40 transition-colors duration-300"
+                    class="stroke-[var(--hairline-strong)] group-hover/role:stroke-[var(--ink-2)] transition-colors duration-300"
                     stroke-width="1.5"
                   />
                 </svg>
 
                 <div
-                  class="absolute left-[40px] top-[28px] w-2 h-2 rounded-full ring-4 ring-[#1a1a1a] -translate-x-1/2 -translate-y-1/2 transition-transform duration-300 group-hover/role:scale-125"
-                  :class="index === 0 ? event.color : 'bg-white/20'"
+                  class="absolute left-[40px] top-[28px] w-2 h-2 rounded-full ring-4 ring-canvas -translate-x-1/2 -translate-y-1/2 transition-transform duration-300 group-hover/role:scale-125"
+                  :class="index === 0 ? event.color : 'bg-hairline-strong'"
                 ></div>
 
                 <div
-                  class="bg-white/[0.02] border border-white/5 rounded-xl p-5 hover:bg-white/[0.05] hover:border-white/10 transition-all duration-300"
+                  class="bg-canvas border border-hairline rounded-xl p-5 hover:bg-canvas-2 hover:border-hairline-strong transition-all duration-300"
                 >
                   <div class="flex flex-col gap-1 mb-2">
-                    <span
-                      class="text-white font-display font-semibold text-base"
-                    >
+                    <span class="text-ink font-display font-semibold text-base">
                       {{ role.title }}
                     </span>
-                    <time
-                      class="text-[11px] font-mono text-white/40 tracking-wider"
-                    >
+                    <time class="text-[11px] font-mono text-muted tracking-wider">
                       {{ role.date }}
                     </time>
                   </div>
                   <div>
                     <p
-                      class="text-sm text-white/60 font-display leading-relaxed transition-all duration-300"
+                      class="text-sm text-ink-2 font-display leading-relaxed transition-all duration-300"
                       :class="
                         !expandedRoles[`${event.id}-${index}`]
                           ? 'line-clamp-2 md:line-clamp-none'
@@ -194,7 +190,7 @@ function toggleRole(id: string) {
                     </p>
                     <button
                       @click="toggleRole(`${event.id}-${index}`)"
-                      class="md:hidden mt-3 text-[10px] uppercase tracking-widest font-display text-white/30 hover:text-white transition-colors flex items-center gap-1"
+                      class="md:hidden mt-3 text-[10px] uppercase tracking-widest font-display text-muted hover:text-ink transition-colors flex items-center gap-1"
                     >
                       {{
                         expandedRoles[`${event.id}-${index}`]

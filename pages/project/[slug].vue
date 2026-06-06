@@ -278,10 +278,10 @@ onUnmounted(() => {
         <div class="flex-1 min-w-0 w-full">
           <details
             v-if="project?.body?.toc?.links?.length"
-            class="block lg:hidden mb-10 p-5 border border-white/10 bg-white/5 rounded-xl text-white"
+            class="block lg:hidden mb-10 p-5 border border-hairline bg-canvas-2 rounded-xl text-ink"
           >
             <summary
-              class="font-display font-bold cursor-pointer outline-none uppercase tracking-widest text-xs opacity-60"
+              class="font-display font-bold cursor-pointer outline-none uppercase tracking-widest text-xs text-muted"
             >
               Table of Contents
             </summary>
@@ -290,7 +290,7 @@ onUnmounted(() => {
                 v-for="link in project.body.toc.links"
                 :key="link.id"
                 :href="`#${link.id}`"
-                class="transition-colors text-white/60 hover:text-white uppercase tracking-widest"
+                class="transition-colors text-ink-2 hover:text-ink uppercase tracking-widest"
                 :class="[
                   link.depth === 3 ? 'ml-4' : '',
                   link.depth > 3 ? 'ml-8' : '',
@@ -301,8 +301,10 @@ onUnmounted(() => {
             </nav>
           </details>
 
-          <main class="prose prose-lg prose-invert max-w-none text-white">
-            <ContentRenderer class="text-white" :value="project" />
+          <main
+            class="prose prose-lg prose-invert max-w-none text-ink prose-headings:text-ink prose-p:text-ink-2 prose-strong:text-ink prose-a:text-ink prose-a:decoration-hairline-strong prose-li:text-ink-2 prose-code:text-ink"
+          >
+            <ContentRenderer class="text-ink" :value="project" />
           </main>
         </div>
 

@@ -233,8 +233,10 @@ onUnmounted(() => {
             </nav>
           </details>
 
-          <main class="prose prose-lg prose-invert max-w-none text-white">
-            <ContentRenderer :value="article" />
+          <main
+            class="prose prose-lg prose-invert max-w-none text-ink prose-headings:text-ink prose-p:text-ink-2 prose-strong:text-ink prose-a:text-ink prose-a:decoration-hairline-strong prose-li:text-ink-2 prose-code:text-ink"
+          >
+            <ContentRenderer class="text-ink" :value="article" />
           </main>
         </div>
 

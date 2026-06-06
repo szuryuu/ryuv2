@@ -42,7 +42,7 @@ const filteredCertificates = computed(() => {
   >
     <aside class="w-full hidden lg:block">
       <div class="flex items-start flex-col justify-between fixed">
-        <div class="flex items-start text-white">
+        <div class="flex items-start text-ink">
           <span class="[writing-mode:vertical-lr] text-2xl font-decoration">スキル</span>
           <span class="[writing-mode:vertical-lr] text-lg font-display">Skills & Certs</span>
         </div>
@@ -51,44 +51,44 @@ const filteredCertificates = computed(() => {
           <a
             href="#certificates"
             class="transition-colors flex items-center gap-3 group uppercase tracking-widest"
-            :class="activeId === 'certificates' ? 'text-white' : 'text-white/40 hover:text-white'"
+            :class="activeId === 'certificates' ? 'text-ink' : 'text-muted hover:text-ink'"
           >
             <span
               class="h-px transition-all duration-300"
-              :class="activeId === 'certificates' ? 'w-12 bg-white' : 'w-8 bg-white/20 group-hover:w-12'"
+              :class="activeId === 'certificates' ? 'w-12 bg-ink' : 'w-8 bg-hairline-strong group-hover:w-12'"
             ></span>
             Certificates
           </a>
           <a
             href="#fullstack"
             class="transition-colors flex items-center gap-3 group uppercase tracking-widest"
-            :class="activeId === 'fullstack' ? 'text-white' : 'text-white/40 hover:text-white'"
+            :class="activeId === 'fullstack' ? 'text-ink' : 'text-muted hover:text-ink'"
           >
             <span
               class="h-px transition-all duration-300"
-              :class="activeId === 'fullstack' ? 'w-12 bg-white' : 'w-8 bg-white/20 group-hover:w-12'"
+              :class="activeId === 'fullstack' ? 'w-12 bg-ink' : 'w-8 bg-hairline-strong group-hover:w-12'"
             ></span>
             Full Stack
           </a>
           <a
             href="#devops"
             class="transition-colors flex items-center gap-3 group uppercase tracking-widest"
-            :class="activeId === 'devops' ? 'text-white' : 'text-white/40 hover:text-white'"
+            :class="activeId === 'devops' ? 'text-ink' : 'text-muted hover:text-ink'"
           >
             <span
               class="h-px transition-all duration-300"
-              :class="activeId === 'devops' ? 'w-12 bg-white' : 'w-8 bg-white/20 group-hover:w-12'"
+              :class="activeId === 'devops' ? 'w-12 bg-ink' : 'w-8 bg-hairline-strong group-hover:w-12'"
             ></span>
             DevOps
           </a>
           <a
             href="#security"
             class="transition-colors flex items-center gap-3 group uppercase tracking-widest"
-            :class="activeId === 'security' ? 'text-white' : 'text-white/40 hover:text-white'"
+            :class="activeId === 'security' ? 'text-ink' : 'text-muted hover:text-ink'"
           >
             <span
               class="h-px transition-all duration-300"
-              :class="activeId === 'security' ? 'w-12 bg-white' : 'w-8 bg-white/20 group-hover:w-12'"
+              :class="activeId === 'security' ? 'w-12 bg-ink' : 'w-8 bg-hairline-strong group-hover:w-12'"
             ></span>
             Security
           </a>
@@ -99,10 +99,10 @@ const filteredCertificates = computed(() => {
     <main class="w-full lg:min-w-5xl max-w-5xl space-y-12 pb-32 mx-auto">
       <section id="certificates" class="relative group">
         <div
-          class="absolute -left-4 top-0 bottom-0 w-px bg-white/10 origin-top scale-y-0 transition-transform group-hover:scale-y-100 duration-500"
+          class="absolute -left-4 top-0 bottom-0 w-px bg-hairline origin-top scale-y-0 transition-transform group-hover:scale-y-100 duration-500"
         ></div>
         <h2
-          class="text-xs font-display text-white/40 uppercase tracking-widest mb-12 pl-4"
+          class="text-xs font-display text-muted uppercase tracking-widest mb-12 pl-4"
         >
           01 / Certificates
         </h2>
@@ -113,8 +113,8 @@ const filteredCertificates = computed(() => {
               v-for="filter in filterItems"
               :key="filter"
               @click="selectedFilter = filter"
-              class="px-4 py-2 rounded-lg text-sm font-display transition-all duration-300"
-              :class="selectedFilter === filter ? 'bg-white text-black' : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'"
+              class="px-4 py-2 rounded-full text-sm font-display transition-all duration-300 border"
+              :class="selectedFilter === filter ? 'bg-ink text-canvas border-ink' : 'bg-canvas-2 text-ink border-hairline hover:bg-canvas'"
             >
               {{ filter }}
             </button>
@@ -122,11 +122,9 @@ const filteredCertificates = computed(() => {
 
           <div
             v-if="filteredCertificates.length === 0"
-            class="bg-white/5 backdrop-blur-sm rounded-xl p-12 border border-white/10 text-center"
+            class="bg-canvas-2 backdrop-blur-sm rounded-xl p-12 border border-hairline text-center"
           >
-            <p class="text-lg font-display text-white mb-2">
-              No certificates found
-            </p>
+            <p class="text-lg font-display text-ink mb-2">No certificates found</p>
           </div>
 
           <div
@@ -144,18 +142,16 @@ const filteredCertificates = computed(() => {
 
       <section id="fullstack" class="relative group">
         <div
-          class="absolute -left-4 top-0 bottom-0 w-px bg-white/10 origin-top scale-y-0 transition-transform group-hover:scale-y-100 duration-500"
+          class="absolute -left-4 top-0 bottom-0 w-px bg-hairline origin-top scale-y-0 transition-transform group-hover:scale-y-100 duration-500"
         ></div>
         <h2
-          class="text-xs font-display text-white/40 uppercase tracking-widest mb-12 pl-4"
+          class="text-xs font-display text-muted uppercase tracking-widest mb-12 pl-4"
         >
           02 / Full Stack
         </h2>
 
         <div class="space-y-6">
-          <p
-            class="text-sm font-display text-white/60 max-w-2xl leading-relaxed"
-          >
+          <p class="text-sm font-display text-ink-2 max-w-2xl leading-relaxed">
             Building scalable web applications from frontend UI to backend APIs,
             database design, and deployment.
           </p>
@@ -163,7 +159,7 @@ const filteredCertificates = computed(() => {
             <div
               v-for="skill in fullStackSkills"
               :key="skill"
-              class="group/skill relative bg-white/5 border border-white/10 rounded-xl p-4 flex items-center justify-center hover:bg-white/10 hover:border-white/20 transition-colors"
+              class="group/skill relative bg-canvas-2 border border-hairline rounded-xl p-4 flex items-center justify-center hover:bg-canvas hover:border-hairline-strong transition-colors"
             >
               <img
                 :src="`${skillUrl}?i=${skill}`"
@@ -172,7 +168,7 @@ const filteredCertificates = computed(() => {
                 loading="lazy"
               />
               <div
-                class="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/skill:opacity-100 transition-opacity bg-black border border-white/10 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap z-10 font-display"
+                class="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/skill:opacity-100 transition-opacity bg-canvas-2 border border-hairline text-ink text-[10px] px-2 py-1 rounded whitespace-nowrap z-10 font-display"
               >
                 {{ skill }}
               </div>
@@ -183,18 +179,16 @@ const filteredCertificates = computed(() => {
 
       <section id="devops" class="relative group">
         <div
-          class="absolute -left-4 top-0 bottom-0 w-px bg-white/10 origin-top scale-y-0 transition-transform group-hover:scale-y-100 duration-500"
+          class="absolute -left-4 top-0 bottom-0 w-px bg-hairline origin-top scale-y-0 transition-transform group-hover:scale-y-100 duration-500"
         ></div>
         <h2
-          class="text-xs font-display text-white/40 uppercase tracking-widest mb-12 pl-4"
+          class="text-xs font-display text-muted uppercase tracking-widest mb-12 pl-4"
         >
           03 / DevOps
         </h2>
 
         <div class="space-y-6">
-          <p
-            class="text-sm font-display text-white/60 max-w-2xl leading-relaxed"
-          >
+          <p class="text-sm font-display text-ink-2 max-w-2xl leading-relaxed">
             Automating deployments, container orchestration, CI/CD pipelines,
             and infrastructure as code.
           </p>
@@ -202,7 +196,7 @@ const filteredCertificates = computed(() => {
             <div
               v-for="skill in devOpsSkills"
               :key="skill"
-              class="group/skill relative bg-white/5 border border-white/10 rounded-xl p-4 flex items-center justify-center hover:bg-white/10 hover:border-white/20 transition-colors"
+              class="group/skill relative bg-canvas-2 border border-hairline rounded-xl p-4 flex items-center justify-center hover:bg-canvas hover:border-hairline-strong transition-colors"
             >
               <img
                 :src="`${skillUrl}?i=${skill}`"
@@ -211,7 +205,7 @@ const filteredCertificates = computed(() => {
                 loading="lazy"
               />
               <div
-                class="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/skill:opacity-100 transition-opacity bg-black border border-white/10 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap z-10 font-display"
+                class="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/skill:opacity-100 transition-opacity bg-canvas-2 border border-hairline text-ink text-[10px] px-2 py-1 rounded whitespace-nowrap z-10 font-display"
               >
                 {{ skill }}
               </div>
@@ -222,18 +216,16 @@ const filteredCertificates = computed(() => {
 
       <section id="security" class="relative group">
         <div
-          class="absolute -left-4 top-0 bottom-0 w-px bg-white/10 origin-top scale-y-0 transition-transform group-hover:scale-y-100 duration-500"
+          class="absolute -left-4 top-0 bottom-0 w-px bg-hairline origin-top scale-y-0 transition-transform group-hover:scale-y-100 duration-500"
         ></div>
         <h2
-          class="text-xs font-display text-white/40 uppercase tracking-widest mb-12 pl-4"
+          class="text-xs font-display text-muted uppercase tracking-widest mb-12 pl-4"
         >
           04 / Security
         </h2>
 
         <div class="space-y-6">
-          <p
-            class="text-sm font-display text-white/60 max-w-2xl leading-relaxed"
-          >
+          <p class="text-sm font-display text-ink-2 max-w-2xl leading-relaxed">
             Network security, penetration testing, security audits, and
             implementing secure coding practices.
           </p>
@@ -241,7 +233,7 @@ const filteredCertificates = computed(() => {
             <div
               v-for="skill in cyberSecuritySkills"
               :key="skill"
-              class="group/skill relative bg-white/5 border border-white/10 rounded-xl p-4 flex items-center justify-center hover:bg-white/10 hover:border-white/20 transition-colors"
+              class="group/skill relative bg-canvas-2 border border-hairline rounded-xl p-4 flex items-center justify-center hover:bg-canvas hover:border-hairline-strong transition-colors"
             >
               <img
                 :src="`${skillUrl}?i=${skill}`"
@@ -250,7 +242,7 @@ const filteredCertificates = computed(() => {
                 loading="lazy"
               />
               <div
-                class="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/skill:opacity-100 transition-opacity bg-black border border-white/10 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap z-10 font-display"
+                class="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/skill:opacity-100 transition-opacity bg-canvas-2 border border-hairline text-ink text-[10px] px-2 py-1 rounded whitespace-nowrap z-10 font-display"
               >
                 {{ skill }}
               </div>
