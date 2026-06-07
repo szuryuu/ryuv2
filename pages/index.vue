@@ -1,99 +1,101 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted } from 'vue'
-import { usePageEnter } from '~/composables/usePageEnter'
-import { devOpsSkills, fullStackSkills } from '~/utils/skills'
+import { computed, onBeforeUnmount, onMounted } from "vue";
+import { usePageEnter } from "~/composables/usePageEnter";
+import { devOpsSkills, fullStackSkills } from "~/utils/skills";
 
-const pageRef = usePageEnter({ y: 20, duration: 0.6 })
-const { data: githubData } = await useLazyAsyncData('github-commits', () =>
-  $fetch('/api/github/commits')
-)
+const pageRef = usePageEnter({ y: 20, duration: 0.6 });
+const { data: githubData } = await useLazyAsyncData("github-commits", () =>
+  $fetch("/api/github/commits"),
+);
 
-const { data: projects } = await useAsyncData('projects-home', () =>
-  queryCollection('projects').order('order', 'ASC').all()
-)
+const { data: projects } = await useAsyncData("projects-home", () =>
+  queryCollection("projects").order("order", "ASC").all(),
+);
 
 const skillLabelMap: Record<string, string> = {
-  js: 'JavaScript',
-  typescript: 'TypeScript',
-  vue: 'Vue',
-  nuxtjs: 'Nuxt',
-  php: 'PHP',
-  laravel: 'Laravel',
-  mysql: 'MySQL',
-  sqlite: 'SQLite',
-  git: 'Git',
-  npm: 'NPM',
-  bun: 'Bun',
-  vercel: 'Vercel',
-  vite: 'Vite',
-  ansible: 'Ansible',
-  arch: 'Arch Linux',
-  azure: 'Azure',
-  bash: 'Bash',
-  docker: 'Docker',
-  githubactions: 'GitHub Actions',
-  go: 'Go',
-  kubernetes: 'Kubernetes',
-  linux: 'Linux',
-  nginx: 'Nginx',
-  prometheus: 'Prometheus',
-  rust: 'Rust',
-  terraform: 'Terraform'
-}
+  js: "JavaScript",
+  typescript: "TypeScript",
+  vue: "Vue",
+  nuxtjs: "Nuxt",
+  php: "PHP",
+  laravel: "Laravel",
+  mysql: "MySQL",
+  sqlite: "SQLite",
+  git: "Git",
+  npm: "NPM",
+  bun: "Bun",
+  vercel: "Vercel",
+  vite: "Vite",
+  ansible: "Ansible",
+  arch: "Arch Linux",
+  azure: "Azure",
+  bash: "Bash",
+  docker: "Docker",
+  githubactions: "GitHub Actions",
+  go: "Go",
+  kubernetes: "Kubernetes",
+  linux: "Linux",
+  nginx: "Nginx",
+  prometheus: "Prometheus",
+  rust: "Rust",
+  terraform: "Terraform",
+};
 
 const marqueeSkills = computed(() => {
-  const set = new Set([...devOpsSkills, ...fullStackSkills])
-  return Array.from(set).map(skill => skillLabelMap[skill] ?? skill)
-})
+  const set = new Set([...devOpsSkills, ...fullStackSkills]);
+  return Array.from(set).map((skill) => skillLabelMap[skill] ?? skill);
+});
 
 const orderedProjects = computed(() => {
-  const list = projects.value ?? []
+  const list = projects.value ?? [];
   return [...list].sort((a, b) => {
-    if (a.featured === b.featured) return a.order - b.order
-    return a.featured ? -1 : 1
-  })
-})
+    if (a.featured === b.featured) return a.order - b.order;
+    return a.featured ? -1 : 1;
+  });
+});
 
-const bentoProjects = computed(() => orderedProjects.value.slice(0, 6))
+const bentoProjects = computed(() => orderedProjects.value.slice(0, 6));
 
 const bentoClasses = [
-  'span-3 row-2',
-  'span-3',
-  'span-3 dark',
-  'span-2',
-  'span-2',
-  'span-2'
-]
+  "span-3 row-2",
+  "span-3",
+  "span-3 dark",
+  "span-2",
+  "span-2",
+  "span-2",
+];
 
-let io: IntersectionObserver | null = null
+let io: IntersectionObserver | null = null;
 
 onMounted(() => {
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const reveals = document.querySelectorAll<HTMLElement>('.reveal')
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+  const reveals = document.querySelectorAll<HTMLElement>(".reveal");
 
   if (prefersReduced) {
-    reveals.forEach(el => el.classList.add('is-in'))
-    return
+    reveals.forEach((el) => el.classList.add("is-in"));
+    return;
   }
 
   io = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('is-in')
-          io?.unobserve(entry.target)
+          entry.target.classList.add("is-in");
+          io?.unobserve(entry.target);
         }
-      })
+      });
     },
-    { threshold: 0.12, rootMargin: '0px 0px -10% 0px' }
-  )
+    { threshold: 0.12, rootMargin: "0px 0px -10% 0px" },
+  );
 
-  reveals.forEach(el => io?.observe(el))
-})
+  reveals.forEach((el) => io?.observe(el));
+});
 
 onBeforeUnmount(() => {
-  io?.disconnect()
-})
+  io?.disconnect();
+});
 </script>
 
 <template>
@@ -102,14 +104,16 @@ onBeforeUnmount(() => {
       <div>
         <span class="eyebrow">
           <span class="dot" />
-          <span class="font-decoration">インフラ</span> · SEC · 2026 · Yogyakarta
+          <span class="font-decoration">インフラ</span> · SEC · 2026 ·
+          Yogyakarta
         </span>
 
         <h1>Shafwan Ilham Dzaky</h1>
 
         <p class="lede">
-          DevOps Engineer focused on cloud infrastructure, platform security, and reliable delivery.
-          I build automation that ships fast, scales cleanly, and stays resilient in production.
+          DevOps Engineer focused on cloud infrastructure, platform security,
+          and reliable delivery. I build automation that ships fast, scales
+          cleanly, and stays resilient in production.
         </p>
 
         <div class="actions">
@@ -135,10 +139,15 @@ onBeforeUnmount(() => {
           <div class="preview-grid">
             <div class="pv-cell span2">
               <div class="meta">profile · live</div>
-              <div class="row" style="justify-content: space-between; align-items: center">
+              <div
+                class="row"
+                style="justify-content: space-between; align-items: center"
+              >
                 <div>
                   <h4 style="font-size: 14px">Shafwan Ilham Dzaky</h4>
-                  <p style="margin: 0; font-size: 11px">DevOps Engineer / INFRA &amp; SEC</p>
+                  <p style="margin: 0; font-size: 11px">
+                    DevOps Engineer / INFRA &amp; SEC
+                  </p>
                 </div>
                 <div class="ring" aria-hidden="true" />
               </div>
@@ -155,13 +164,16 @@ onBeforeUnmount(() => {
             <div class="pv-cell">
               <div class="meta">stats</div>
               <div class="num">2+<small>Years</small></div>
-              <div class="num">{{ githubData?.totalCommits || '500+' }}<small>Commits</small></div>
+              <div class="num">
+                {{ githubData?.totalCommits || "500+" }}<small>Commits</small>
+              </div>
             </div>
 
             <div class="pv-cell span2">
               <div class="meta">location</div>
               <p style="font-size: 11.5px; line-height: 1.6">
-                Yogyakarta, Indonesia · <span class="font-decoration">クラフト精神 職人</span>
+                Yogyakarta, Indonesia ·
+                <span class="font-decoration">クラフト精神 職人</span>
               </p>
             </div>
           </div>
@@ -177,15 +189,18 @@ onBeforeUnmount(() => {
             <p class="font-decoration section-kanji">プロジェクト</p>
           </div>
           <p>
-            Infrastructure and security projects built with automation-first workflows.
-            Production mindset, measurable reliability, and practical delivery.
+            Infrastructure and security projects built with automation-first
+            workflows. Production mindset, measurable reliability, and practical
+            delivery.
           </p>
         </div>
 
         <div class="section-head" style="margin-bottom: 56px">
           <h2>
             Featured builds for cloud, security,
-            <span style="color: var(--muted); font-weight: 500">and shipping velocity.</span>
+            <span style="color: var(--muted); font-weight: 500"
+              >and shipping velocity.</span
+            >
           </h2>
           <span />
         </div>
@@ -197,16 +212,19 @@ onBeforeUnmount(() => {
             :class="['b-card', bentoClasses[i] ?? 'span-2']"
           >
             <div class="core">
-              <div class="meta">0{{ i + 1 }} · {{ project.type }} · {{ project.year }}</div>
+              <div class="meta">
+                0{{ i + 1 }} · {{ project.type }} · {{ project.year }}
+              </div>
               <h3>{{ project.title }}</h3>
               <p>{{ project.description }}</p>
 
               <div v-if="i === 0" class="codeblock">
-                <span class="c">// infra delivery snippet</span><br>
-                <span class="k">pipeline</span>.deploy({<br>
-                &nbsp;&nbsp;cloud: <span class="s">'Azure'</span>,<br>
-                &nbsp;&nbsp;iac: <span class="s">'Terraform'</span>,<br>
-                &nbsp;&nbsp;orchestrator: <span class="s">'Kubernetes'</span><br>
+                <span class="c">// infra delivery snippet</span><br />
+                <span class="k">pipeline</span>.deploy({<br />
+                &nbsp;&nbsp;cloud: <span class="s">'Azure'</span>,<br />
+                &nbsp;&nbsp;iac: <span class="s">'Terraform'</span>,<br />
+                &nbsp;&nbsp;orchestrator: <span class="s">'Kubernetes'</span
+                ><br />
                 })
               </div>
             </div>
@@ -234,8 +252,8 @@ onBeforeUnmount(() => {
       <div class="closing-inner">
         <h2>Ready to build something that ships.</h2>
         <p>
-          Open for collaboration on DevOps, cloud migration, and secure platform delivery.
-          Let us ship fast with clear reliability standards.
+          Open for collaboration on DevOps, cloud migration, and secure platform
+          delivery. Let us ship fast with clear reliability standards.
         </p>
 
         <NuxtLink to="/contact" class="pill">
@@ -247,11 +265,14 @@ onBeforeUnmount(() => {
           </span>
         </NuxtLink>
 
-        <p class="font-decoration" style="opacity: 0.24; margin-top: 14px; margin-bottom: 0">連絡</p>
+        <p
+          class="font-decoration"
+          style="opacity: 0.24; margin-top: 14px; margin-bottom: 0"
+        >
+          連絡
+        </p>
       </div>
     </section>
-
-
   </div>
 </template>
 
@@ -286,7 +307,9 @@ onBeforeUnmount(() => {
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.6);
   box-shadow: inset 0 0 0 1px var(--hairline);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
   font-size: 10px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -349,7 +372,9 @@ h1 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 360ms var(--ease-spring), background 700ms var(--ease);
+  transition:
+    transform 360ms var(--ease-spring),
+    background 700ms var(--ease);
 }
 
 .pill:hover .icon-wrap {
@@ -381,7 +406,9 @@ h1 {
   cursor: pointer;
   border: none;
   text-decoration: none;
-  transition: background 700ms var(--ease), transform 700ms var(--ease);
+  transition:
+    background 700ms var(--ease),
+    transform 700ms var(--ease);
 }
 
 .ghost:hover {
@@ -408,7 +435,9 @@ h1 {
   position: relative;
   border-radius: var(--core-radius);
   background: linear-gradient(180deg, #fafaf7 0%, #efefeb 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), inset 0 0 0 1px var(--hairline);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 0 0 1px var(--hairline);
   padding: 22px;
   overflow: hidden;
 }
@@ -435,7 +464,9 @@ h1 {
 .pv-cell {
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.8);
-  box-shadow: inset 0 0 0 1px var(--hairline), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  box-shadow:
+    inset 0 0 0 1px var(--hairline),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
   padding: 14px;
 }
 
@@ -458,7 +489,9 @@ h1 {
 }
 
 .pv-cell .meta {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
   font-size: 9.5px;
   color: var(--muted);
   letter-spacing: 0.14em;
@@ -571,7 +604,9 @@ h1 {
     inset 0 1px 0 var(--innerlight),
     0 0 0 1px var(--hairline),
     0 24px 48px -28px rgba(10, 10, 10, 0.18);
-  transition: transform 700ms var(--ease), box-shadow 700ms var(--ease);
+  transition:
+    transform 700ms var(--ease),
+    box-shadow 700ms var(--ease);
 }
 
 .b-card:hover {
@@ -585,7 +620,9 @@ h1 {
 .b-card .core {
   border-radius: var(--core-radius);
   background: #fcfcfa;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), inset 0 0 0 1px var(--hairline);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 0 0 1px var(--hairline);
   padding: 32px;
   height: 100%;
   display: flex;
@@ -603,7 +640,9 @@ h1 {
 }
 
 .b-card .meta {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
   font-size: 10.5px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -633,7 +672,9 @@ h1 {
   border-radius: 18px;
   background: #181818;
   color: #ececea;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
   font-size: 12px;
   line-height: 1.65;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
@@ -667,8 +708,20 @@ h1 {
 .marquee {
   padding: 56px 0;
   overflow: hidden;
-  mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
 }
 
 .marquee-track {
@@ -716,14 +769,20 @@ h1 {
   color: #f2f2f0;
   position: relative;
   overflow: hidden;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 30px 80px -40px rgba(10, 10, 10, 0.6);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 30px 80px -40px rgba(10, 10, 10, 0.6);
 }
 
 .closing::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(700px 360px at 30% 0%, rgba(115, 139, 168, 0.24), transparent 70%);
+  background: radial-gradient(
+    700px 360px at 30% 0%,
+    rgba(115, 139, 168, 0.24),
+    transparent 70%
+  );
   pointer-events: none;
 }
 
@@ -762,12 +821,14 @@ h1 {
   background: rgba(10, 10, 10, 0.08);
 }
 
-
 .reveal {
   opacity: 0;
   transform: translateY(16px);
   filter: blur(8px);
-  transition: opacity 800ms var(--ease), transform 800ms var(--ease), filter 800ms var(--ease);
+  transition:
+    opacity 800ms var(--ease),
+    transform 800ms var(--ease),
+    filter 800ms var(--ease);
 }
 
 .reveal.is-in {

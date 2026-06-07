@@ -1,53 +1,85 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { usePageEnter } from '~/composables/usePageEnter'
-import { useScrollSpy } from '~/composables/useScrollSpy'
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { usePageEnter } from "~/composables/usePageEnter";
+import { useScrollSpy } from "~/composables/useScrollSpy";
 
-const pageRef = usePageEnter({ y: 20, duration: 0.6 })
-const { activeId } = useScrollSpy(['overview', 'articles'])
+const pageRef = usePageEnter({ y: 20, duration: 0.6 });
+const { activeId } = useScrollSpy(["overview", "articles"]);
 
-const { data: articles } = await useAsyncData('writing', () =>
-  queryCollection('writing').order('order', 'ASC').all()
-)
+const { data: articles } = await useAsyncData("writing", () =>
+  queryCollection("writing").order("order", "ASC").all(),
+);
 
 const allTags = computed(() => {
-  if (!articles.value) return []
-  const set = new Set<string>()
-  articles.value.forEach((a) => a.tags?.forEach((t: string) => set.add(t)))
-  return ['All', ...Array.from(set).sort()]
-})
+  if (!articles.value) return [];
+  const set = new Set<string>();
+  articles.value.forEach((a) => a.tags?.forEach((t: string) => set.add(t)));
+  return ["All", ...Array.from(set).sort()];
+});
 
-const selectedTag = ref('All')
+const selectedTag = ref("All");
 
 const filtered = computed(() => {
-  if (!articles.value) return []
-  let result = articles.value
+  if (!articles.value) return [];
+  let result = articles.value;
 
-  if (selectedTag.value !== 'All') {
-    result = result.filter((a) => a.tags?.includes(selectedTag.value))
+  if (selectedTag.value !== "All") {
+    result = result.filter((a) => a.tags?.includes(selectedTag.value));
   }
 
   return result.sort((a, b) => {
-    if (a.featured && !b.featured) return -1
-    if (!a.featured && b.featured) return 1
-    return 0
-  })
-})
+    if (a.featured && !b.featured) return -1;
+    if (!a.featured && b.featured) return 1;
+    return 0;
+  });
+});
 
 function readingTime(body: unknown): string {
-  const text = JSON.stringify(body ?? '')
-  const words = text.split(/\s+/).length
-  const mins = Math.max(1, Math.round(words / 200))
-  return `${mins} min read`
+  const text = JSON.stringify(body ?? "");
+  const words = text.split(/\s+/).length;
+  const mins = Math.max(1, Math.round(words / 200));
+  return `${mins} min read`;
 }
 
 function formatDate(date: string) {
-  return new Date(date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric'
-  })
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 }
+
+let io: IntersectionObserver | null = null;
+
+onMounted(() => {
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+  const reveals = document.querySelectorAll<HTMLElement>(".reveal");
+
+  if (prefersReduced) {
+    reveals.forEach((el) => el.classList.add("is-in"));
+    return;
+  }
+
+  io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-in");
+          io?.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12, rootMargin: "0px 0px -10% 0px" },
+  );
+
+  reveals.forEach((el) => io?.observe(el));
+});
+
+onBeforeUnmount(() => {
+  io?.disconnect();
+});
 </script>
 
 <template>
@@ -61,8 +93,16 @@ function formatDate(date: string) {
           </div>
 
           <nav class="aside-nav">
-            <a href="#overview" :class="activeId === 'overview' ? 'is-active' : ''">Overview</a>
-            <a href="#articles" :class="activeId === 'articles' ? 'is-active' : ''">Articles</a>
+            <a
+              href="#overview"
+              :class="activeId === 'overview' ? 'is-active' : ''"
+              >Overview</a
+            >
+            <a
+              href="#articles"
+              :class="activeId === 'articles' ? 'is-active' : ''"
+              >Articles</a
+            >
           </nav>
         </div>
       </div>
@@ -128,7 +168,7 @@ function formatDate(date: string) {
               :to="article.path"
               class="item"
             >
-              <span class="num">{{ String(index + 1).padStart(2, '0') }}</span>
+              <span class="num">{{ String(index + 1).padStart(2, "0") }}</span>
 
               <div class="copy">
                 <div class="badges">
@@ -136,7 +176,9 @@ function formatDate(date: string) {
                     <LucideStar class="w-3 h-3" />
                     Featured
                   </span>
-                  <span v-for="tag in article.tags" :key="tag" class="badge">{{ tag }}</span>
+                  <span v-for="tag in article.tags" :key="tag" class="badge">{{
+                    tag
+                  }}</span>
                 </div>
 
                 <h3>{{ article.title }}</h3>
@@ -155,6 +197,14 @@ function formatDate(date: string) {
       </section>
     </main>
   </div>
+
+  <ClosingCTA
+    title="Build systems that ship."
+    description="Open for DevOps, cloud migration, and secure platform delivery."
+    cta-text="Get in Touch"
+    cta-link="/contact"
+    kanji="連絡"
+  />
 </template>
 
 <style scoped>
@@ -169,7 +219,10 @@ function formatDate(date: string) {
   padding: 96px 20px 120px;
 }
 
-.sticky-shell { position: sticky; top: 132px; }
+.sticky-shell {
+  position: sticky;
+  top: 132px;
+}
 .sticky-shell .core {
   min-height: 320px;
   padding: 24px 18px;
@@ -178,11 +231,22 @@ function formatDate(date: string) {
   justify-content: space-between;
 }
 
-.aside-title { display: flex; gap: 6px; }
-.aside-title .upside:first-child { font-size: 18px; }
-.aside-title .upside:last-child { font-size: 14px; opacity: 0.45; }
+.aside-title {
+  display: flex;
+  gap: 6px;
+}
+.aside-title .upside:first-child {
+  font-size: 18px;
+}
+.aside-title .upside:last-child {
+  font-size: 14px;
+  opacity: 0.45;
+}
 
-.aside-nav { display: grid; gap: 10px; }
+.aside-nav {
+  display: grid;
+  gap: 10px;
+}
 .aside-nav a {
   color: var(--muted);
   text-decoration: none;
@@ -194,19 +258,28 @@ function formatDate(date: string) {
   gap: 8px;
 }
 .aside-nav a::before {
-  content: '';
+  content: "";
   width: 26px;
   height: 1px;
   background: var(--hairline-strong);
   transition: width 700ms var(--ease);
 }
 .aside-nav a:hover,
-.aside-nav a.is-active { color: var(--ink); }
+.aside-nav a.is-active {
+  color: var(--ink);
+}
 .aside-nav a:hover::before,
-.aside-nav a.is-active::before { width: 40px; }
+.aside-nav a.is-active::before {
+  width: 40px;
+}
 
-.writing-main { display: grid; gap: 28px; }
-.hero .core { padding: 26px; }
+.writing-main {
+  display: grid;
+  gap: 28px;
+}
+.hero .core {
+  padding: 26px;
+}
 
 .eyebrow {
   display: inline-flex;
@@ -214,14 +287,20 @@ function formatDate(date: string) {
   gap: 8px;
   padding: 6px 12px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.6);
+  background: rgba(255, 255, 255, 0.6);
   box-shadow: inset 0 0 0 1px var(--hairline);
   color: var(--muted);
   font-size: 10px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
 }
-.dot { width: 6px; height: 6px; border-radius: 999px; background: #2f6a4a; box-shadow: 0 0 0 4px rgba(47,106,74,.18); }
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #2f6a4a;
+  box-shadow: 0 0 0 4px rgba(47, 106, 74, 0.18);
+}
 
 .hero h1 {
   margin: 14px 0 10px;
@@ -229,20 +308,64 @@ function formatDate(date: string) {
   line-height: 1;
   letter-spacing: -0.03em;
 }
-.hero p { margin: 0; color: var(--ink-2); }
+.hero p {
+  margin: 0;
+  color: var(--ink-2);
+}
 
-.stats-grid { margin-top: 16px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; max-width: 360px; }
-.stat-box { border: 1px solid var(--hairline); border-radius: 14px; background: var(--canvas-2); padding: 12px; }
-.stat-box strong { font-size: 28px; line-height: 1; color: var(--ink); display: block; }
-.stat-box span { font-size: 12px; color: var(--ink-2); }
+.stats-grid {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  max-width: 360px;
+}
+.stat-box {
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  background: var(--canvas-2);
+  padding: 12px;
+}
+.stat-box strong {
+  font-size: 28px;
+  line-height: 1;
+  color: var(--ink);
+  display: block;
+}
+.stat-box span {
+  font-size: 12px;
+  color: var(--ink-2);
+}
 
-.section { border-top: 1px solid var(--hairline); padding-top: 14px; }
-.section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-.section-index { color: var(--muted); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; }
-.kanji { font-size: 14px; opacity: 0.35; }
+.section {
+  border-top: 1px solid var(--hairline);
+  padding-top: 14px;
+}
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.section-index {
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.kanji {
+  font-size: 14px;
+  opacity: 0.35;
+}
 
-.tag-row .core { padding: 12px; }
-.pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag-row .core {
+  padding: 12px;
+}
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 .tag-pill {
   border: 1px solid var(--hairline);
   background: var(--canvas-2);
@@ -251,12 +374,23 @@ function formatDate(date: string) {
   padding: 6px 12px;
   font-size: 11px;
 }
-.tag-pill.is-active { background: var(--ink); color: var(--canvas); border-color: var(--ink); }
+.tag-pill.is-active {
+  background: var(--ink);
+  color: var(--canvas);
+  border-color: var(--ink);
+}
 
-.empty .core { padding: 20px; }
-.empty p { margin: 0; color: var(--ink-2); }
+.empty .core {
+  padding: 20px;
+}
+.empty p {
+  margin: 0;
+  color: var(--ink-2);
+}
 
-.list .core { padding: 10px 16px; }
+.list .core {
+  padding: 10px 16px;
+}
 .item {
   display: grid;
   grid-template-columns: 32px minmax(0, 1fr) auto 16px;
@@ -266,11 +400,24 @@ function formatDate(date: string) {
   border-bottom: 1px solid var(--hairline);
   text-decoration: none;
 }
-.item:last-child { border-bottom: none; }
-.num { color: var(--hairline-strong); font-size: 11px; padding-top: 3px; }
+.item:last-child {
+  border-bottom: none;
+}
+.num {
+  color: var(--hairline-strong);
+  font-size: 11px;
+  padding-top: 3px;
+}
 
-.copy { min-width: 0; }
-.badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
+.copy {
+  min-width: 0;
+}
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+}
 .badge {
   border: 1px solid var(--hairline);
   color: var(--muted);
@@ -281,7 +428,7 @@ function formatDate(date: string) {
   text-transform: uppercase;
 }
 .badge.featured {
-  border-color: rgba(31,106,78,.35);
+  border-color: rgba(31, 106, 78, 0.35);
   color: #1f6a4e;
   display: inline-flex;
   align-items: center;
@@ -310,15 +457,32 @@ function formatDate(date: string) {
   font-size: 11px;
   padding-top: 4px;
 }
-.chev { width: 14px; height: 14px; color: var(--hairline-strong); align-self: center; }
+.chev {
+  width: 14px;
+  height: 14px;
+  color: var(--hairline-strong);
+  align-self: center;
+}
 
 @media (max-width: 1024px) {
-  .writing-page { grid-template-columns: 1fr; padding-top: 84px; }
-  .writing-aside { display: none; }
+  .writing-page {
+    grid-template-columns: 1fr;
+    padding-top: 84px;
+  }
+  .writing-aside {
+    display: none;
+  }
 }
 @media (max-width: 767px) {
-  .writing-page { padding: 74px 16px 90px; }
-  .item { grid-template-columns: 24px minmax(0, 1fr); }
-  .meta, .chev { display: none; }
+  .writing-page {
+    padding: 74px 16px 90px;
+  }
+  .item {
+    grid-template-columns: 24px minmax(0, 1fr);
+  }
+  .meta,
+  .chev {
+    display: none;
+  }
 }
 </style>

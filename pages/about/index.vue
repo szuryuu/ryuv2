@@ -1,9 +1,42 @@
 <script setup lang="ts">
+import { onMounted, onBeforeUnmount } from "vue";
 import { usePageEnter } from "~/composables/usePageEnter";
 import { useScrollSpy } from "~/composables/useScrollSpy";
 
 const pageRef = usePageEnter({ y: 20, duration: 0.6 });
 const { activeId } = useScrollSpy(["intro", "journey", "skill"]);
+
+let io: IntersectionObserver | null = null;
+
+onMounted(() => {
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+  const reveals = document.querySelectorAll<HTMLElement>(".reveal");
+
+  if (prefersReduced) {
+    reveals.forEach((el) => el.classList.add("is-in"));
+    return;
+  }
+
+  io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-in");
+          io?.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12, rootMargin: "0px 0px -10% 0px" },
+  );
+
+  reveals.forEach((el) => io?.observe(el));
+});
+
+onBeforeUnmount(() => {
+  io?.disconnect();
+});
 </script>
 
 <template>
@@ -71,6 +104,14 @@ const { activeId } = useScrollSpy(["intro", "journey", "skill"]);
       </section>
     </main>
   </div>
+
+  <ClosingCTA
+    title="Build systems that ship."
+    description="Open for DevOps, cloud migration, and secure platform delivery."
+    cta-text="Get in Touch"
+    cta-link="/contact"
+    kanji="連絡"
+  />
 </template>
 
 <style scoped>

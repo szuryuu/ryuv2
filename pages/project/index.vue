@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import ProjectCard from '~/components/project/ProjectCard.vue'
 import { usePageEnter } from '~/composables/usePageEnter'
 import { useScrollSpy } from '~/composables/useScrollSpy'
@@ -54,6 +54,36 @@ const stats = computed(() => {
     featured: projects.value.filter((p) => p.featured).length,
     completed: projects.value.filter((p) => p.status === 'Completed').length
   }
+})
+
+let io: IntersectionObserver | null = null
+
+onMounted(() => {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const reveals = document.querySelectorAll<HTMLElement>('.reveal')
+
+  if (prefersReduced) {
+    reveals.forEach(el => el.classList.add('is-in'))
+    return
+  }
+
+  io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in')
+          io?.unobserve(entry.target)
+        }
+      })
+    },
+    { threshold: 0.12, rootMargin: '0px 0px -10% 0px' }
+  )
+
+  reveals.forEach(el => io?.observe(el))
+})
+
+onBeforeUnmount(() => {
+  io?.disconnect()
 })
 </script>
 
@@ -225,6 +255,14 @@ const stats = computed(() => {
       </section>
     </main>
   </div>
+
+  <ClosingCTA
+    title="Build systems that ship."
+    description="Open for DevOps, cloud migration, and secure platform delivery."
+    cta-text="Get in Touch"
+    cta-link="/contact"
+    kanji="連絡"
+  />
 </template>
 
 <style scoped>
