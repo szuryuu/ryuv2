@@ -13,7 +13,7 @@ if (!article.value) {
   throw createError({ statusCode: 404, message: "Article not found" });
 }
 
-const { data: allArticles } = await useAsyncData("all-writing", () =>
+const { data: allArticles } = await useLazyAsyncData("all-writing", () =>
   queryCollection("writing").order("date", "DESC").all(),
 );
 

@@ -5,7 +5,7 @@ import { useScrollSpy } from '~/composables/useScrollSpy'
 
 const { activeId } = useScrollSpy(['overview', 'filter', 'showcase'])
 
-const { data: projects } = await useAsyncData('projects', () =>
+const { data: projects } = await useLazyAsyncData('projects', () =>
   queryCollection('projects').order('order', 'ASC').all()
 )
 
@@ -65,6 +65,14 @@ onMounted(() => {
     return
   }
 
+  // Immediately show above-fold content
+  reveals.forEach((el) => {
+    const rect = el.getBoundingClientRect()
+    if (rect.top < window.innerHeight) {
+      el.classList.add('is-in')
+    }
+  })
+
   io = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -77,7 +85,11 @@ onMounted(() => {
     { threshold: 0.12, rootMargin: '0px 0px -10% 0px' }
   )
 
-  reveals.forEach(el => io?.observe(el))
+  reveals.forEach(el => {
+    if (!el.classList.contains('is-in')) {
+      io?.observe(el)
+    }
+  })
 })
 
 onBeforeUnmount(() => {

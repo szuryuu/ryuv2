@@ -5,7 +5,7 @@ const { data: githubData } = await useLazyAsyncData("github-commits", () =>
   $fetch("/api/github/commits"),
 );
 
-const { data: projects } = await useAsyncData("projects-home", () =>
+const { data: projects } = await useLazyAsyncData("projects-home", () =>
   queryCollection("projects").order("order", "ASC").all(),
 );
 
@@ -45,13 +45,17 @@ const marqueeSkills = computed(() => {
 
 const orderedProjects = computed(() => {
   const list = projects.value ?? [];
+  if (list.length === 0) return [];
   return [...list].sort((a, b) => {
     if (a.featured === b.featured) return a.order - b.order;
     return a.featured ? -1 : 1;
   });
 });
 
-const bentoProjects = computed(() => orderedProjects.value.slice(0, 6));
+const bentoProjects = computed(() => {
+  const ordered = orderedProjects.value;
+  return ordered.length > 0 ? ordered.slice(0, 6) : [];
+});
 
 const bentoClasses = [
   "span-3 row-2",
@@ -75,6 +79,14 @@ onMounted(() => {
     return;
   }
 
+  // Immediately show above-fold content
+  reveals.forEach((el) => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      el.classList.add("is-in");
+    }
+  });
+
   io = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -87,7 +99,11 @@ onMounted(() => {
     { threshold: 0.12, rootMargin: "0px 0px -10% 0px" },
   );
 
-  reveals.forEach((el) => io?.observe(el));
+  reveals.forEach((el) => {
+    if (!el.classList.contains("is-in")) {
+      io?.observe(el);
+    }
+  });
 });
 
 onBeforeUnmount(() => {
