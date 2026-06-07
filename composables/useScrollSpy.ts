@@ -5,6 +5,10 @@ export function useScrollSpy(sectionIds: string[]) {
   let observer: IntersectionObserver | null = null;
 
   const handleBottom = () => {
+    // Guard: only update if observed sections still exist in DOM
+    const firstSection = document.getElementById(sectionIds[0]);
+    if (!firstSection) return;
+
     const scrollPosition = window.innerHeight + window.scrollY;
     const scrollHeight = document.documentElement.scrollHeight;
     if (scrollPosition >= scrollHeight - 100) {

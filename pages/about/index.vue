@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useScrollSpy } from "~/composables/useScrollSpy";
 
 const { activeId } = useScrollSpy(["intro", "journey", "skill"]);
 
+const pageRoot = ref<HTMLElement | null>(null);
 let io: IntersectionObserver | null = null;
 
 onMounted(() => {
   const prefersReduced = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
   ).matches;
-  const reveals = document.querySelectorAll<HTMLElement>(".reveal");
+  const reveals = pageRoot.value?.querySelectorAll<HTMLElement>(".reveal") ?? [];
 
   if (prefersReduced) {
     reveals.forEach((el) => el.classList.add("is-in"));
@@ -50,7 +51,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="about-page">
+  <div ref="pageRoot" class="about-page">
     <aside class="about-aside">
       <div class="aside-inner bezel-card">
         <div class="core">

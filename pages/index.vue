@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { devOpsSkills, fullStackSkills } from "~/utils/skills";
 const { data: githubData } = await useLazyAsyncData("github-commits", () =>
   $fetch("/api/github/commits"),
@@ -66,13 +66,14 @@ const bentoClasses = [
   "span-2",
 ];
 
+const pageRoot = ref<HTMLElement | null>(null);
 let io: IntersectionObserver | null = null;
 
 onMounted(() => {
   const prefersReduced = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
   ).matches;
-  const reveals = document.querySelectorAll<HTMLElement>(".reveal");
+  const reveals = pageRoot.value?.querySelectorAll<HTMLElement>(".reveal") ?? [];
 
   if (prefersReduced) {
     reveals.forEach((el) => el.classList.add("is-in"));
@@ -112,7 +113,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="page-root">
+  <div ref="pageRoot" class="page-root">
     <section class="wrap hero reveal">
       <div>
         <span class="eyebrow">

@@ -4,6 +4,8 @@ import { useScrollSpy } from "~/composables/useScrollSpy";
 
 const { activeId } = useScrollSpy(["overview", "articles"]);
 
+const pageRoot = ref<HTMLElement | null>(null);
+
 const { data: articles } = await useLazyAsyncData("writing", () =>
   queryCollection("writing").order("order", "ASC").all(),
 );
@@ -53,7 +55,7 @@ onMounted(() => {
   const prefersReduced = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
   ).matches;
-  const reveals = document.querySelectorAll<HTMLElement>(".reveal");
+  const reveals = pageRoot.value?.querySelectorAll<HTMLElement>(".reveal") ?? [];
 
   if (prefersReduced) {
     reveals.forEach((el) => el.classList.add("is-in"));
@@ -93,7 +95,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="writing-page">
+  <div ref="pageRoot" class="writing-page">
     <aside class="writing-aside">
       <div class="bezel-card sticky-shell">
         <div class="core">

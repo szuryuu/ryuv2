@@ -5,6 +5,8 @@ import { useScrollSpy } from '~/composables/useScrollSpy'
 
 const { activeId } = useScrollSpy(['overview', 'filter', 'showcase'])
 
+const pageRoot = ref<HTMLElement | null>(null)
+
 const { data: projects } = await useLazyAsyncData('projects', () =>
   queryCollection('projects').order('order', 'ASC').all()
 )
@@ -58,7 +60,7 @@ let io: IntersectionObserver | null = null
 
 onMounted(() => {
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const reveals = document.querySelectorAll<HTMLElement>('.reveal')
+  const reveals = pageRoot.value?.querySelectorAll<HTMLElement>('.reveal') ?? []
 
   if (prefersReduced) {
     reveals.forEach(el => el.classList.add('is-in'))
@@ -98,7 +100,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="project-page">
+  <div ref="pageRoot" class="project-page">
     <aside class="project-aside">
       <div class="bezel-card sticky-shell">
         <div class="core">

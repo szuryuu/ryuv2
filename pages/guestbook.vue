@@ -9,6 +9,7 @@ interface GuestEntry {
   created_at: string
 }
 
+const pageRoot = ref<HTMLElement | null>(null)
 const entries = ref<GuestEntry[]>([])
 const loadingList = ref(true)
 const submitting = ref(false)
@@ -84,7 +85,7 @@ onMounted(() => {
   fetchEntries()
 
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const reveals = document.querySelectorAll<HTMLElement>('.reveal')
+  const reveals = pageRoot.value?.querySelectorAll<HTMLElement>('.reveal') ?? []
 
   if (prefersReduced) {
     reveals.forEach(el => el.classList.add('is-in'))
@@ -112,7 +113,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="guestbook-page">
+  <div ref="pageRoot" class="guestbook-page">
     <div class="wrap">
       <header class="page-head bezel-card reveal">
         <div class="core">

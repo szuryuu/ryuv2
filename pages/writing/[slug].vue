@@ -35,6 +35,7 @@ useSeoMeta({
   ogImage: article.value.cover,
 });
 
+const pageRoot = ref<HTMLElement | null>(null);
 const scrollProgress = ref(0);
 const activeId = ref("");
 let observer: IntersectionObserver | null = null;
@@ -119,7 +120,7 @@ onMounted(() => {
   );
 
   setTimeout(() => {
-    document.querySelectorAll(".prose h2, .prose h3").forEach((heading) => {
+    pageRoot.value?.querySelectorAll(".prose h2, .prose h3").forEach((heading) => {
       if (heading.id) observer?.observe(heading);
     });
   }, 500);
@@ -132,7 +133,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <article v-if="article" class="w-full min-h-screen relative">
+  <article v-if="article" ref="pageRoot" class="w-full min-h-screen relative">
     <div class="fixed top-0 left-0 right-0 z-20">
       <div class="h-px w-full bg-hairline">
         <div
