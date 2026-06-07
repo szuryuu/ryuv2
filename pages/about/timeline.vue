@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useTimeline } from '~/composables/useTimeline'
-import { usePageEnter } from '~/composables/usePageEnter'
 
 const { events } = useTimeline()
-const pageRef = usePageEnter({ y: 20, duration: 0.6 })
 
 const expandedRoles = ref<Record<string, boolean>>({})
 
@@ -14,7 +12,7 @@ function toggleRole(id: string) {
 </script>
 
 <template>
-  <div ref="pageRef" class="timeline-page">
+  <div class="timeline-page">
     <header class="timeline-head bezel-card">
       <div class="core">
         <NuxtLink to="/about" class="back-link">

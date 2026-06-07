@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-import { usePageEnter } from '~/composables/usePageEnter'
-
-const pageRef = usePageEnter({ y: 20, duration: 0.6 })
 
 interface GuestEntry {
   id: string
@@ -115,7 +112,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="pageRef" class="guestbook-page">
+  <div class="guestbook-page">
     <div class="wrap">
       <header class="page-head bezel-card reveal">
         <div class="core">

@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import ProjectCard from '~/components/project/ProjectCard.vue'
-import { usePageEnter } from '~/composables/usePageEnter'
 import { useScrollSpy } from '~/composables/useScrollSpy'
 
-const pageRef = usePageEnter({ y: 20, duration: 0.6 })
 const { activeId } = useScrollSpy(['overview', 'filter', 'showcase'])
 
 const { data: projects } = await useAsyncData('projects', () =>
@@ -88,7 +86,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="pageRef" class="project-page">
+  <div class="project-page">
     <aside class="project-aside">
       <div class="bezel-card sticky-shell">
         <div class="core">

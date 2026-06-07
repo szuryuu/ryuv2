@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { usePageEnter } from '~/composables/usePageEnter'
 import { useScrollSpy } from '~/composables/useScrollSpy'
-
-const pageRef = usePageEnter({ y: 20, duration: 0.6 })
 
 const { activeId } = useScrollSpy([
   'email',
@@ -57,7 +54,7 @@ const hoveredContact = ref<string | null>(null)
 </script>
 
 <template>
-  <div ref="pageRef" class="contact-page">
+  <div class="contact-page">
     <aside class="contact-aside">
       <div class="bezel-card sticky-shell">
         <div class="core">

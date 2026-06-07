@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onBeforeUnmount } from "vue";
-import { usePageEnter } from "~/composables/usePageEnter";
 import { useScrollSpy } from "~/composables/useScrollSpy";
 
-const pageRef = usePageEnter({ y: 20, duration: 0.6 });
 const { activeId } = useScrollSpy(["intro", "journey", "skill"]);
 
 let io: IntersectionObserver | null = null;
@@ -40,7 +38,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="pageRef" class="about-page">
+  <div class="about-page">
     <aside class="about-aside">
       <div class="aside-inner bezel-card">
         <div class="core">

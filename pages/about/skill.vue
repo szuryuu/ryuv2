@@ -7,10 +7,7 @@ import {
   skillUrl
 } from '@/utils/skills'
 import { certificateArray } from '@/utils/certificates'
-import { usePageEnter } from '~/composables/usePageEnter'
 import { useScrollSpy } from '~/composables/useScrollSpy'
-
-const pageRef = usePageEnter({ y: 20, duration: 0.6 })
 
 const { activeId } = useScrollSpy([
   'certificates',
@@ -36,7 +33,7 @@ const filteredCertificates = computed(() => {
 </script>
 
 <template>
-  <div ref="pageRef" class="skill-page">
+  <div class="skill-page">
     <aside class="skill-aside">
       <div class="bezel-card sticky-shell">
         <div class="core">

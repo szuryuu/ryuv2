@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted } from "vue";
-import { usePageEnter } from "~/composables/usePageEnter";
 import { devOpsSkills, fullStackSkills } from "~/utils/skills";
-
-const pageRef = usePageEnter({ y: 20, duration: 0.6 });
 const { data: githubData } = await useLazyAsyncData("github-commits", () =>
   $fetch("/api/github/commits"),
 );
@@ -99,7 +96,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="pageRef" class="page-root">
+  <div class="page-root">
     <section class="wrap hero reveal">
       <div>
         <span class="eyebrow">

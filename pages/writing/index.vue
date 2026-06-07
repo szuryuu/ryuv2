@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
-import { usePageEnter } from "~/composables/usePageEnter";
 import { useScrollSpy } from "~/composables/useScrollSpy";
 
-const pageRef = usePageEnter({ y: 20, duration: 0.6 });
 const { activeId } = useScrollSpy(["overview", "articles"]);
 
 const { data: articles } = await useAsyncData("writing", () =>
@@ -83,7 +81,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="pageRef" class="writing-page">
+  <div class="writing-page">
     <aside class="writing-aside">
       <div class="bezel-card sticky-shell">
         <div class="core">
