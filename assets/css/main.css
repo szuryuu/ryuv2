@@ -157,6 +157,16 @@ div[id] {
   scroll-margin-top: 160px;
 }
 
+/* Page transition */
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 400ms var(--ease);
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+}
+
 /* Animation texture */
 /*@media (prefers-reduced-motion: no-preference) {
   body::after {

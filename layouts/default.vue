@@ -24,8 +24,8 @@ function closeMobile() {
           <li><NuxtLink to="/contact">Contact</NuxtLink></li>
         </ul>
 
-        <NuxtLink to="/contact#guestbook" class="pill" @click="closeMobile">
-          <span>Questbook</span>
+        <NuxtLink to="/guestbook" class="pill" @click="closeMobile">
+          <span>Guestbook</span>
           <span class="icon-wrap">
             <svg viewBox="0 0 12 12" stroke-width="1.6">
               <path d="M2.5 6h7M6 2.5L9.5 6 6 9.5" />
@@ -54,7 +54,7 @@ function closeMobile() {
         <NuxtLink to="/project" @click="closeMobile">Projects</NuxtLink>
         <NuxtLink to="/writing" @click="closeMobile">Writing</NuxtLink>
         <NuxtLink to="/contact" @click="closeMobile">Contact</NuxtLink>
-        <NuxtLink to="/contact#guestbook" class="mobile-questbook" @click="closeMobile">Questbook</NuxtLink>
+        <NuxtLink to="/guestbook" class="mobile-questbook" @click="closeMobile">Guestbook</NuxtLink>
       </div>
     </nav>
 

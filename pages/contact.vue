@@ -9,8 +9,7 @@ const { activeId } = useScrollSpy([
   'email',
   'github',
   'linkedin',
-  'cv',
-  'guestbook'
+  'cv'
 ])
 
 const contacts = [
@@ -54,84 +53,7 @@ const contacts = [
 
 const hoveredContact = ref<string | null>(null)
 
-interface GuestEntry {
-  id: string
-  name: string
-  message: string
-  avatar_url?: string
-  created_at: string
-}
 
-const entries = ref<GuestEntry[]>([])
-const loadingList = ref(true)
-const submitting = ref(false)
-const submitDone = ref(false)
-const submitError = ref('')
-const form = ref({ message: '' })
-const supabase = useSupabaseClient()
-const user = useSupabaseUser()
-
-function formatEntryDate(dt: string) {
-  return new Date(dt).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric'
-  })
-}
-
-async function fetchEntries() {
-  loadingList.value = true
-  try {
-    entries.value = await $fetch<GuestEntry[]>('/api/guestbook')
-  } catch {
-  } finally {
-    loadingList.value = false
-  }
-}
-
-async function loginWithGithub() {
-  const { error } = await supabase.auth.signInWithOAuth({
-    provider: 'github',
-    options: {
-      redirectTo: `${window.location.origin}/contact`
-    }
-  })
-  if (error) console.error(error)
-}
-
-async function logout() {
-  await supabase.auth.signOut()
-}
-
-async function handleSubmit() {
-  submitError.value = ''
-  if (!form.value.message.trim()) {
-    submitError.value = 'Message cannot be empty.'
-    return
-  }
-
-  submitting.value = true
-  try {
-    const entry = await $fetch<GuestEntry>('/api/guestbook', {
-      method: 'POST',
-      body: {
-        message: form.value.message.trim()
-      }
-    })
-    entries.value.unshift(entry)
-    form.value = { message: '' }
-    submitDone.value = true
-    setTimeout(() => (submitDone.value = false), 3000)
-  } catch (e: unknown) {
-    const err = e as { data?: { message?: string } }
-    submitError.value =
-      err?.data?.message ?? 'Something went wrong. Try again.'
-  } finally {
-    submitting.value = false
-  }
-}
-
-onMounted(() => fetchEntries())
 </script>
 
 <template>
@@ -153,7 +75,7 @@ onMounted(() => fetchEntries())
             >
               {{ contact.label }}
             </a>
-            <a href="#guestbook" :class="activeId === 'guestbook' ? 'is-active' : ''">Questbook</a>
+
           </nav>
         </div>
       </div>
@@ -242,89 +164,19 @@ onMounted(() => fetchEntries())
         </div>
       </section>
 
-      <section id="guestbook" class="guestbook bezel-card">
+      <section class="cta-section bezel-card">
         <div class="core">
-          <div class="section-head">
-            <span class="section-index">02 / Questbook</span>
-            <span class="font-decoration kanji">芳名帳</span>
+          <div class="cta-content">
+            <h3>Leave your mark</h3>
+            <p>Sign the Questbook — leave note, thought, or just say hi.</p>
+            <NuxtLink to="/guestbook" class="pill">
+              <span>Open Questbook</span>
+              <span class="icon-wrap">
+                <LucidePenLine class="w-3.5 h-3.5" />
+              </span>
+            </NuxtLink>
           </div>
-
-          <div class="form-wrap">
-            <div class="head-row">
-              <h3>Sign the Questbook</h3>
-              <button
-                v-if="user"
-                @click="logout"
-                class="tiny-btn"
-              >
-                Sign Out
-              </button>
-            </div>
-
-            <div v-if="!user" class="login-box">
-              <p>You must login to sign. Bot protection active.</p>
-              <button @click="loginWithGithub" class="primary-link btn-as-btn">
-                <LucideGithub class="w-4 h-4" />
-                Sign in with GitHub
-              </button>
-            </div>
-
-            <div v-else class="signed-box">
-              <div class="user-row">
-                <img :src="user.user_metadata.avatar_url" class="avatar" alt="Avatar">
-                <span>
-                  Signing as
-                  <strong>{{ user.user_metadata.full_name || user.user_metadata.user_name }}</strong>
-                </span>
-              </div>
-
-              <textarea
-                v-model="form.message"
-                maxlength="300"
-                rows="3"
-                placeholder="Leave a note, thought, or just say hi."
-                :disabled="submitting"
-              />
-              <p class="count">{{ form.message.length }} / 300</p>
-
-              <p v-if="submitError" class="error">{{ submitError }}</p>
-              <p v-if="submitDone" class="ok">
-                <LucideCheck class="w-3.5 h-3.5" />
-                Your message has been recorded. ありがとう。
-              </p>
-
-              <button @click="handleSubmit" :disabled="submitting" class="primary-link btn-as-btn">
-                <LucideLoader2 v-if="submitting" class="w-3.5 h-3.5 animate-spin" />
-                {{ submitting ? 'Signing...' : 'Sign Questbook' }}
-              </button>
-            </div>
-          </div>
-
-          <div class="entries">
-            <div v-if="loadingList" class="loading-list">
-              <div v-for="i in 3" :key="i" class="skeleton" />
-            </div>
-
-            <div v-else-if="entries.length === 0" class="empty-note">
-              <p class="font-decoration">まだ誰もいない</p>
-              <span>Be the first to sign.</span>
-            </div>
-
-            <div v-else class="entry-list">
-              <div v-for="entry in entries" :key="entry.id" class="entry-item">
-                <img v-if="entry.avatar_url" :src="entry.avatar_url" :alt="entry.name" class="entry-avatar">
-                <div v-else class="entry-avatar fallback">{{ entry.name.charAt(0) }}</div>
-
-                <div class="entry-copy">
-                  <div class="entry-head">
-                    <strong>{{ entry.name }}</strong>
-                    <span>{{ formatEntryDate(entry.created_at) }}</span>
-                  </div>
-                  <p>{{ entry.message }}</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <span class="font-decoration cta-kanji">芳名帳</span>
         </div>
       </section>
     </main>
@@ -446,47 +298,70 @@ onMounted(() => fetchEntries())
 .ghost-link { border: 1px solid var(--hairline); color: var(--ink); background: var(--canvas-2); }
 .btn-as-btn { cursor: pointer; }
 
-.head-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-.head-row h3 { margin: 0; color: var(--ink); font-size: 16px; }
-.tiny-btn { border: none; background: transparent; color: #b91c1c; font-size: 11px; }
-
-.login-box { margin-top: 10px; border: 1px solid var(--hairline); border-radius: 12px; background: var(--canvas-2); padding: 12px; }
-.login-box p { margin: 0 0 10px; color: var(--ink-2); font-size: 13px; }
-
-.signed-box { margin-top: 10px; display: grid; gap: 8px; }
-.user-row { display: flex; align-items: center; gap: 8px; color: var(--ink-2); font-size: 13px; }
-.avatar { width: 30px; height: 30px; border-radius: 999px; }
-
-textarea {
-  width: 100%;
-  border: 1px solid var(--hairline);
-  background: var(--canvas-2);
-  border-radius: 12px;
-  padding: 10px;
-  color: var(--ink);
-  font-size: 13px;
+.cta-section .core {
+  padding: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
 }
-.count { margin: 0; text-align: right; color: var(--muted); font-size: 10px; }
-.error { margin: 0; color: #b91c1c; font-size: 12px; }
-.ok { margin: 0; color: #1f6a4e; font-size: 12px; display: inline-flex; align-items: center; gap: 6px; }
 
-.entries { margin-top: 16px; }
-.loading-list { display: grid; gap: 8px; }
-.skeleton { height: 52px; border-radius: 10px; background: var(--canvas-2); border: 1px solid var(--hairline); }
+.cta-content h3 {
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-size: 24px;
+  letter-spacing: -0.02em;
+}
 
-.empty-note { border: 1px solid var(--hairline); border-radius: 12px; text-align: center; padding: 20px; }
-.empty-note p { margin: 0; color: var(--muted); }
-.empty-note span { font-size: 12px; color: var(--muted); }
+.cta-content p {
+  margin: 0 0 16px;
+  color: var(--ink-2);
+  font-size: 14px;
+  max-width: 42ch;
+}
 
-.entry-list { border-top: 1px solid var(--hairline); }
-.entry-item { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--hairline); }
-.entry-avatar { width: 30px; height: 30px; border-radius: 999px; border: 1px solid var(--hairline); object-fit: cover; }
-.entry-avatar.fallback { display: grid; place-items: center; background: var(--canvas-2); color: var(--ink); font-size: 12px; text-transform: uppercase; }
-.entry-copy { min-width: 0; }
-.entry-head { display: flex; gap: 8px; align-items: baseline; }
-.entry-head strong { color: var(--ink); font-size: 13px; }
-.entry-head span { color: var(--muted); font-size: 11px; }
-.entry-copy p { margin: 2px 0 0; color: var(--ink-2); font-size: 13px; }
+.cta-kanji {
+  font-size: 48px;
+  opacity: 0.15;
+  writing-mode: vertical-rl;
+  flex-shrink: 0;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 9px 9px 16px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--canvas);
+  font: 600 13px/1 var(--font-display);
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: transform 700ms var(--ease);
+}
+
+.pill .icon-wrap {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 360ms var(--ease-spring), background 700ms var(--ease);
+}
+
+.pill:hover .icon-wrap {
+  transform: translate(1px, -1px) scale(1.05);
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.pill:active {
+  transform: scale(0.98);
+}
 
 @media (max-width: 1024px) {
   .contact-page { grid-template-columns: 1fr; padding-top: 84px; }
@@ -496,5 +371,13 @@ textarea {
   .contact-page { padding: 74px 16px 90px; }
   .cards-grid,
   .info-grid { grid-template-columns: 1fr; }
+  .cta-section .core {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px;
+  }
+  .cta-kanji {
+    writing-mode: horizontal-tb;
+  }
 }
 </style>
