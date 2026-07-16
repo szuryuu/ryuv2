@@ -72,62 +72,63 @@ onUnmounted(() => {
 <template>
   <div class="root">
     <div class="col-sticky">
-      <section class="section identity">
-        <div class="name-line">
-          <span class="tag">C.</span>
-          <span class="mono">{{ year }}</span>
-          <span class="mono">Shafwan Ilham Dzaky</span>
-        </div>
-
-        <ClientOnly>
-          <div class="clock">
-            <div class="clock-row">
-              <span class="tag">T.</span>
-              <span class="mono clock-tz">YOG</span>
-              <span class="mono clock-time">{{ ownerTime }}</span>
-              <span class="mono clock-offset">GMT+7</span>
-            </div>
-            <div class="clock-row clock-row-you">
-              <span class="tag tag-hidden">T.</span>
-              <span class="mono clock-tz">YOU</span>
-              <span class="mono clock-time">{{ visitorTime }}</span>
-              <span class="mono clock-offset">{{ visitorOffset }}</span>
-            </div>
+      <div class="col-sticky-top">
+        <section class="section identity">
+          <div class="name-line">
+            <span class="tag">C.</span>
+            <span class="mono">{{ year }}</span>
+            <span class="mono">Shafwan Ilham Dzaky</span>
           </div>
-          <template #fallback>
+
+          <ClientOnly>
             <div class="clock">
               <div class="clock-row">
                 <span class="tag">T.</span>
                 <span class="mono clock-tz">YOG</span>
-                <span class="mono clock-time">--:--:--</span>
+                <span class="mono clock-time">{{ ownerTime }}</span>
                 <span class="mono clock-offset">GMT+7</span>
               </div>
               <div class="clock-row clock-row-you">
                 <span class="tag tag-hidden">T.</span>
                 <span class="mono clock-tz">YOU</span>
-                <span class="mono clock-time">--:--:--</span>
-                <span class="mono clock-offset">GMT</span>
+                <span class="mono clock-time">{{ visitorTime }}</span>
+                <span class="mono clock-offset">{{ visitorOffset }}</span>
               </div>
             </div>
-          </template>
-        </ClientOnly>
-      </section>
+            <template #fallback>
+              <div class="clock">
+                <div class="clock-row">
+                  <span class="tag">T.</span>
+                  <span class="mono clock-tz">YOG</span>
+                  <span class="mono clock-time">--:--:--</span>
+                  <span class="mono clock-offset">GMT+7</span>
+                </div>
+                <div class="clock-row clock-row-you">
+                  <span class="tag tag-hidden">T.</span>
+                  <span class="mono clock-tz">YOU</span>
+                  <span class="mono clock-time">--:--:--</span>
+                  <span class="mono clock-offset">GMT</span>
+                </div>
+              </div>
+            </template>
+          </ClientOnly>
+        </section>
+      </div>
 
-      <!-- S. Socials -->
-      <section class="section socials">
-        <span class="tag">S.</span>
-        <a href="https://github.com/szuryuu" target="_blank" rel="noopener">GitHub</a>
-        <span class="sep">·</span>
-        <a href="https://linkedin.com/in/shafwan-ilham-dzaky" target="_blank" rel="noopener">LinkedIn</a>
-      </section>
+      <div class="col-sticky-bottom">
+        <section class="section socials">
+          <span class="tag">S.</span>
+          <div class="socials-links">
+            <a href="https://github.com/szuryuu" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://linkedin.com/in/shafwan-ilham-dzaky" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </section>
 
-      <!-- E. Email -->
-      <section class="section email">
-        <span class="tag">E.</span>
-        <a href="mailto:ilhamdzaky@gmail.com">ilhamdzaky@gmail.com</a>
-      </section>
-
-
+        <section class="section email">
+          <span class="tag">E.</span>
+          <a href="mailto:ilhamdzaky@gmail.com">ilhamdzaky@gmail.com</a>
+        </section>
+      </div>
     </div>
 
     <div class="col-scroll">
@@ -135,8 +136,14 @@ onUnmounted(() => {
       <section class="section bio">
         <p>
           I build automated infrastructure, resilient systems, and
-          security-first architecture. Focused on cloud-native platforms,
-          CI/CD pipelines, and production-grade service meshes.
+          security-first architecture. Focused on cloud-native platforms, CI/CD
+          pipelines, and production-grade service meshes.
+        </p>
+        <p>
+          Previously focused on infrastructure automation, monitoring and
+          observability with tools like Prometheus, Grafana, and the ELK stack.
+          Experienced with multi-cloud environments and designing secure,
+          scalable networks from the ground up.
         </p>
       </section>
 
@@ -181,12 +188,27 @@ onUnmounted(() => {
   </div>
 </template>
 
+<style>
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+</style>
+
 <style scoped>
 .root {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 64px;
-  padding: 80px 48px 48px;
+  align-items: start;
+  gap: clamp(48px, 6vw, 96px);
+  padding: 0 24px 48px;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -195,15 +217,24 @@ onUnmounted(() => {
   position: sticky;
   top: 0;
   align-self: start;
-  order: 2;
+  order: 1;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 90px);
+  height: calc(100dvh - 90px);
+  justify-content: space-between;
+  padding-top: 140px;
+  text-align: left;
+  overflow: hidden;
 }
 
 .col-scroll {
-  order: 1;
+  order: 2;
+  padding-top: 140px;
 }
 
 .section {
-  margin-bottom: 48px;
+  margin-bottom: 0;
 }
 
 .tag {
@@ -280,18 +311,30 @@ onUnmounted(() => {
 .bio p {
   max-width: 52ch;
   color: var(--ink-2);
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.6;
-  margin: 0;
+  margin: 0 0 1em;
 }
 
-/* Socials + Email */
-.socials,
+.bio p:last-child {
+  margin-bottom: 0;
+}
+
+.socials {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: 15px;
+  margin-bottom: 16px;
+}
+
 .email {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
-  font-size: 13px;
-  margin-bottom: 20px;
+  font-size: 15px;
+  margin-bottom: 16px;
 }
 
 .socials .tag,
@@ -299,10 +342,24 @@ onUnmounted(() => {
   margin-right: 10px;
 }
 
+.socials-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .socials a,
 .email a {
   color: var(--ink);
   text-underline-offset: 3px;
+}
+
+.col-sticky-bottom .section {
+  margin-bottom: 16px;
+}
+
+.col-sticky-bottom .section:last-of-type {
+  margin-bottom: 0;
 }
 
 /* Work */
