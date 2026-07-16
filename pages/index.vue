@@ -67,98 +67,116 @@ function stackFor(project: any): string[] {
 
 <template>
   <div class="root">
-    <!-- N. Identity -->
-    <section class="section identity">
-      <span class="tag">N.</span>
-      <h1>Shafwan Ilham Dzaky</h1>
-      <p class="role">DevOps Engineer &mdash; DevSecOps Focus</p>
-      <p class="meta-line">
-        Yogyakarta, Indonesia<span class="sep">·</span>
-        <span class="status">
-          <span class="pulse" />
-          Available for work
-        </span>
-      </p>
-    </section>
+    <div class="col-sticky">
+      <!-- N. Identity -->
+      <section class="section identity">
+        <span class="tag">N.</span>
+        <h1>Shafwan Ilham Dzaky</h1>
+        <p class="role">DevOps Engineer &mdash; DevSecOps Focus</p>
+        <p class="meta-line">
+          Yogyakarta, Indonesia<span class="sep">·</span>
+          <span class="status">
+            <span class="pulse" />
+            Available for work
+          </span>
+        </p>
+      </section>
 
-    <!-- Bio -->
-    <section class="section bio">
-      <p>
-        I build automated infrastructure, resilient systems, and
-        security-first architecture. Focused on cloud-native platforms,
-        CI/CD pipelines, and production-grade service meshes.
-      </p>
-    </section>
+      <!-- S. Socials -->
+      <section class="section socials">
+        <span class="tag">S.</span>
+        <a href="https://github.com/szuryuu" target="_blank" rel="noopener">GitHub</a>
+        <span class="sep">·</span>
+        <a href="https://linkedin.com/in/shafwan-ilham-dzaky" target="_blank" rel="noopener">LinkedIn</a>
+      </section>
 
-    <!-- S. Socials -->
-    <section class="section socials">
-      <span class="tag">S.</span>
-      <a href="https://github.com/szuryuu" target="_blank" rel="noopener">GitHub</a>
-      <span class="sep">·</span>
-      <a href="https://linkedin.com/in/shafwan-ilham-dzaky" target="_blank" rel="noopener">LinkedIn</a>
-    </section>
+      <!-- E. Email -->
+      <section class="section email">
+        <span class="tag">E.</span>
+        <a href="mailto:ilhamdzaky@gmail.com">ilhamdzaky@gmail.com</a>
+      </section>
 
-    <!-- E. Email -->
-    <section class="section email">
-      <span class="tag">E.</span>
-      <a href="mailto:ilhamdzaky@gmail.com">ilhamdzaky@gmail.com</a>
-    </section>
+      <!-- Skills -->
+      <section class="section skills">
+        <p>{{ skills.join(" · ") }}</p>
+      </section>
 
-    <!-- W. Selected Work -->
-    <section class="section work">
-      <span class="tag">W.</span>
-      <h2>Selected work ({{ shortlist.length }})</h2>
+      <!-- Footer -->
+      <footer class="footer">
+        Shafwan Ilham Dzaky · DevOps Engineer · Yogyakarta · {{ new Date().getFullYear() }}
+      </footer>
+    </div>
 
-      <ol class="work-list">
-        <li v-for="(p, i) in shortlist" :key="p.path ?? i" class="work-item">
-          <div class="work-num">{{ String(i + 1).padStart(2, "0") }}.</div>
-          <div class="work-body">
-            <a
-              v-if="p.github"
-              :href="p.github"
-              target="_blank"
-              rel="noopener"
-              class="work-title"
-            >
-              {{ p.title }}
-              <span class="ext-link">&nearr;</span>
-            </a>
-            <span v-else class="work-title nolink">{{ p.title }}</span>
+    <div class="col-scroll">
+      <!-- Bio -->
+      <section class="section bio">
+        <p>
+          I build automated infrastructure, resilient systems, and
+          security-first architecture. Focused on cloud-native platforms,
+          CI/CD pipelines, and production-grade service meshes.
+        </p>
+      </section>
 
-            <div class="work-field">
-              <span class="field-label">Info.</span>
-              {{ p.description }}
+      <!-- W. Selected Work -->
+      <section class="section work">
+        <span class="tag">W.</span>
+        <h2>Selected work ({{ shortlist.length }})</h2>
+
+        <ol class="work-list">
+          <li v-for="(p, i) in shortlist" :key="p.path ?? i" class="work-item">
+            <div class="work-num">{{ String(i + 1).padStart(2, "0") }}.</div>
+            <div class="work-body">
+              <a
+                v-if="p.github"
+                :href="p.github"
+                target="_blank"
+                rel="noopener"
+                class="work-title"
+              >
+                {{ p.title }}
+                <span class="ext-link">&nearr;</span>
+              </a>
+              <span v-else class="work-title nolink">{{ p.title }}</span>
+
+              <div class="work-field">
+                <span class="field-label">Info.</span>
+                {{ p.description }}
+              </div>
+              <div class="work-field">
+                <span class="field-label">Stack.</span>
+                {{ stackFor(p).join(", ") }}
+              </div>
+              <div class="work-field">
+                <span class="field-label">Year.</span>
+                {{ p.year }}
+              </div>
             </div>
-            <div class="work-field">
-              <span class="field-label">Stack.</span>
-              {{ stackFor(p).join(", ") }}
-            </div>
-            <div class="work-field">
-              <span class="field-label">Year.</span>
-              {{ p.year }}
-            </div>
-          </div>
-        </li>
-      </ol>
-    </section>
-
-    <!-- Skills -->
-    <section class="section skills">
-      <p>{{ skills.join(" · ") }}</p>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-      Shafwan Ilham Dzaky · DevOps Engineer · Yogyakarta · {{ new Date().getFullYear() }}
-    </footer>
+          </li>
+        </ol>
+      </section>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .root {
-  max-width: 780px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  padding: 80px 48px 48px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 80px 28px 48px;
+}
+
+.col-sticky {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  order: 2;
+}
+
+.col-scroll {
+  order: 1;
 }
 
 .section {
@@ -360,9 +378,20 @@ function stackFor(project: any): string[] {
   letter-spacing: 0.04em;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 767px) {
   .root {
+    grid-template-columns: 1fr;
+    gap: 0;
     padding: 48px 16px 32px;
+  }
+
+  .col-sticky {
+    position: static;
+    order: 0;
+  }
+
+  .col-scroll {
+    order: 0;
   }
 
   .section {
