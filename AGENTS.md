@@ -59,6 +59,52 @@ Tone below for why this deviates from the literal reference).
 This is a DevOps/infra engineer's site, not a creative-dev agency site — keep
 it credible for that audience (see Tone below).
 
+### Layout directive: two-column sticky split (confirmed by human, 2026-07-16)
+
+This is NOT a text-alignment mirror. It's a two-column grid layout, columns
+swapped left/right relative to the reference:
+
+```
+┌─────────────────────────┬──────────────────────────┐
+│  LEFT COLUMN (scrolls)   │  RIGHT COLUMN (sticky)    │
+│                          │  position: sticky;        │
+│  Bio (2-3 sentences)     │  top: 0; height: 100vh;   │
+│  — sits directly above  │  (or fit-content — check  │
+│  the heading below, not │  it doesn't clip on short │
+│  in the sticky column   │  viewports)               │
+│                          │                            │
+│  "Selected work (6)"     │  N. / identity block       │
+│  01. Project title       │  name, role, location,     │
+│      Info./Stack./Year.  │  status line               │
+│  02. ...                 │                            │
+│  03. ...                 │  Skills line               │
+│  04. ...                 │                            │
+│  05. ...                 │  S. — GitHub / LinkedIn     │
+│  06. ...                 │  E. — email                 │
+│  (list is taller than    │                            │
+│  viewport — this column  │  Footer: name · role ·      │
+│  scrolls with the page)  │  location · year            │
+└─────────────────────────┴──────────────────────────┘
+```
+
+Left = bio + work list (mirrored from reference's right column, where bio
+sits directly above "Selected works" in the source DOM order — confirmed by
+re-fetching the reference). Right = identity/skills/contact/footer, pinned
+via `position: sticky` so it stays visible while the left column scrolls.
+
+Skills line and footer aren't present in the reference at all — they're
+additions for this site. Default assumption: both sit in the sticky column
+(skills after status line, footer at the very bottom, below E.). If the
+sticky column's total content is taller than the viewport on smaller screens,
+it will clip or overflow — check this visually once built, and if it
+happens, either give the sticky column its own internal scroll or move
+skills/footer out to the scrolling column instead. Flag to the human rather
+than silently truncating content.
+
+On mobile/narrow viewports, stack to a single column (identity block first,
+then work list) — sticky positioning only makes sense at desktop widths where
+two columns fit side by side.
+
 ## What this page contains, in order
 
 1. **Header / identity** — name, role, one line of location/status. No nav
@@ -162,3 +208,7 @@ State clearly to the user before deleting anything, but the target is:
 - [ ] Site is legible and functional with JS disabled (no critical content
       hidden behind animation-only reveal)
 - [ ] `bun run dev` runs with zero console errors
+- [ ] Layout matches the two-column sticky-split directive — verified
+      visually by scrolling the page, not just by code review: identity
+      column stays pinned on the right while the work list scrolls on the
+      left, at desktop width
