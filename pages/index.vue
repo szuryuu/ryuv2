@@ -364,9 +364,8 @@ body {
 
 /* Work */
 .work h2 {
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-size: 15px;
+  font-weight: 400;
   margin: 4px 0 28px;
 }
 
@@ -402,9 +401,8 @@ body {
 }
 
 .work-title {
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-size: 15px;
+  font-weight: 400;
   color: var(--ink);
   text-decoration: none;
 }
@@ -425,7 +423,7 @@ body {
 }
 
 .work-field {
-  font-size: 13.5px;
+  font-size: 15px;
   color: var(--ink-2);
   line-height: 1.55;
   margin-top: 4px;
@@ -450,14 +448,15 @@ body {
   .col-sticky {
     position: static;
     order: 0;
+    height: auto;
+    display: block;
+    padding-top: 0;
+    text-align: left;
   }
 
   .col-scroll {
     order: 0;
-  }
-
-  .section {
-    margin-bottom: 36px;
+    padding-top: 0;
   }
 
   .work-item {
