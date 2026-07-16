@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { devOpsSkills, fullStackSkills } from "~/utils/skills";
 
 const { data: projects } = await useAsyncData("projects-home", () =>
   queryCollection("projects").order("order", "ASC").all(),
@@ -22,40 +21,6 @@ const shortlist = computed(() => {
     .filter(Boolean);
 });
 
-const skillLabelMap: Record<string, string> = {
-  js: "JavaScript",
-  typescript: "TypeScript",
-  vue: "Vue",
-  nuxtjs: "Nuxt",
-  php: "PHP",
-  laravel: "Laravel",
-  mysql: "MySQL",
-  sqlite: "SQLite",
-  git: "Git",
-  npm: "NPM",
-  bun: "Bun",
-  vercel: "Vercel",
-  vite: "Vite",
-  ansible: "Ansible",
-  arch: "Arch Linux",
-  azure: "Azure",
-  bash: "Bash",
-  docker: "Docker",
-  githubactions: "GitHub Actions",
-  go: "Go",
-  kubernetes: "Kubernetes",
-  linux: "Linux",
-  nginx: "Nginx",
-  prometheus: "Prometheus",
-  rust: "Rust",
-  terraform: "Terraform",
-};
-
-const skills = computed(() => {
-  const set = new Set([...devOpsSkills, ...fullStackSkills]);
-  return Array.from(set).map((s) => skillLabelMap[s] ?? s);
-});
-
 function stackFor(project: any): string[] {
   const tech = project.tech ?? [];
   const infra = tech.filter((t: string) =>
@@ -68,20 +33,6 @@ function stackFor(project: any): string[] {
 <template>
   <div class="root">
     <div class="col-sticky">
-      <!-- N. Identity -->
-      <section class="section identity">
-        <span class="tag">N.</span>
-        <h1>Shafwan Ilham Dzaky</h1>
-        <p class="role">DevOps Engineer &mdash; DevSecOps Focus</p>
-        <p class="meta-line">
-          Yogyakarta, Indonesia<span class="sep">·</span>
-          <span class="status">
-            <span class="pulse" />
-            Available for work
-          </span>
-        </p>
-      </section>
-
       <!-- S. Socials -->
       <section class="section socials">
         <span class="tag">S.</span>
@@ -96,15 +47,7 @@ function stackFor(project: any): string[] {
         <a href="mailto:ilhamdzaky@gmail.com">ilhamdzaky@gmail.com</a>
       </section>
 
-      <!-- Skills -->
-      <section class="section skills">
-        <p>{{ skills.join(" · ") }}</p>
-      </section>
 
-      <!-- Footer -->
-      <footer class="footer">
-        Shafwan Ilham Dzaky · DevOps Engineer · Yogyakarta · {{ new Date().getFullYear() }}
-      </footer>
     </div>
 
     <div class="col-scroll">
@@ -193,62 +136,6 @@ function stackFor(project: any): string[] {
 }
 
 /* Identity */
-.identity {
-  margin-bottom: 36px;
-}
-
-.identity h1 {
-  font-size: clamp(48px, 7vw, 86px);
-  font-weight: 700;
-  line-height: 0.96;
-  letter-spacing: -0.038em;
-  margin: 10px 0 14px;
-  max-width: 14ch;
-}
-
-.role {
-  font-size: 16px;
-  color: var(--muted);
-  margin: 0 0 8px;
-}
-
-.meta-line {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  font-size: 11.5px;
-  color: var(--muted);
-  letter-spacing: 0.04em;
-  margin: 0;
-}
-
-.sep {
-  margin: 0 8px;
-  opacity: 0.4;
-}
-
-.status {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: #2f6a4a;
-}
-
-.pulse {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 999px;
-  background: #2f6a4a;
-  box-shadow: 0 0 0 0 rgba(47, 106, 74, 0.4);
-  animation: pulse 2.4s ease infinite;
-}
-
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(47, 106, 74, 0.4); }
-  70% { box-shadow: 0 0 0 9px rgba(47, 106, 74, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(47, 106, 74, 0); }
-}
-
 /* Bio */
 .bio p {
   max-width: 52ch;
@@ -356,28 +243,6 @@ function stackFor(project: any): string[] {
   margin-right: 6px;
 }
 
-/* Skills */
-.skills p {
-  font-size: 13px;
-  color: var(--muted);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  line-height: 1.7;
-  margin: 0;
-}
-
-/* Footer */
-.footer {
-  margin-top: 80px;
-  padding-top: 20px;
-  border-top: 1px solid var(--hairline);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 0.04em;
-}
-
 @media (max-width: 767px) {
   .root {
     grid-template-columns: 1fr;
@@ -403,9 +268,5 @@ function stackFor(project: any): string[] {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .pulse {
-    animation: none;
-  }
-}
+
 </style>
