@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref, onMounted, onUnmounted } from "vue";
 
 const { data: projects } = await useAsyncData("projects-home", () =>
   queryCollection("projects").order("order", "ASC").all(),
@@ -28,11 +28,91 @@ function stackFor(project: any): string[] {
   );
   return infra.length >= 2 ? infra.slice(0, 4) : tech.slice(0, 4);
 }
+
+const year = new Date().getFullYear();
+
+const ownerTime = ref("--:--:--");
+const visitorTime = ref("--:--:--");
+const visitorOffset = ref("GMT");
+
+function fmtTime(d: Date): string {
+  return d.toLocaleTimeString("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  });
+}
+
+function updateClock() {
+  const now = new Date();
+  const jakarta = new Date(
+    now.toLocaleString("en-US", { timeZone: "Asia/Jakarta" }),
+  );
+  ownerTime.value = fmtTime(jakarta);
+  visitorTime.value = fmtTime(now);
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZoneName: "short",
+  } as Intl.DateTimeFormatOptions)
+    .formatToParts(now)
+    .find((p) => p.type === "timeZoneName");
+  visitorOffset.value = parts ? parts.value : "GMT";
+}
+
+let timer: ReturnType<typeof setInterval> | null = null;
+onMounted(() => {
+  updateClock();
+  timer = setInterval(updateClock, 1000);
+});
+onUnmounted(() => {
+  if (timer) clearInterval(timer);
+});
 </script>
 
 <template>
   <div class="root">
     <div class="col-sticky">
+      <section class="section identity">
+        <div class="name-line">
+          <span class="tag">C.</span>
+          <span class="mono">{{ year }}</span>
+          <span class="mono">Shafwan Ilham Dzaky</span>
+        </div>
+
+        <ClientOnly>
+          <div class="clock">
+            <div class="clock-row">
+              <span class="tag">T.</span>
+              <span class="mono clock-tz">YOG</span>
+              <span class="mono clock-time">{{ ownerTime }}</span>
+              <span class="mono clock-offset">GMT+7</span>
+            </div>
+            <div class="clock-row clock-row-you">
+              <span class="tag tag-hidden">T.</span>
+              <span class="mono clock-tz">YOU</span>
+              <span class="mono clock-time">{{ visitorTime }}</span>
+              <span class="mono clock-offset">{{ visitorOffset }}</span>
+            </div>
+          </div>
+          <template #fallback>
+            <div class="clock">
+              <div class="clock-row">
+                <span class="tag">T.</span>
+                <span class="mono clock-tz">YOG</span>
+                <span class="mono clock-time">--:--:--</span>
+                <span class="mono clock-offset">GMT+7</span>
+              </div>
+              <div class="clock-row clock-row-you">
+                <span class="tag tag-hidden">T.</span>
+                <span class="mono clock-tz">YOU</span>
+                <span class="mono clock-time">--:--:--</span>
+                <span class="mono clock-offset">GMT</span>
+              </div>
+            </div>
+          </template>
+        </ClientOnly>
+      </section>
+
       <!-- S. Socials -->
       <section class="section socials">
         <span class="tag">S.</span>
@@ -135,7 +215,67 @@ function stackFor(project: any): string[] {
   color: var(--muted);
 }
 
-/* Identity */
+.name-line {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: 15px;
+  margin: 0 0 10px;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.name-line .mono {
+  margin-right: 0.75ch;
+}
+
+.clock {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: 15px;
+  margin-bottom: 0;
+}
+
+.clock-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  gap: 0;
+}
+
+.clock-row .tag {
+  margin-right: 1.5ch;
+}
+
+.clock-tz {
+  min-width: 3ch;
+  text-align: left;
+  margin-right: 1.5ch;
+}
+
+.clock-time {
+  min-width: 8ch;
+  text-align: right;
+  margin-right: 1ch;
+}
+
+.clock-offset {
+  color: var(--muted);
+}
+
+.clock-row-you {
+  margin-top: 2px;
+}
+
+.tag-hidden {
+  visibility: hidden;
+}
+
 /* Bio */
 .bio p {
   max-width: 52ch;
