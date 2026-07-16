@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Zen+Old+Mincho&display=swap");
-
 @import "tailwindcss";
 @import "@nuxt/ui";
 @import "./text-custom.css";
@@ -8,7 +6,6 @@
 
 @theme {
   --font-display: "Plus Jakarta Sans", sans-serif;
-  --font-decoration: "Zen Old Mincho", serif;
   --canvas: #F2F2F0;
   --canvas-2: #FDFBF7;
   --ink: #222222;
@@ -23,88 +20,6 @@
   --core-radius: 1.85rem;
 }
 
-/* Ambient mesh */
-.mesh {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-.mesh::before,
-.mesh::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.18;
-  will-change: transform;
-}
-.mesh::before {
-  width: 720px;
-  height: 720px;
-  background: radial-gradient(circle at 30% 30%, #8fa8c8, transparent 60%);
-  top: -180px;
-  left: -160px;
-  animation: drift1 28s var(--ease) infinite alternate;
-}
-.mesh::after {
-  width: 560px;
-  height: 560px;
-  background: radial-gradient(circle at 60% 60%, #c9b79a, transparent 60%);
-  top: 120px;
-  right: -140px;
-  animation: drift2 36s var(--ease) infinite alternate;
-}
-@keyframes drift1 {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(80px, 60px, 0);
-  }
-}
-@keyframes drift2 {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-60px, 40px, 0);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .mesh::before,
-  .mesh::after {
-    animation: none;
-  }
-}
-
-/* Double-bezel utility */
-.bezel-card {
-  padding: 8px;
-  border-radius: var(--shell-radius);
-  background: rgba(255, 255, 255, 0.5);
-  box-shadow:
-    inset 0 1px 0 var(--innerlight),
-    0 0 0 1px var(--hairline),
-    0 24px 48px -28px rgba(10, 10, 10, 0.18);
-}
-.bezel-card .core {
-  border-radius: var(--core-radius);
-  background: var(--canvas-2);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.85),
-    inset 0 0 0 1px var(--hairline);
-  padding: 32px;
-  height: 100%;
-}
-
-/* Upside for Japanese Text */
-.upside {
-  writing-mode: vertical-rl;
-  text-orientation: upright;
-}
-
 /* Remove Scrollbar */
 * {
   scrollbar-width: none;
@@ -115,14 +30,6 @@
 *::-webkit-scrollbar {
   display: none;
   width: 0;
-}
-
-body::before,
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
 }
 
 html {
@@ -137,24 +44,16 @@ body {
   overscroll-behavior-y: none;
 }
 
-/* Texture overlay */
 body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
   background: url("/texture.png") repeat;
   opacity: 0.04;
   mix-blend-mode: overlay;
   z-index: 50;
   inset: -6rem;
-}
-
-h1[id],
-h2[id],
-h3[id],
-h4[id],
-h5[id],
-h6[id],
-section[id],
-div[id] {
-  scroll-margin-top: 160px;
 }
 
 /* Page transition */
@@ -167,39 +66,4 @@ div[id] {
   opacity: 0;
 }
 
-/* Animation texture */
-/*@media (prefers-reduced-motion: no-preference) {
-  body::after {
-    animation: glitch 2s infinite;
-  }
-}*/
 
-/*@keyframes glitch {
-  0% {
-    transform: translate(0);
-    opacity: 0.08;
-  }
-  20% {
-    transform: translate(-2px, 2px);
-    opacity: 0.12;
-  }
-  40% {
-    transform: translate(2px, -2px);
-    opacity: 0.08;
-  }
-  60% {
-    transform: translate(-1px, 1px);
-    opacity: 0.1;
-  }
-  80% {
-    transform: translate(1px, -1px);
-    opacity: 0.09;
-  }
-  100% {
-    transform: translate(0);
-    opacity: 0.08;
-  }
-}
-.animate-glitch {
-  animation: glitch 3s infinite;
-}*/
