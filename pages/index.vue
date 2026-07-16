@@ -200,6 +200,7 @@ body {
   margin: 0;
   padding: 0;
 }
+
 </style>
 
 <style scoped>
@@ -377,6 +378,7 @@ body {
 
 .work-item {
   display: flex;
+  align-items: baseline;
   gap: 20px;
   padding: 25px 0;
   border-top: 1px solid var(--hairline);
@@ -392,7 +394,6 @@ body {
   font-size: 13px;
   color: var(--muted);
   min-width: 28px;
-  padding-top: 1px;
 }
 
 .work-body {
