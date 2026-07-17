@@ -1,75 +1,87 @@
-# Nuxt Minimal Starter
+# Szuryuu
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Personal portfolio site for a DevOps and infrastructure engineer. A single-page Nuxt 3 application with a two-column sticky layout, selected work list, and interactive career timeline.
 
-## Setup
+## Features
 
-Make sure to install dependencies:
+- **Two-column sticky layout**
+  Identity block, skills, and contact pinned on one side while the bio and work list scroll independently. Collapses to a single column on narrow viewports.
+- **Live dual-timezone clock**
+  Displays local time (Asia/Jakarta) and visitor time side by side in the identity block. Rendered client-side via `<ClientOnly>` to avoid SSR hydration mismatches.
+- **Selected work list**
+  Curated project shortlist sourced from `utils/projects.ts`. Each entry shows a one-line description, tech stack, year, and an external link to the repository.
+- **Interactive career timeline**
+  Dot-and-line rail with multi-role support for positions like Botika (two consecutive roles). Sorted by most recent end date.
+
+## Tech Stack
+
+| Category            | Technologies    |
+| :------------------ | :-------------- |
+| **Framework**       | Nuxt 3 (SSG)    |
+| **UI**              | Vue 3, @nuxt/ui |
+| **Styling**         | Tailwind CSS v4 |
+| **Package Manager** | Bun             |
+| **Runtime**         | Node.js         |
+
+## Getting Started
+
+### Prerequisites
+
+- Bun (or Node.js with npm)
+- Git
+
+### Install
 
 ```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
+git clone git@github.com:szuryuu/ryuv2.git
+cd ryuv2
 bun install
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+### Develop
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
 bun run dev
 ```
 
-## Production
+The dev server starts at `http://localhost:3000`.
 
-Build the application for production:
+### Build
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
 bun run build
 ```
 
-Locally preview production build:
+Generates a static site into `.output/public` via `nuxt generate`. The output is a single pre-rendered HTML page with no server runtime required.
+
+### Preview
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
 bun run preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Serves the generated static output locally for verification.
+
+## Project Structure
+
+```
+.
+├── pages/
+│   └── index.vue          # Single-page application entry
+├── utils/
+│   ├── projects.ts        # Project data (title, description, tech, links)
+│   └── timeline.ts        # Career timeline events and roles
+├── assets/
+│   └── css/
+│       └── main.css       # Global styles, CSS custom properties, Tailwind
+├── public/
+│   ├── favicon.ico
+│   ├── logo.webp
+│   ├── robots.txt
+│   └── cv-2026.pdf
+├── app.vue                # Root component, wraps page in UApp
+├── error.vue              # Minimal 404 page with redirect to home
+├── nuxt.config.ts         # Nuxt configuration (SSG, modules, prerender)
+├── package.json
+└── tsconfig.json
+```
