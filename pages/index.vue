@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, onUnmounted } from "vue";
 import { timelineEvents, type TimelineEvent } from "~/utils/timeline";
-
-const { data: projects } = await useAsyncData("projects-home", () =>
-  queryCollection("projects").order("order", "ASC").all(),
-);
+import { projects } from "~/utils/projects";
 
 const shortlistTitles = [
   "CloudOps: Azure GitOps Platform",
@@ -15,12 +12,11 @@ const shortlistTitles = [
   "Dokku Nginx Path",
 ];
 
-const shortlist = computed(() => {
-  const all = projects.value ?? [];
-  return shortlistTitles
-    .map((title) => all.find((p) => p.title === title))
-    .filter(Boolean);
-});
+const shortlist = computed(() =>
+  shortlistTitles
+    .map((title) => projects.find((p) => p.title === title))
+    .filter(Boolean),
+);
 
 function stackFor(project: any): string[] {
   const tech = project.tech ?? [];
