@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, onUnmounted } from "vue";
-import AmbientDissolve from "~/components/AmbientDissolve.vue";
 import { timelineEvents, type TimelineEvent } from "~/utils/timeline";
 
 const { data: projects } = await useAsyncData("projects-home", () =>
@@ -31,7 +30,6 @@ function stackFor(project: any): string[] {
   return infra.length >= 2 ? infra.slice(0, 4) : tech.slice(0, 4);
 }
 
-const identityRef = ref<HTMLElement | null>(null);
 const activeTab = ref<'work' | 'timeline'>('work');
 const year = new Date().getFullYear();
 
@@ -102,12 +100,11 @@ onUnmounted(() => {
     <div class="col-sticky">
       <div class="col-sticky-top">
         <section class="section identity">
-          <div ref="identityRef" class="name-line">
+          <div class="name-line">
             <span class="tag">C.</span>
             <span class="mono">{{ year }}</span>
             <span class="mono">Shafwan Ilham Dzaky</span>
           </div>
-          <AmbientDissolve :target-ref="identityRef" />
 
           <ClientOnly>
             <div class="clock">
