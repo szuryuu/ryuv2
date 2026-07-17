@@ -1,6 +1,6 @@
 # Szuryuu
 
-Personal portfolio site for a DevOps and infrastructure engineer. A single-page Nuxt 3 application with a two-column sticky layout, selected work list, and interactive career timeline.
+Personal portfolio site. A single-page Nuxt 3 application with a two-column sticky layout, selected work list, and interactive career timeline.
 
 ## Features
 
