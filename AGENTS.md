@@ -199,7 +199,48 @@ State clearly to the user before deleting anything, but the target is:
    longer used.
 7. Final pass: check for dead imports, unused components, console errors.
 
-## Non-negotiable checklist before calling any step done
+## Confirmed additions beyond original scope (2026-07-17)
+
+Two features were added after this file was first written, through explicit
+back-and-forth with the human, and are NOT scope creep to be cleaned up:
+
+- **Live two-timezone clock** (identity block, `T.` line) — deliberately
+  added, SSR-safe via `<ClientOnly>`, throttled interval. Keep it.
+- **Timeline section** (tab alongside "Selected work") — deliberately added,
+  sourced from `utils/timeline.ts`, includes a visual dot+line rail and
+  nested mini-timeline for multi-role entries (e.g. Botika). Keep it.
+
+Future cleanup/review passes (ponytail or otherwise) should NOT recommend
+deleting these as "not in spec" — this file's original scope section is
+intentionally left as historical context, not a ceiling on what the site
+can contain. Also note: the confirmed 6-project shortlist in `pages/index.vue`
+(`shortlistTitles`) is NOT equivalent to `project.featured === true` — it
+includes 2 non-featured projects (Azure End-to-End DevOps Pipeline, Dokku
+Nginx Path) chosen deliberately during human curation. Do not "simplify" the
+shortlist logic to filter by the `featured` flag — that would silently drop
+those 2 projects and revert a considered decision.
+
+## Cleanup pass (2026-07-17)
+
+Ran a `ponytail`-style over-engineering review. Approved cuts:
+
+- Guestbook: delete `server/api/guestbook/*`, `types/database.types.ts`,
+  remove `@nuxtjs/supabase` dependency entirely (not just unroute — no page
+  references it, safe to fully remove now, superseding the earlier "leave
+  Supabase config untouched" instruction above, which was written when a
+  guestbook page still existed as a future possibility).
+- `app.vue`: remove dead `<NuxtLayout>` wrapper (no `layouts/` directory
+  exists, it does nothing).
+- `error.vue`: simplify — single-route site doesn't need a complex 404 page.
+- `content.config.ts`: remove the unused `writing` collection definition
+  (does not touch `content/writing/*.md` files themselves, which stay on
+  disk per the original instruction — only stops Nuxt from scanning them
+  into an unused collection).
+- Consolidate repeated inline `font-family: ui-monospace...` declarations
+  in `pages/index.vue` into one shared class.
+
+Rejected cuts (see reasoning above): live clock, timeline section,
+`shortlistTitles` → `featured` flag substitution.
 
 - [ ] No leftover nav links to routes that no longer exist
 - [ ] No `.mesh`, `.bento`, `.b-card`, `font-decoration` classes remain
