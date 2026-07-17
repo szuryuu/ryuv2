@@ -173,15 +173,15 @@ onUnmounted(() => {
 
               <div class="work-field">
                 <span class="field-label">Info.</span>
-                {{ p.description }}
+                <span class="field-value">{{ p.description }}</span>
               </div>
               <div class="work-field">
                 <span class="field-label">Stack.</span>
-                {{ stackFor(p).join(", ") }}
+                <span class="field-value">{{ stackFor(p).join(", ") }}</span>
               </div>
               <div class="work-field">
                 <span class="field-label">Year.</span>
-                {{ p.year }}
+                <span class="field-value">{{ p.year }}</span>
               </div>
             </div>
           </li>
@@ -427,6 +427,8 @@ body {
 }
 
 .work-field {
+  display: flex;
+  align-items: baseline;
   font-size: 15px;
   color: var(--ink-2);
   line-height: 1.55;
@@ -434,12 +436,14 @@ body {
 }
 
 .field-label {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 0.08em;
-  margin-right: 6px;
+  flex-shrink: 0;
+  width: 56px;
+  text-align: left;
+}
+
+.field-value {
+  flex: 1;
+  min-width: 0;
 }
 
 @media (max-width: 767px) {
