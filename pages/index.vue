@@ -100,14 +100,14 @@ onUnmounted(() => {
     <div class="col-sticky">
       <div class="col-sticky-top">
         <section class="section identity">
-          <div class="name-line">
-            <span class="tag">C.</span>
-            <span class="mono">{{ year }}</span>
-            <span class="mono">Shafwan Ilham Dzaky</span>
+          <div class="name-line fn-mono">
+            <span class="tag fn-mono">C.</span>
+            <span class="mono fn-mono">{{ year }}</span>
+            <span class="mono fn-mono">Shafwan Ilham Dzaky</span>
           </div>
 
           <ClientOnly>
-            <div class="clock">
+            <div class="clock fn-mono">
               <div class="clock-row">
                 <span class="tag">T.</span>
                 <span class="mono clock-tz">YOG</span>
@@ -122,7 +122,7 @@ onUnmounted(() => {
               </div>
             </div>
             <template #fallback>
-              <div class="clock">
+              <div class="clock fn-mono">
                 <div class="clock-row">
                   <span class="tag">T.</span>
                   <span class="mono clock-tz">YOG</span>
@@ -142,16 +142,16 @@ onUnmounted(() => {
       </div>
 
       <div class="col-sticky-bottom">
-        <section class="section socials">
-          <span class="tag">S.</span>
+        <section class="section socials fn-mono">
+          <span class="tag fn-mono">S.</span>
           <div class="socials-links">
             <a href="https://github.com/szuryuu" target="_blank" rel="noopener">GitHub</a>
             <a href="https://linkedin.com/in/shafwan-ilham-dzaky" target="_blank" rel="noopener">LinkedIn</a>
           </div>
         </section>
 
-        <section class="section email">
-          <span class="tag">E.</span>
+        <section class="section email fn-mono">
+          <span class="tag fn-mono">E.</span>
           <a href="mailto:ilhamdzaky@gmail.com">ilhamdzaky@gmail.com</a>
         </section>
       </div>
@@ -191,7 +191,7 @@ onUnmounted(() => {
         <!-- Work list -->
         <ol v-if="activeTab === 'work'" class="work-list">
           <li v-for="(p, i) in shortlist" :key="p.path ?? i" class="work-item">
-            <div class="work-num">{{ String(i + 1).padStart(2, "0") }}.</div>
+            <div class="work-num fn-mono">{{ String(i + 1).padStart(2, "0") }}.</div>
             <div class="work-body">
               <a
                 v-if="p.github"
@@ -338,9 +338,12 @@ body {
   margin-bottom: 0;
 }
 
-.tag {
+.fn-mono {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
+}
+
+.tag {
   font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -348,15 +351,11 @@ body {
 }
 
 .name-line {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
   font-size: 15px;
   margin: 0 0 10px;
 }
 
 .mono {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
   font-size: 15px;
   font-weight: 400;
   color: var(--ink);
@@ -367,8 +366,6 @@ body {
 }
 
 .clock {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
   font-size: 15px;
   margin-bottom: 0;
 }
@@ -425,15 +422,11 @@ body {
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
   font-size: 15px;
   margin-bottom: 16px;
 }
 
 .email {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
   font-size: 15px;
   margin-bottom: 16px;
 }
@@ -514,8 +507,6 @@ body {
 }
 
 .work-num {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
   font-size: 13px;
   color: var(--muted);
   min-width: 28px;
