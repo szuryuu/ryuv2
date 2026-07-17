@@ -2,13 +2,22 @@
 @import "@nuxt/ui";
 
 @theme {
-  --font-display: "Plus Jakarta Sans", sans-serif;
+  --font-display: "Roboto Mono", monospace;
   --canvas: #f6f6f6;
-  --ink: #222222;
-  --ink-2: #434343;
+  --ink: #5a5a5a;
+  --ink-2: #5a5a5a;
   --muted: #8d8d7b;
   --hairline: #e5e5dc;
-  --ease: cubic-bezier(0.32,0.72,0,1);
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+:root {
+  --text-body: 14px;
+  --leading-body: 21px;
+  --tracking-body: 0.3px;
+  --text-meta: 12px;
+  --leading-meta: 18px;
+  --tracking-meta: 0.3px;
 }
 
 /* Remove Scrollbar */
@@ -31,8 +40,7 @@ html,
 body {
   background-color: var(--canvas);
   font-family: var(--font-display);
+  font-weight: 400;
   color: var(--ink);
   overscroll-behavior-y: none;
 }
-
-
