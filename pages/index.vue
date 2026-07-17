@@ -390,7 +390,7 @@ body {
 }
 
 .name-line .mono {
-  margin-right: 0.75ch;
+  margin-left: 1.5ch;
 }
 
 .clock {
@@ -452,7 +452,7 @@ body {
 .socials {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
+  gap: 0px;
   font-size: var(--text-meta);
   letter-spacing: var(--tracking-meta);
   margin-bottom: 16px;
@@ -553,7 +553,7 @@ body {
 }
 
 .work-title {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 400;
   color: var(--ink);
   text-decoration: none;
@@ -570,7 +570,7 @@ body {
 
 .ext-link {
   font-size: var(--text-meta);
-  color: var(--muted);
+  color: var(--ink-2);
   margin-left: 2px;
 }
 
@@ -581,12 +581,12 @@ body {
   color: var(--ink-2);
   line-height: var(--leading-meta);
   letter-spacing: var(--tracking-meta);
-  margin-top: 4px;
+  margin-top: 10px;
 }
 
 .field-label {
   flex-shrink: 0;
-  width: 56px;
+  width: 68px;
   text-align: left;
 }
 
@@ -623,8 +623,8 @@ body {
 }
 
 .tl-dot {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: transparent;
   border: 1px solid var(--ink);
@@ -636,7 +636,7 @@ body {
   width: 1px;
   flex: 1;
   background: var(--hairline);
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 .tl-content {
@@ -645,7 +645,7 @@ body {
 }
 
 .tl-title {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 400;
   color: var(--ink);
 }
@@ -657,7 +657,7 @@ body {
 
 .tl-role-item {
   display: flex;
-  gap: 12px;
+  gap: 18px;
 }
 
 .tl-rail-mini {
@@ -670,8 +670,8 @@ body {
 }
 
 .tl-dot-mini {
-  width: 4px;
-  height: 4px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: transparent;
   border: 1px solid var(--muted);
