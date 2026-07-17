@@ -16,15 +16,10 @@ export default defineNuxtConfig({
   modules: [
     "@nuxt/content",
     "@nuxt/ui",
-    "@nuxtjs/supabase",
   ],
 
   vite: {
     plugins: [tailwindcss()],
-  },
-
-  supabase: {
-    redirect: false,
   },
 
   nitro: {
