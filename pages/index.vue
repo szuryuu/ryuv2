@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, onUnmounted } from "vue";
 import AmbientDissolve from "~/components/AmbientDissolve.vue";
+import { timelineEvents, type TimelineEvent } from "~/utils/timeline";
 
 const { data: projects } = await useAsyncData("projects-home", () =>
   queryCollection("projects").order("order", "ASC").all(),
@@ -31,7 +32,32 @@ function stackFor(project: any): string[] {
 }
 
 const identityRef = ref<HTMLElement | null>(null);
+const activeTab = ref<'work' | 'timeline'>('work');
 const year = new Date().getFullYear();
+
+// Sort timeline events by latest role's end date, most recent first
+function parseEndDate(role: TimelineEvent['roles'][number]): number {
+  const endPart = role.date.includes(' - ') ? role.date.split(' - ')[1] : role.date;
+  if (endPart === 'Present') return Infinity;
+  const m: Record<string, number> = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
+  const parts = endPart.split(' ');
+  if (parts.length === 2 && m[parts[0]] !== undefined) {
+    return parseInt(parts[1]) * 12 + m[parts[0]];
+  }
+  return 0;
+}
+
+const sortedTimeline = computed(() =>
+  [...timelineEvents].sort((a, b) => {
+    const aLatest = Math.max(...a.roles.map(parseEndDate));
+    const bLatest = Math.max(...b.roles.map(parseEndDate));
+    return bLatest - aLatest;
+  }),
+);
+
+function sortedRoles(event: TimelineEvent): TimelineEvent['roles'] {
+  return [...event.roles].sort((a, b) => parseEndDate(b) - parseEndDate(a));
+}
 
 const ownerTime = ref("--:--:--");
 const visitorTime = ref("--:--:--");
