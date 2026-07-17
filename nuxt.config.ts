@@ -13,30 +13,18 @@ export default defineNuxtConfig({
     },
   },
 
+  modules: [
+    "@nuxt/content",
+    "@nuxt/ui",
+    "@nuxtjs/supabase",
+  ],
+
   vite: {
     plugins: [tailwindcss()],
   },
 
-  modules: [
-    "@nuxt/content",
-    "@nuxt/ui",
-    "nuxt-lucide-icons",
-    "v-gsap-nuxt",
-    "@nuxt/image",
-    "@nuxtjs/supabase",
-  ],
-
   supabase: {
     redirect: false,
-  },
-
-  icon: {
-    customCollections: [
-      {
-        prefix: "custom",
-        dir: "./assets/images/icons",
-      },
-    ],
   },
 
   nitro: {
