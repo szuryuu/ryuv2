@@ -466,11 +466,36 @@ body {
   margin-bottom: 0;
 }
 
-/* Work */
-.work h2 {
+/* Tabs */
+.list-section {
+  margin-top: 32px;
+}
+
+.tab-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 28px;
+}
+
+.tab-label {
+  background: none;
+  border: none;
+  padding: 0;
   font-size: 15px;
-  font-weight: 400;
-  margin: 4px 0 28px;
+  font-family: inherit;
+  color: var(--muted);
+  cursor: pointer;
+  text-underline-offset: 3px;
+}
+
+.tab-label.active {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+.tab-label:hover {
+  color: var(--ink);
 }
 
 .work-list {
@@ -544,6 +569,108 @@ body {
 .field-value {
   flex: 1;
   min-width: 0;
+}
+
+/* Timeline visual */
+.timeline-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tl-event {
+  display: flex;
+  gap: 20px;
+  padding-top: 28px;
+  padding-bottom: 28px;
+  border-top: 1px solid var(--hairline);
+}
+
+.tl-event-last {
+  padding-bottom: 0;
+}
+
+.tl-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 8px;
+}
+
+.tl-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--ink);
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.tl-line {
+  width: 1px;
+  flex: 1;
+  background: var(--hairline);
+  margin-top: 8px;
+}
+
+.tl-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.tl-title {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+/* Multi-role mini timeline */
+.tl-roles {
+  margin-top: 8px;
+}
+
+.tl-role-item {
+  display: flex;
+  gap: 12px;
+}
+
+.tl-rail-mini {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 6px;
+  align-self: stretch;
+}
+
+.tl-dot-mini {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--muted);
+  flex-shrink: 0;
+  margin-top: 8px;
+}
+
+.tl-line-mini {
+  width: 1px;
+  flex: 1;
+  min-height: 2px;
+  background: var(--hairline);
+  margin-top: 4px;
+}
+
+.tl-role-content {
+  flex: 1;
+  min-width: 0;
+  padding-bottom: 8px;
+}
+
+.tl-role-last .tl-role-content {
+  padding-bottom: 0;
 }
 
 @media (max-width: 767px) {
