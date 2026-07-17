@@ -21,20 +21,37 @@ const shortlist = computed(() =>
 function stackFor(project: any): string[] {
   const tech = project.tech ?? [];
   const infra = tech.filter((t: string) =>
-    /azure|aks|terraform|docker|kubernetes|github|nginx|envoy|prometheus|bash|cloud|bicep/i.test(t),
+    /azure|aks|terraform|docker|kubernetes|github|nginx|envoy|prometheus|bash|cloud|bicep/i.test(
+      t,
+    ),
   );
   return infra.length >= 2 ? infra.slice(0, 4) : tech.slice(0, 4);
 }
 
-const activeTab = ref<'work' | 'timeline'>('work');
+const activeTab = ref<"work" | "timeline">("work");
 const year = new Date().getFullYear();
 
 // Sort timeline events by latest role's end date, most recent first
-function parseEndDate(role: TimelineEvent['roles'][number]): number {
-  const endPart = role.date.includes(' - ') ? role.date.split(' - ')[1] : role.date;
-  if (endPart === 'Present') return Infinity;
-  const m: Record<string, number> = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
-  const parts = endPart.split(' ');
+function parseEndDate(role: TimelineEvent["roles"][number]): number {
+  const endPart = role.date.includes(" - ")
+    ? role.date.split(" - ")[1]
+    : role.date;
+  if (endPart === "Present") return Infinity;
+  const m: Record<string, number> = {
+    Jan: 0,
+    Feb: 1,
+    Mar: 2,
+    Apr: 3,
+    May: 4,
+    Jun: 5,
+    Jul: 6,
+    Aug: 7,
+    Sep: 8,
+    Oct: 9,
+    Nov: 10,
+    Dec: 11,
+  };
+  const parts = endPart.split(" ");
   if (parts.length === 2 && m[parts[0]] !== undefined) {
     return parseInt(parts[1]) * 12 + m[parts[0]];
   }
@@ -49,7 +66,7 @@ const sortedTimeline = computed(() =>
   }),
 );
 
-function sortedRoles(event: TimelineEvent): TimelineEvent['roles'] {
+function sortedRoles(event: TimelineEvent): TimelineEvent["roles"] {
   return [...event.roles].sort((a, b) => parseEndDate(b) - parseEndDate(a));
 }
 
@@ -141,8 +158,15 @@ onUnmounted(() => {
         <section class="section socials fn-mono">
           <span class="tag fn-mono">S.</span>
           <div class="socials-links">
-            <a href="https://github.com/szuryuu" target="_blank" rel="noopener">GitHub</a>
-            <a href="https://linkedin.com/in/shafwan-ilham-dzaky" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/szuryuu" target="_blank" rel="noopener"
+              >GitHub</a
+            >
+            <a
+              href="https://linkedin.com/in/shafwan-ilham-dzaky"
+              target="_blank"
+              rel="noopener"
+              >LinkedIn</a
+            >
           </div>
         </section>
 
@@ -176,18 +200,24 @@ onUnmounted(() => {
             class="tab-label"
             :class="{ active: activeTab === 'work' }"
             @click="activeTab = 'work'"
-          >Selected work ({{ shortlist.length }})</button>
+          >
+            Selected work ({{ shortlist.length }})
+          </button>
           <button
             class="tab-label"
             :class="{ active: activeTab === 'timeline' }"
             @click="activeTab = 'timeline'"
-          >Timeline ({{ timelineEvents.length }})</button>
+          >
+            Timeline ({{ timelineEvents.length }})
+          </button>
         </div>
 
         <!-- Work list -->
         <ol v-if="activeTab === 'work'" class="work-list">
           <li v-for="(p, i) in shortlist" :key="p.path ?? i" class="work-item">
-            <div class="work-num fn-mono">{{ String(i + 1).padStart(2, "0") }}.</div>
+            <div class="work-num fn-mono">
+              {{ String(i + 1).padStart(2, "0") }}.
+            </div>
             <div class="work-body">
               <a
                 v-if="p.github"
@@ -239,7 +269,9 @@ onUnmounted(() => {
                 </div>
                 <div class="work-field">
                   <span class="field-label">Info.</span>
-                  <span class="field-value">{{ event.roles[0].description }}</span>
+                  <span class="field-value">{{
+                    event.roles[0].description
+                  }}</span>
                 </div>
                 <div class="work-field">
                   <span class="field-label">Period.</span>
@@ -257,7 +289,10 @@ onUnmounted(() => {
                   >
                     <div class="tl-rail-mini">
                       <div class="tl-dot-mini"></div>
-                      <div v-if="ri < event.roles.length - 1" class="tl-line-mini"></div>
+                      <div
+                        v-if="ri < event.roles.length - 1"
+                        class="tl-line-mini"
+                      ></div>
                     </div>
                     <div class="tl-role-content">
                       <div class="work-field">
@@ -296,7 +331,6 @@ body {
   margin: 0;
   padding: 0;
 }
-
 </style>
 
 <style scoped>
@@ -335,8 +369,9 @@ body {
 }
 
 .fn-mono {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
 }
 
 .tag {
@@ -682,6 +717,4 @@ body {
     gap: 14px;
   }
 }
-
-
 </style>
