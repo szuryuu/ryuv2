@@ -1,23 +1,14 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
-@import "./text-custom.css";
-
-@plugin "@tailwindcss/typography";
 
 @theme {
   --font-display: "Plus Jakarta Sans", sans-serif;
   --canvas: #f6f6f6;
-  --canvas-2: #FDFBF7;
   --ink: #222222;
   --ink-2: #434343;
   --muted: #8d8d7b;
   --hairline: #e5e5dc;
-  --hairline-strong: #b3b3a5;
-  --innerlight: #faf9f7;
   --ease: cubic-bezier(0.32,0.72,0,1);
-  --ease-spring: cubic-bezier(0.16,1.16,0.3,1);
-  --shell-radius: 2.25rem;
-  --core-radius: 1.85rem;
 }
 
 /* Remove Scrollbar */
@@ -42,28 +33,6 @@ body {
   font-family: var(--font-display);
   color: var(--ink);
   overscroll-behavior-y: none;
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: url("/texture.png") repeat;
-  opacity: 0.04;
-  mix-blend-mode: overlay;
-  z-index: 50;
-  inset: -6rem;
-}
-
-/* Page transition */
-.page-enter-active,
-.page-leave-active {
-  transition: opacity 400ms var(--ease);
-}
-.page-enter-from,
-.page-leave-to {
-  opacity: 0;
 }
 
 
