@@ -176,12 +176,23 @@ onUnmounted(() => {
         </p>
       </section>
 
-      <!-- W. Selected Work -->
-      <section class="section work">
-        <span class="tag">W.</span>
-        <h2>Selected work ({{ shortlist.length }})</h2>
+      <!-- Tabs: Selected work / Timeline -->
+      <section class="section list-section">
+        <div class="tab-header">
+          <button
+            class="tab-label"
+            :class="{ active: activeTab === 'work' }"
+            @click="activeTab = 'work'"
+          >Selected work ({{ shortlist.length }})</button>
+          <button
+            class="tab-label"
+            :class="{ active: activeTab === 'timeline' }"
+            @click="activeTab = 'timeline'"
+          >Timeline ({{ timelineEvents.length }})</button>
+        </div>
 
-        <ol class="work-list">
+        <!-- Work list -->
+        <ol v-if="activeTab === 'work'" class="work-list">
           <li v-for="(p, i) in shortlist" :key="p.path ?? i" class="work-item">
             <div class="work-num">{{ String(i + 1).padStart(2, "0") }}.</div>
             <div class="work-body">
@@ -212,6 +223,69 @@ onUnmounted(() => {
             </div>
           </li>
         </ol>
+
+        <!-- Timeline list -->
+        <div v-else class="timeline-list">
+          <div
+            v-for="(event, i) in sortedTimeline"
+            :key="event.id"
+            class="tl-event"
+            :class="{ 'tl-event-last': i === sortedTimeline.length - 1 }"
+          >
+            <div class="tl-rail">
+              <div class="tl-dot"></div>
+              <div v-if="i < sortedTimeline.length - 1" class="tl-line"></div>
+            </div>
+            <div class="tl-content">
+              <span class="tl-title">{{ event.title }}</span>
+
+              <template v-if="event.roles.length === 1">
+                <div class="work-field">
+                  <span class="field-label">Role.</span>
+                  <span class="field-value">{{ event.roles[0].title }}</span>
+                </div>
+                <div class="work-field">
+                  <span class="field-label">Info.</span>
+                  <span class="field-value">{{ event.roles[0].description }}</span>
+                </div>
+                <div class="work-field">
+                  <span class="field-label">Period.</span>
+                  <span class="field-value">{{ event.roles[0].date }}</span>
+                </div>
+              </template>
+
+              <template v-else>
+                <div class="tl-roles">
+                  <div
+                    v-for="(role, ri) in sortedRoles(event)"
+                    :key="ri"
+                    class="tl-role-item"
+                    :class="{ 'tl-role-last': ri === event.roles.length - 1 }"
+                  >
+                    <div class="tl-rail-mini">
+                      <div class="tl-dot-mini"></div>
+                      <div v-if="ri < event.roles.length - 1" class="tl-line-mini"></div>
+                    </div>
+                    <div class="tl-role-content">
+                      <div class="work-field">
+                        <span class="field-label">Role.</span>
+                        <span class="field-value">{{ role.title }}</span>
+                      </div>
+                      <div class="work-field">
+                        <span class="field-label">Info.</span>
+                        <span class="field-value">{{ role.description }}</span>
+                      </div>
+                      <div class="work-field">
+                        <span class="field-label">Period.</span>
+                        <span class="field-value">{{ role.date }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   </div>
