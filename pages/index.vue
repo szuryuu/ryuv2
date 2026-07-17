@@ -376,12 +376,15 @@ body {
 }
 
 .name-line {
-  font-size: 15px;
+  font-size: var(--text-meta);
+  line-height: var(--leading-meta);
+  letter-spacing: var(--tracking-meta);
   margin: 0 0 10px;
 }
 
 .mono {
-  font-size: 15px;
+  font-size: var(--text-meta);
+  letter-spacing: var(--tracking-meta);
   font-weight: 400;
   color: var(--ink);
 }
@@ -391,7 +394,9 @@ body {
 }
 
 .clock {
-  font-size: 15px;
+  font-size: var(--text-meta);
+  line-height: var(--leading-meta);
+  letter-spacing: var(--tracking-meta);
   margin-bottom: 0;
 }
 
@@ -434,8 +439,9 @@ body {
 .bio p {
   max-width: 52ch;
   color: var(--ink-2);
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  letter-spacing: var(--tracking-body);
   margin: 0 0 1em;
 }
 
@@ -447,12 +453,14 @@ body {
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  font-size: 15px;
+  font-size: var(--text-meta);
+  letter-spacing: var(--tracking-meta);
   margin-bottom: 16px;
 }
 
 .email {
-  font-size: 15px;
+  font-size: var(--text-meta);
+  letter-spacing: var(--tracking-meta);
   margin-bottom: 16px;
 }
 
@@ -497,7 +505,8 @@ body {
   background: none;
   border: none;
   padding: 0;
-  font-size: 15px;
+  font-size: var(--text-body);
+  letter-spacing: var(--tracking-body);
   font-family: inherit;
   color: var(--muted);
   cursor: pointer;
@@ -532,7 +541,8 @@ body {
 }
 
 .work-num {
-  font-size: 13px;
+  font-size: var(--text-meta);
+  letter-spacing: var(--tracking-meta);
   color: var(--muted);
   min-width: 28px;
 }
@@ -559,7 +569,7 @@ body {
 }
 
 .ext-link {
-  font-size: 12px;
+  font-size: var(--text-meta);
   color: var(--muted);
   margin-left: 2px;
 }
@@ -567,9 +577,10 @@ body {
 .work-field {
   display: flex;
   align-items: baseline;
-  font-size: 15px;
+  font-size: var(--text-meta);
   color: var(--ink-2);
-  line-height: 1.55;
+  line-height: var(--leading-meta);
+  letter-spacing: var(--tracking-meta);
   margin-top: 4px;
 }
 
