@@ -1,0 +1,141 @@
+export interface Project {
+  title: string;
+  description: string;
+  tech: string[];
+  year: string;
+  github?: string;
+  live?: string;
+  featured: boolean;
+  order: number;
+}
+
+export const projects: Project[] = [
+  {
+    title: "CloudOps: Azure GitOps Platform",
+    description: "A production-grade GitOps monorepo deploying a Go/Nginx microservices architecture on a Terraform-provisioned Azure Kubernetes Service (AKS) cluster, featuring decoupled CI/CD and zero-credential security.",
+    tech: ["Azure", "AKS", "Terraform", "GitHub Actions", "Go (Gin)", "Nginx", "PostgreSQL", "Prometheus"],
+    year: "2026",
+    github: "https://github.com/szuryuu/cloudops",
+    featured: true,
+    order: 1,
+  },
+  {
+    title: "Dynamic VMSS Auto-Discovery & Mesh",
+    description: "An elastic Service Mesh architecture integrating Envoy Proxy with Azure Virtual Machine Scale Sets (VMSS), featuring metric-driven autoscaling and zero-downtime dynamic routing.",
+    tech: ["Go", "Envoy Proxy", "Terraform", "Azure VMSS", "Cloud-init"],
+    year: "2026",
+    github: "https://github.com/szuryuu/auto-discover-vmss",
+    featured: true,
+    order: 2,
+  },
+  {
+    title: "LaporCepat: AI-Powered Disaster Reporting",
+    description: "A real-time emergency reporting system that replaces manual call centers with an AI pipeline (Groq Whisper STT + Gemini 2.5 Flash) for instant triage and live dispatch.",
+    tech: ["Nuxt 4", "Groq Whisper AI", "Google Gemini 2.5 Flash", "Firebase", "SSE", "Leaflet"],
+    year: "2025",
+    github: "https://github.com/szuryuu/lapor-cepat-bpbd",
+    live: "https://lapor-cepat.vercel.app",
+    featured: true,
+    order: 3,
+  },
+  {
+    title: "MySQL Load Test",
+    description: "A high-performance load testing suite that captures real production traffic via PCAP analysis and replays it with weighted concurrency to accurately simulate database load.",
+    tech: ["Go", "Gopacket", "Prometheus", "MySQL"],
+    year: "2025",
+    github: "https://github.com/szuryuu/mysql-load-test",
+    featured: true,
+    order: 4,
+  },
+  {
+    title: "Azure End-to-End DevOps Pipeline",
+    description: "A production-ready CI/CD pipeline and immutable infrastructure setup on Azure, featuring automated security scanning, zero-secret authentication, and dynamic telemetry injection.",
+    tech: ["GitHub Actions", "Terraform", "Docker", "Azure", "Bash"],
+    year: "2026",
+    github: "https://github.com/szuryuu/azure-e2e-devops",
+    featured: false,
+    order: 5,
+  },
+  {
+    title: "Azure Auto Discover VMs",
+    description: "A dynamic Service Mesh utilizing Envoy Proxy and a custom Go Control Plane to automatically discover and load balance Azure Virtual Machines with zero downtime.",
+    tech: ["Go", "Envoy Proxy", "Terraform", "Azure", "Cloud-init"],
+    year: "2026",
+    github: "https://github.com/szuryuu/auto-discover-vms",
+    featured: false,
+    order: 6,
+  },
+  {
+    title: "Dokku Nginx Path",
+    description: "A Dokku plugin enabling path-based routing for multiple applications under a single domain, featuring automated Nginx configuration merging and unified SSL management.",
+    tech: ["Bash", "Go", "Nginx", "Dokku"],
+    year: "2025",
+    github: "https://github.com/szuryuu/nginx-path-vhost",
+    featured: false,
+    order: 7,
+  },
+  {
+    title: "BodyLog: Serverless Fitness Tracker",
+    description: "A brutalist, serverless progressive overload tracker built with Nuxt 4, utilizing Google Sheets API as a zero-cost headless database for 100% data ownership.",
+    tech: ["Nuxt 4", "Vue 3", "Tailwind CSS v4", "Google Sheets API", "Serverless"],
+    year: "2026",
+    github: "https://github.com/szuryuu/bodylog",
+    featured: false,
+    order: 8,
+  },
+  {
+    title: "Sinvent - Inventory System",
+    description: "A modern, decoupled inventory management system featuring secure JWT authentication, role-based access control, and interactive data visualization for real-time stock tracking.",
+    tech: ["Laravel 12", "Vue 3", "MySQL", "Tailwind CSS", "Shadcn"],
+    year: "2025",
+    github: "https://github.com/szuryuu/sinvent",
+    featured: false,
+    order: 9,
+  },
+  {
+    title: "Internship Monitoring",
+    description: "A centralized platform for managing vocational school internships, featuring a robust Admin Dashboard built with Filament PHP and RESTful APIs for student mobile apps.",
+    tech: ["Laravel 11", "Filament PHP", "MySQL", "Vue.js"],
+    year: "2025",
+    github: "https://github.com/szuryuu/internship-monitoring-laravel",
+    featured: false,
+    order: 10,
+  },
+  {
+    title: "Mikrotik Manager",
+    description: "A Python-based CLI utility designed to automate common MikroTik RouterOS configuration tasks, featuring a modular architecture and a rich terminal interface.",
+    tech: ["Python", "MikroTik", "Paramiko", "Streamlit", "SSH"],
+    year: "2024",
+    github: "https://github.com/szuryuu/mikro-manager",
+    featured: false,
+    order: 11,
+  },
+  {
+    title: "GHA Sheet Attendance",
+    description: "A serverless attendance logging system that leverages GitHub Actions to automate daily reporting into Google Sheets with programmatic formatting and secure credential handling.",
+    tech: ["Go", "GitHub Actions", "Google Sheets API"],
+    year: "2025",
+    github: "https://github.com/szuryuu/gha-sheet-attend",
+    featured: false,
+    order: 12,
+  },
+  {
+    title: "GHA Follow Unfollow",
+    description: "A serverless Go automation tool running on GitHub Actions to manage followers, maintaining a healthy follower ratio with automated sync and activity logging.",
+    tech: ["Go", "GitHub Actions", "GitHub API"],
+    year: "2025",
+    github: "https://github.com/szuryuu/gha-follow-unfollow",
+    featured: false,
+    order: 13,
+  },
+  {
+    title: "Notori - Notes App",
+    description: "A lightweight, modular note-taking application engineered with Native Web Components and Webpack to demonstrate framework-agnostic component architecture.",
+    tech: ["JavaScript", "Webpack", "Anime.js"],
+    year: "2025",
+    github: "https://github.com/szuryuu/notori",
+    live: "https://notori.vercel.app/",
+    featured: false,
+    order: 14,
+  },
+];
