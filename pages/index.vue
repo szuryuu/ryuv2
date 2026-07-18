@@ -193,11 +193,10 @@ onUnmounted(() => {
           secure, scalable networks from the ground up.
         </p>
         <p>
-          He has interned as both a Full Stack Developer and DevOps Engineer,
-          working across backend services, CI/CD automation, and
-          infrastructure monitoring. He currently mentors developers as an
-          external code reviewer, and holds an MTCNA certification in network
-          administration and secure system design.
+          He also contributes as an external code reviewer for one of
+          Indonesia's largest coding education platforms, mentoring and
+          reviewing the work of aspiring developers, and holds an MTCNA
+          certification in network administration and secure system design.
         </p>
       </section>
 
