@@ -337,6 +337,15 @@ body {
   margin: 0;
   padding: 0;
 }
+
+::selection {
+  background-color: #000000;
+  color: #ffffff;
+}
+::-moz-selection {
+  background-color: #000000;
+  color: #ffffff;
+}
 </style>
 
 <style scoped>
