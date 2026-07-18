@@ -181,21 +181,22 @@ onUnmounted(() => {
       <!-- Bio -->
       <section class="section bio">
         <p>
-          I build automated infrastructure, resilient systems, and
-          security-first architecture. Focused on cloud-native platforms, CI/CD
-          pipelines, and production-grade service meshes.
+          Shafwan Ilham Dzaky is a DevOps engineer based in Yogyakarta,
+          Indonesia, focused on automated infrastructure, resilient systems, and
+          security-first architecture. He works across cloud-native platforms,
+          CI/CD pipelines, and production-grade service meshes.
         </p>
         <p>
-          Previously focused on infrastructure automation, monitoring and
-          observability with tools like Prometheus, Grafana, and the ELK stack.
-          Experienced with multi-cloud environments and designing secure,
-          scalable networks from the ground up.
+          He has previously focused on infrastructure automation, monitoring,
+          and observability using tools like Prometheus, Grafana, and the ELK
+          stack, with experience across multi-cloud environments and designing
+          secure, scalable networks from the ground up.
         </p>
         <p>
-          Previously interned as both a Full Stack Developer and DevOps Engineer
-          at Botika, working across backend services, CI/CD automation, and
-          infrastructure monitoring. Currently mentors developers as an external
-          code reviewer, and holds an MTCNA certification in network
+          He has interned as both a Full Stack Developer and DevOps Engineer,
+          working across backend services, CI/CD automation, and
+          infrastructure monitoring. He currently mentors developers as an
+          external code reviewer, and holds an MTCNA certification in network
           administration and secure system design.
         </p>
       </section>
