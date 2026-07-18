@@ -436,7 +436,6 @@ body {
 
 /* Bio */
 .bio p {
-  max-width: 52ch;
   color: var(--ink-2);
   font-size: var(--text-body);
   line-height: var(--leading-body);
