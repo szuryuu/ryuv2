@@ -9,7 +9,10 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: { lang: "en" },
-      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico?v=2" }],
+      link: [
+        { rel: "icon", type: "image/x-icon", href: "/favicon.ico?v=3" },
+        { rel: "apple-touch-icon", href: "/apple-touch-icon.png?v=3" },
+      ],
     },
   },
 
