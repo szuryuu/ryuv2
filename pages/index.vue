@@ -214,7 +214,7 @@ onUnmounted(() => {
 
         <!-- Work list -->
         <ol v-if="activeTab === 'work'" class="work-list">
-          <li v-for="(p, i) in shortlist" :key="p.path ?? i" class="work-item">
+          <li v-for="(p, i) in shortlist" :key="p.path ?? i" class="work-item list-item-row">
             <div class="work-num">
               {{ String(i + 1).padStart(2, "0") }}.
             </div>
@@ -252,8 +252,7 @@ onUnmounted(() => {
           <div
             v-for="(event, i) in sortedTimeline"
             :key="event.id"
-            class="tl-event"
-            :class="{ 'tl-event-last': i === sortedTimeline.length - 1 }"
+            class="tl-event list-item-row"
           >
             <div class="tl-rail">
               <div class="tl-dot"></div>
@@ -529,6 +528,19 @@ body {
 }
 
 .work-item {
+  /* layout handled by .list-item-row */
+}
+
+.work-num {
+  font-size: var(--text-meta);
+  letter-spacing: var(--tracking-meta);
+  color: var(--muted);
+  width: 28px;
+  flex-shrink: 0;
+}
+
+/* Shared list-item row (work + timeline) */
+.list-item-row {
   display: flex;
   align-items: baseline;
   gap: 20px;
@@ -536,15 +548,12 @@ body {
   border-top: 1px solid var(--hairline);
 }
 
-.work-item:last-child {
-  padding-bottom: 0;
+.list-item-row:first-child {
+  border-top: none;
 }
 
-.work-num {
-  font-size: var(--text-meta);
-  letter-spacing: var(--tracking-meta);
-  color: var(--muted);
-  min-width: 28px;
+.list-item-row:last-child {
+  padding-bottom: 0;
 }
 
 .work-body {
@@ -603,15 +612,7 @@ body {
 }
 
 .tl-event {
-  display: flex;
-  gap: 20px;
-  padding-top: 28px;
-  padding-bottom: 28px;
-  border-top: 1px solid var(--hairline);
-}
-
-.tl-event-last {
-  padding-bottom: 0;
+  /* layout handled by .list-item-row */
 }
 
 .tl-rail {
@@ -619,7 +620,7 @@ body {
   flex-direction: column;
   align-items: center;
   flex-shrink: 0;
-  width: 8px;
+  width: 28px;
 }
 
 .tl-dot {
@@ -652,7 +653,11 @@ body {
 
 /* Multi-role mini timeline */
 .tl-roles {
-  margin-top: 8px;
+  margin-top: 10px;
+}
+
+.tl-role-content .work-field:first-child {
+  margin-top: 0;
 }
 
 .tl-role-item {
@@ -718,7 +723,7 @@ body {
     padding-top: 0;
   }
 
-  .work-item {
+  .list-item-row {
     gap: 14px;
   }
 }
