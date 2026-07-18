@@ -727,16 +727,30 @@ body {
 
   .col-sticky {
     position: static;
-    order: 0;
+    order: 2;
     height: auto;
-    display: block;
+    display: flex;
+    flex-direction: column;
     padding-top: 0;
     text-align: left;
   }
 
+  .col-sticky-top {
+    order: 2;
+  }
+
+  .col-sticky-bottom {
+    order: 1;
+  }
+
   .col-scroll {
-    order: 0;
+    order: 1;
     padding-top: 0;
+    margin-bottom: 48px;
+  }
+
+  .clock {
+    display: none;
   }
 
   .list-item-row {
