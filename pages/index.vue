@@ -637,6 +637,7 @@ body {
   align-items: center;
   flex-shrink: 0;
   width: 28px;
+  align-self: stretch;
 }
 
 .tl-dot {
