@@ -756,5 +756,15 @@ body {
   .list-item-row {
     gap: 14px;
   }
+
+  .tl-dot {
+    width: 6px;
+    height: 6px;
+    margin-top: 7px;
+  }
+
+  .tl-rail {
+    padding-left: 2px;
+  }
 }
 </style>
