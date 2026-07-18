@@ -191,6 +191,13 @@ onUnmounted(() => {
           Experienced with multi-cloud environments and designing secure,
           scalable networks from the ground up.
         </p>
+        <p>
+          Previously interned as both a Full Stack Developer and DevOps Engineer
+          at Botika, working across backend services, CI/CD automation, and
+          infrastructure monitoring. Currently mentors developers as an external
+          code reviewer, and holds an MTCNA certification in network
+          administration and secure system design.
+        </p>
       </section>
 
       <!-- Tabs: Selected work / Timeline -->
